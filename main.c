@@ -14,6 +14,7 @@
 #include "ft_printf/ft_printf.h"
 #include <stdlib.h>
 #include <stdio.h>
+#include <unistd.h>
 
 void	del_link(t_list *link, t_list **lst, t_list *lstsave)
 {
@@ -102,13 +103,34 @@ void	push(t_list **tolow, t_list **toup)
 		*tolow = tmp;
 	}
 }
+
+int	ft_isspace(int c)
+{
+	return (c >= 9 && c <= 13 || c == 32);
+}
+
 int	has_error(char *argv[])
 {
+	char	*s;
+
 	while (*++argv)
-	{
-		if (**argv)
+	{ 
+		s = *argv;
+		while (*s)
+		{			
+			if (*s == '-')
+				s++;
+			if (!ft_isdigit(*s++))
+				return (1);	
+		}
+		// while (ft_isspace(*s))
+		// 	s++;
+		
+		//argv++;
 	}
+	return (0);
 }
+
 int	main(int argc, char *argv[])
 {
 	t_list	*a_head;
@@ -118,43 +140,43 @@ int	main(int argc, char *argv[])
 	if (argc <= 1)
 		return (1);
 	if (has_error(argv))
-		return (write(2, "Error\n", 6));
-	a_head = NULL;
-	b_head = NULL;
-	a_head = ft_lstnew((void *) *++argv);	
-	while (*++argv)
-	{
-		new = ft_lstnew((void *) *argv);
-		ft_lstadd_back(&a_head, new);		
-	}	
-	print_lst(a_head);
-	swap(a_head);
-	ft_printf("\n");
-	print_lst(a_head);
-	del_link(a_head->next, &a_head, a_head);
-	ft_printf("\n");
-	print_lst(a_head);
-	rot(&a_head);
-	ft_printf("\n");
-	print_lst(a_head);
-	rev_rot(&a_head);
-	ft_printf("\n");
-	print_lst(a_head);
-	push(&a_head, &b_head);
-	ft_printf("\n");
-	print_lst(a_head);
-	ft_printf("b\n\n");
-	print_lst(b_head);
-		push(&a_head, &b_head);
-	ft_printf("\n");
-	print_lst(a_head);
-	ft_printf("b\n\n");
-	print_lst(b_head);
-		push(&a_head, &b_head);
-	ft_printf("\n");
-	print_lst(a_head);
-	ft_printf("b\n\n");
-	print_lst(b_head);
+		write(2, "Error\n", 6);
+	// a_head = NULL;
+	// b_head = NULL;
+	// a_head = ft_lstnew((void *) *++argv);	
+	// while (*++argv)
+	// {
+	// 	new = ft_lstnew((void *) *argv);
+	// 	ft_lstadd_back(&a_head, new);		
+	// }	
+	// print_lst(a_head);
+	// swap(a_head);
+	// ft_printf("\n");
+	// print_lst(a_head);
+	// del_link(a_head->next, &a_head, a_head);
+	// ft_printf("\n");
+	// print_lst(a_head);
+	// rot(&a_head);
+	// ft_printf("\n");
+	// print_lst(a_head);
+	// rev_rot(&a_head);
+	// ft_printf("\n");
+	// print_lst(a_head);
+	// push(&a_head, &b_head);
+	// ft_printf("\n");
+	// print_lst(a_head);
+	// ft_printf("b\n\n");
+	// print_lst(b_head);
+	// 	push(&a_head, &b_head);
+	// ft_printf("\n");
+	// print_lst(a_head);
+	// ft_printf("b\n\n");
+	// print_lst(b_head);
+	// 	push(&a_head, &b_head);
+	// ft_printf("\n");
+	// print_lst(a_head);
+	// ft_printf("b\n\n");
+	// print_lst(b_head);
 
 	
 	return (0);
