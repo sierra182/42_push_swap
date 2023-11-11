@@ -6,7 +6,7 @@
 /*   By: svidot <svidot@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/11 13:45:00 by svidot            #+#    #+#             */
-/*   Updated: 2023/11/11 16:45:18 by svidot           ###   ########.fr       */
+/*   Updated: 2023/11/11 17:39:22 by svidot           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,27 @@ void	swap(t_list *lst)
 {						
 	swap_data(&lst->content, &lst->next->content);	
 }
+void	rot(t_list **lst)
+{		
+	t_list	*tmp;	
 
+	ft_lstadd_back(lst, *lst);
+	tmp = (*lst)->next;
+	(*lst)->next = NULL;
+	*lst = tmp; 
+}
+void	rev_rot(t_list **lst)
+{		
+	t_list	*tmp;	
+	t_list	*lstlast;
+	
+	lstlast = ft_lstlast(*lst);
+	ft_lstadd_front(lst, lstlast);
+	
+	// tmp = (*lst)->next;
+	(*lst)->next = NULL;
+	// *lst = tmp; 
+}
 int	main(int argc, char *argv[])
 {
 	t_list	*a_head;
@@ -77,6 +97,12 @@ int	main(int argc, char *argv[])
 	ft_printf("\n");
 	print_lst(a_head);
 	del_link(a_head->next, &a_head, a_head);
+	ft_printf("\n");
+	print_lst(a_head);
+	rot(&a_head);
+	ft_printf("\n");
+	print_lst(a_head);
+	rev_rot(&a_head);
 	ft_printf("\n");
 	print_lst(a_head);
 	return (0);
