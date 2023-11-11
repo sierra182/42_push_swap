@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: svidot <svidot@student.42.fr>              +#+  +:+       +#+        */
+/*   By: seblin <seblin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/11 13:45:00 by svidot            #+#    #+#             */
-/*   Updated: 2023/11/11 17:39:22 by svidot           ###   ########.fr       */
+/*   Updated: 2023/11/11 21:09:33 by seblin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ void	print_lst(t_list *lst)
 		lst = lst->next;
 	}	
 }
+
 void	swap_data(void **a, void **b)
 {
 	void	*tmp;
@@ -56,36 +57,70 @@ void	swap_data(void **a, void **b)
 	*b = tmp;	
 }
 void	swap(t_list *lst)
-{						
-	swap_data(&lst->content, &lst->next->content);	
+{	
+	if (lst && lst->next)					
+		swap_data(&lst->content, &lst->next->content);	
 }
 void	rot(t_list **lst)
 {		
 	t_list	*tmp;	
-
-	ft_lstadd_back(lst, *lst);
-	tmp = (*lst)->next;
-	(*lst)->next = NULL;
-	*lst = tmp; 
+	
+	if (*lst && (*lst)->next)
+	{
+		ft_lstadd_back(lst, *lst);
+		tmp = (*lst)->next;
+		(*lst)->next = NULL;
+		*lst = tmp;
+	}
 }
+
 void	rev_rot(t_list **lst)
 {		
-	t_list	*tmp;	
 	t_list	*lstlast;
+	int		lstsize;
 	
-	lstlast = ft_lstlast(*lst);
-	ft_lstadd_front(lst, lstlast);
+	if (*lst && (*lst)->next)
+	{
+		lstsize = ft_lstsize(*lst);
+		lstlast = ft_lstlast(*lst);
+		ft_lstadd_front(lst, lstlast);
+		while (--lstsize)
+			*lst = (*lst)->next;
+		(*lst)->next = NULL;
+		*lst = lstlast; 
+	}
+}
+
+void	push(t_list **tolow, t_list **toup)
+{	
+	t_list	*tmp;
 	
-	// tmp = (*lst)->next;
-	(*lst)->next = NULL;
-	// *lst = tmp; 
+	if (*tolow)
+	{		
+		tmp = (*tolow)->next;
+		ft_lstadd_front(toup, *tolow);
+		*tolow = tmp;
+	}
+}
+int	has_error(char *argv[])
+{
+	while (*++argv)
+	{
+		if (**argv)
+	}
 }
 int	main(int argc, char *argv[])
 {
 	t_list	*a_head;
 	t_list	*b_head;
 	t_list	*new;
-
+	
+	if (argc <= 1)
+		return (1);
+	if (has_error(argv))
+		return (write(2, "Error\n", 6));
+	a_head = NULL;
+	b_head = NULL;
 	a_head = ft_lstnew((void *) *++argv);	
 	while (*++argv)
 	{
@@ -105,5 +140,22 @@ int	main(int argc, char *argv[])
 	rev_rot(&a_head);
 	ft_printf("\n");
 	print_lst(a_head);
+	push(&a_head, &b_head);
+	ft_printf("\n");
+	print_lst(a_head);
+	ft_printf("b\n\n");
+	print_lst(b_head);
+		push(&a_head, &b_head);
+	ft_printf("\n");
+	print_lst(a_head);
+	ft_printf("b\n\n");
+	print_lst(b_head);
+		push(&a_head, &b_head);
+	ft_printf("\n");
+	print_lst(a_head);
+	ft_printf("b\n\n");
+	print_lst(b_head);
+
+	
 	return (0);
 }
