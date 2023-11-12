@@ -1,20 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_isspace.c                                       :+:      :+:    :+:   */
+/*   setup.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: svidot <svidot@student.42.fr>              +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/12 19:11:56 by svidot            #+#    #+#             */
-/*   Updated: 2023/11/12 19:11:56 by svidot           ###   ########.fr       */
+/*   Created: 2023/11/12 19:31:26 by marvin            #+#    #+#             */
+/*   Updated: 2023/11/12 19:31:26 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#ifndef SETUP_H
+ #define SETUP_H
 
-int	ft_isspace(int c)
-{
-	return ((c >= 9 && c <= 13) || c == 32);
-}
+int	has_error(char *argv[], char *argv_save[], int **args, int argc);
+int	*init_list(t_list **lst, int argc, char *argv[], int *args);
 
-
+#endif

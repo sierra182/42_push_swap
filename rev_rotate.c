@@ -1,20 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_isspace.c                                       :+:      :+:    :+:   */
+/*   rev_rotate.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: svidot <svidot@student.42.fr>              +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/12 19:11:56 by svidot            #+#    #+#             */
-/*   Updated: 2023/11/12 19:11:56 by svidot           ###   ########.fr       */
+/*   Created: 2023/11/12 20:18:40 by marvin            #+#    #+#             */
+/*   Updated: 2023/11/12 20:18:40 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
-
-int	ft_isspace(int c)
+void	rra(t_list **lst)
 {
-	return ((c >= 9 && c <= 13) || c == 32);
+	rev_rotate(lst);
+	write(1, "rra\n", 4);
 }
 
+void	rrb(t_list **lst)
+{
+	rev_rotate(lst);
+	write(1, "rrb\n", 4);
+}
 
+void	rrr(t_list **la, t_list **lb)
+{
+	rev_rotate(la);
+	rev_rotate(lb);
+	write(1, "rrr\n", 4);
+}
