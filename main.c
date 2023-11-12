@@ -15,6 +15,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <unistd.h>
+#include <limits.h>
 
 void	del_link(t_list *link, t_list **lst, t_list *lstsave)
 {
@@ -104,6 +105,26 @@ void	push(t_list **tolow, t_list **toup)
 	}
 }
 
+int	is_overflow(char *s)
+{
+	long	nbr;
+	int		isneg;
+
+	nbr = 0;
+	isneg = 0;	
+	if (*s == '-' && ++isneg)
+		s++;
+	else if (*s == '+')
+		s++;
+	while (*s)
+	{
+		nbr = nbr * 10 + *s++ - 48;
+		if (nbr - isneg > INT_MAX)
+			return (1);
+	}
+	return (0);
+}
+
 int	ft_isspace(int c)
 {
 	return (c >= 9 && c <= 13 || c == 32);
@@ -112,21 +133,17 @@ int	ft_isspace(int c)
 int	has_error(char *argv[])
 {
 	char	*s;
-
+	
 	while (*++argv)
 	{ 
-		s = *argv;
-		while (*s)
-		{			
-			if (*s == '-')
-				s++;
-			if (!ft_isdigit(*s++))
-				return (1);	
-		}
-		// while (ft_isspace(*s))
-		// 	s++;
-		
-		//argv++;
+		s = *argv;		
+		if ((*s == '-' || *s == '+') && ft_isdigit(*(s + 1)))
+			s++;
+		while (*s++)		
+			if (!ft_isdigit(*(s - 1)))
+				return (1);
+		if (is_overflow(*argv))
+			return (1);
 	}
 	return (0);
 }
