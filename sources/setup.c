@@ -10,7 +10,9 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "setup.h"
+#include "ft_printf/libft/libft.h"
+#include <stdlib.h>
+#include <limits.h>
 
 static int	has_twins(int *args, int argc, int tocheck)
 {	

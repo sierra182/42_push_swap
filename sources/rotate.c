@@ -1,44 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   swap.c                                             :+:      :+:    :+:   */
+/*   rotate.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/12 19:52:26 by marvin            #+#    #+#             */
-/*   Updated: 2023/11/12 19:52:26 by marvin           ###   ########.fr       */
+/*   Created: 2023/11/12 19:54:13 by marvin            #+#    #+#             */
+/*   Updated: 2023/11/12 19:54:13 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-static void	swap_data(void **a, void **b)
+#include "include/rotate_utils.h"
+#include "unistd.h"
+
+void	ra(t_list **lst)
 {
-	void	*tmp;
-	
-	tmp = *a;
-	*a = *b;
-	*b = tmp;	
-}
-static void	swap(t_list *lst)
-{	
-	if (lst && lst->next)					
-		swap_data(&lst->content, &lst->next->content);	
+	rotate(lst);
+	write(1, "ra\n", 3);
 }
 
-void	sa(t_list *lst)
+void	rb(t_list **lst)
 {
-	swap(lst);
-	write(1, "sa\n", 3);
+	rotate(lst);
+	write(1, "rb\n", 3);
 }
 
-void	sb(t_list *lst)
+void	rr(t_list **la, t_list **lb)
 {
-	swap(lst);
-	write(1, "sb\n", 3);
-}
-
-void	ss(t_list *la, t_list *lb)
-{
-	swap(la);
-	swap(lb);
-	write(1, "ss\n", 3);
+	rotate(la);
+	rotate(lb);
+	write(1, "rr\n", 3);
 }

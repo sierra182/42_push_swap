@@ -10,6 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "ft_printf/libft/libft.h"
+
 void	rotate(t_list **lst)
 {		
 	t_list	*tmp;	

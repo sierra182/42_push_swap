@@ -1,30 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   rotate.c                                           :+:      :+:    :+:   */
+/*   rotate_utils.h                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/12 19:54:13 by marvin            #+#    #+#             */
-/*   Updated: 2023/11/12 19:54:13 by marvin           ###   ########.fr       */
+/*   Created: 2023/11/12 20:37:47 by marvin            #+#    #+#             */
+/*   Updated: 2023/11/12 20:37:47 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-void	ra(t_list **lst)
-{
-	rotate(lst);
-	write(1, "ra\n", 3);
-}
+#ifndef ROTATE_UTILS_H
+# define ROTATE_UTILS_H
 
-void	rb(t_list **lst)
-{
-	rotate(lst);
-	write(1, "rb\n", 3);
-}
+#include <strings.h>
 
-void	rr(t_list **la, t_list **lb)
-{
-	rotate(la);
-	rotate(lb);
-	write(1, "rr\n", 3);
-}
+void	rotate(t_list **lst);
+void	rev_rotate(t_list **lst);
+
+#endif

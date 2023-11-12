@@ -6,17 +6,18 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/11 13:45:00 by svidot            #+#    #+#             */
-/*   Updated: 2023/11/12 19:52:45 by marvin           ###   ########.fr       */
+/*   Updated: 2023/11/12 21:04:32 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf/libft/libft.h"
-#include "ft_printf/ft_printf.h"
-#include "setup.h"
-#include <stdlib.h>
-#include <stdio.h>
+#include "include/setup.h"
 #include <unistd.h>
-#include <limits.h>
+#include <stdlib.h>
+
+#include "ft_printf/ft_printf.h"
+#include "include/operation.h"
+#include <stdio.h>
 
 void	del_link(t_list *link, t_list **lst, t_list *lstsave)
 {

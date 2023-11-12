@@ -1,35 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   push.c                                             :+:      :+:    :+:   */
+/*   rev_rotate.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/12 19:51:42 by marvin            #+#    #+#             */
-/*   Updated: 2023/11/12 19:51:42 by marvin           ###   ########.fr       */
+/*   Created: 2023/11/12 20:18:40 by marvin            #+#    #+#             */
+/*   Updated: 2023/11/12 20:18:40 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-static void	push(t_list **tolow, t_list **toup)
-{	
-	t_list	*tmp;
-	
-	if (*tolow)
-	{		
-		tmp = (*tolow)->next;
-		ft_lstadd_front(toup, *tolow);
-		*tolow = tmp;
-	}
+#include "include/rotate_utils.h"
+#include "unistd.h"
+
+void	rra(t_list **lst)
+{
+	rev_rotate(lst);
+	write(1, "rra\n", 4);
 }
 
-void	pa(t_list **la, t_list **lb)
+void	rrb(t_list **lst)
 {
-	push(lb, la);
-	write(1, "pa\n", 3);
+	rev_rotate(lst);
+	write(1, "rrb\n", 4);
 }
 
-void	pb(t_list **la, t_list **lb)
+void	rrr(t_list **la, t_list **lb)
 {
-	push(la, lb);
-	write(1, "pb\n", 3);
+	rev_rotate(la);
+	rev_rotate(lb);
+	write(1, "rrr\n", 4);
 }
