@@ -45,7 +45,7 @@ void	print_lst(t_list *lst)
 {
 	while (lst)
 	{
-		ft_printf("%s\n", ((char *) lst->content));
+		ft_printf("%d\n", *(int *) lst->content);
 		lst = lst->next;
 	}	
 }
@@ -105,6 +105,21 @@ void	push(t_list **tolow, t_list **toup)
 	}
 }
 
+int	has_twins(int *args, int argc, int tocheck)
+{	
+	int res;
+
+	res = 0;
+	while (argc--)
+	{   
+		if (args[argc] == tocheck)
+			res++;
+		if (res >= 2)
+			return (res);	
+	}
+	return (0);
+}
+
 int	is_overflow(char *s)
 {
 	long	nbr;
@@ -130,10 +145,16 @@ int	ft_isspace(int c)
 	return (c >= 9 && c <= 13 || c == 32);
 }
 
-int	has_error(char *argv[])
+int	init_args_arr()
 {
-	char	*s;
 	
+}
+
+int	has_error(char *argv[], char *argv_save[], int **args, int argc)
+{
+	char	*s;	
+	int		i;
+
 	while (*++argv)
 	{ 
 		s = *argv;		
@@ -143,33 +164,63 @@ int	has_error(char *argv[])
 			if (!ft_isdigit(*(s - 1)))
 				return (1);
 		if (is_overflow(*argv))
-			return (1);
+			return (1);		
 	}
+	*args = (int *) malloc(sizeof(int) * (argc - 1));
+	argv = argv_save;
+	while (*++argv)	
+		*(*args)++ = ft_atoi(*argv);
+	*args = (*args) - (argc - 1); 	
+	argv = argv_save;
+	i = 0;
+	while (*++argv)	
+		if (has_twins(*args, argc - 1, (*args)[i++]))
+			return (free(*args), 1);	
 	return (0);
+}
+
+int	*init_list(t_list **lst, int argc, char *argv[], int *args)
+{
+	t_list	*new;
+	
+	while (*++argv)
+	{			
+		new = ft_lstnew((void *) args++);
+		ft_lstadd_back(lst, new);
+	}		
 }
 
 int	main(int argc, char *argv[])
 {
 	t_list	*a_head;
 	t_list	*b_head;
-	t_list	*new;
+	int		*args;
 	
+	a_head = NULL;
+	b_head = NULL;
 	if (argc <= 1)
 		return (1);
-	if (has_error(argv))
-		write(2, "Error\n", 6);
-	// a_head = NULL;
-	// b_head = NULL;
-	// a_head = ft_lstnew((void *) *++argv);	
-	// while (*++argv)
-	// {
-	// 	new = ft_lstnew((void *) *argv);
-	// 	ft_lstadd_back(&a_head, new);		
-	// }	
-	// print_lst(a_head);
+	if (has_error(argv, argv, &args, argc))
+		return (write(2, "Error\n", 6));
+	init_list(&a_head, argc, argv, args);
+	print_lst(a_head);
 	// swap(a_head);
 	// ft_printf("\n");
 	// print_lst(a_head);
+	// ft_printf("\n");
+	// rot(&a_head);
+
+	// print_lst(a_head);
+	// ft_printf("\nb\n");
+	// print_lst(b_head);
+	// ft_printf("\n");
+
+	// ft_printf("\n");
+	// push(&a_head, &b_head);
+	// print_lst(a_head);
+	// ft_printf("\nb\n");
+	// print_lst(b_head);
+	// ft_printf("\n");
 	// del_link(a_head->next, &a_head, a_head);
 	// ft_printf("\n");
 	// print_lst(a_head);
@@ -195,6 +246,8 @@ int	main(int argc, char *argv[])
 	// ft_printf("b\n\n");
 	// print_lst(b_head);
 
-	
+	free(args);
+	ft_lstclear(&a_head, NULL);
+	// ft_lstclear(&b_head, NULL);
 	return (0);
 }
