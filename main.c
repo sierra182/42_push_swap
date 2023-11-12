@@ -145,9 +145,13 @@ int	ft_isspace(int c)
 	return (c >= 9 && c <= 13 || c == 32);
 }
 
-int	init_args_arr()
+int	init_args_arr(int **args, char *argv[],  int argc)
 {
+	*args = (int *) malloc(sizeof(int) * (argc - 1));
 	
+	while (*++argv)	
+		*(*args)++ = ft_atoi(*argv);
+	*args = (*args) - (argc - 1);	
 }
 
 int	has_error(char *argv[], char *argv_save[], int **args, int argc)
@@ -166,13 +170,9 @@ int	has_error(char *argv[], char *argv_save[], int **args, int argc)
 		if (is_overflow(*argv))
 			return (1);		
 	}
-	*args = (int *) malloc(sizeof(int) * (argc - 1));
-	argv = argv_save;
-	while (*++argv)	
-		*(*args)++ = ft_atoi(*argv);
-	*args = (*args) - (argc - 1); 	
-	argv = argv_save;
+	init_args_arr(args, argv_save, argc);
 	i = 0;
+	argv = argv_save;
 	while (*++argv)	
 		if (has_twins(*args, argc - 1, (*args)[i++]))
 			return (free(*args), 1);	
