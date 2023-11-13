@@ -10,8 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "include/rotate_utils.h"
-#include "unistd.h"
+#include "rotate_utils.h"
+#include <unistd.h>
 
 void	ra(t_list **lst)
 {

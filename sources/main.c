@@ -6,17 +6,17 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/11 13:45:00 by svidot            #+#    #+#             */
-/*   Updated: 2023/11/12 21:04:32 by marvin           ###   ########.fr       */
+/*   Updated: 2023/11/13 21:15:20 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf/libft/libft.h"
-#include "include/setup.h"
+#include "libft.h"
+#include "setup.h"
 #include <unistd.h>
 #include <stdlib.h>
 
-#include "ft_printf/ft_printf.h"
-#include "include/operation.h"
+#include "ft_printf.h"
+#include "operations.h"
 #include <stdio.h>
 
 void	del_link(t_list *link, t_list **lst, t_list *lstsave)
@@ -49,7 +49,8 @@ void	print_lst(t_list *lst)
 	{
 		ft_printf("%d\n", *(int *) lst->content);
 		lst = lst->next;
-	}	
+	}
+	ft_printf("\n");	
 }
 
 int	main(int argc, char *argv[])
@@ -66,50 +67,58 @@ int	main(int argc, char *argv[])
 		return (write(2, "Error\n", 6));
 	init_list(&a_head, argc, argv, args);
 	print_lst(a_head);
-	// swap(a_head);
-	// ft_printf("\n");
-	// print_lst(a_head);
-	// ft_printf("\n");
-	// rot(&a_head);
+	
+	sa(a_head);
+	print_lst(a_head);
+	
+	sb(b_head);
+	print_lst(b_head);
+	
+	pb(&a_head, &b_head);
+	pb(&a_head, &b_head);
+	
+	print_lst(a_head);
+	print_lst(b_head);
+	
+	ss(a_head, b_head);
+	print_lst(a_head);
+	print_lst(b_head);
 
-	// print_lst(a_head);
-	// ft_printf("\nb\n");
-	// print_lst(b_head);
-	// ft_printf("\n");
+	pa(&a_head, &b_head);
+	pa(&a_head, &b_head);
+	
+	print_lst(a_head);
+	print_lst(b_head);
 
-	// ft_printf("\n");
-	// push(&a_head, &b_head);
-	// print_lst(a_head);
-	// ft_printf("\nb\n");
-	// print_lst(b_head);
-	// ft_printf("\n");
-	// del_link(a_head->next, &a_head, a_head);
-	// ft_printf("\n");
-	// print_lst(a_head);
-	// rot(&a_head);
-	// ft_printf("\n");
-	// print_lst(a_head);
-	// rev_rot(&a_head);
-	// ft_printf("\n");
-	// print_lst(a_head);
-	// push(&a_head, &b_head);
-	// ft_printf("\n");
-	// print_lst(a_head);
-	// ft_printf("b\n\n");
-	// print_lst(b_head);
-	// 	push(&a_head, &b_head);
-	// ft_printf("\n");
-	// print_lst(a_head);
-	// ft_printf("b\n\n");
-	// print_lst(b_head);
-	// 	push(&a_head, &b_head);
-	// ft_printf("\n");
-	// print_lst(a_head);
-	// ft_printf("b\n\n");
-	// print_lst(b_head);
+	pb(&a_head, &b_head);
+	pb(&a_head, &b_head);
+	pb(&a_head, &b_head);
+	
+	print_lst(a_head);
+	print_lst(b_head);
+
+	ra(&a_head);
+	rb(&b_head);
+	
+	print_lst(a_head);
+	print_lst(b_head);
+	
+	rr(&a_head, &b_head);
+	print_lst(a_head);
+	print_lst(b_head);
+
+	rra(&a_head);
+	rrb(&b_head);
+	
+	print_lst(a_head);
+	print_lst(b_head);
+	
+	rrr(&a_head, &b_head);
+	print_lst(a_head);
+	print_lst(b_head);
 
 	free(args);
 	ft_lstclear(&a_head, NULL);
-	// ft_lstclear(&b_head, NULL);
+	ft_lstclear(&b_head, NULL);
 	return (0);
 }

@@ -1,19 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   operation.h                                        :+:      :+:    :+:   */
+/*   operations.h                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/11 13:46:50 by svidot            #+#    #+#             */
-/*   Updated: 2023/11/12 21:07:13 by marvin           ###   ########.fr       */
+/*   Updated: 2023/11/13 20:52:59 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef OPERATION_H
-# define OPERATION_H
+#ifndef OPERATIONS_H
+# define OPERATIONS_H
 
-#include <strings.h>
+#include "libft.h"
 
 void	pa(t_list **la, t_list **lb);
 void	pb(t_list **la, t_list **lb);

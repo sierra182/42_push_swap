@@ -10,8 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf/libft/libft.h"
-#include "unistd.h"
+#include "libft.h"
+#include <unistd.h>
 
 static void	push(t_list **tolow, t_list **toup)
 {	

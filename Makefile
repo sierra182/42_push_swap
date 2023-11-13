@@ -1,5 +1,5 @@
 CC = cc
-CFLAGS = -Iinclude #-Wall -Wextra -Werror
+CFLAGS = -Iinclude/ -Ift_printf/libft/ -Ift_printf/ #-Wall -Wextra -Werror
 LDFLAGS = ft_printf/libftprintf.a
 SRC_DIR = sources
 SOURCES = $(SRC_DIR)/main.c $(SRC_DIR)/setup.c $(SRC_DIR)/push.c $(SRC_DIR)/swap.c \
@@ -9,11 +9,10 @@ NAME = push_swap
 
 .PHONY : all
 
-%.o : %.cc
+$(SRC_DIR)/%.o : $(SRC_DIR)/%.c
 	$(CC) $(CFLAGS) $< -c -o $@
 
-all :
-	$(NAME)
+all : $(NAME)	
 
-$(NAME)
+$(NAME) : $(OBJECTS)
 	$(CC) $(OBJECTS) $(LDFLAGS) -o $@
