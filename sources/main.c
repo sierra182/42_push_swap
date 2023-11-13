@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/11 13:45:00 by svidot            #+#    #+#             */
-/*   Updated: 2023/11/13 22:33:37 by marvin           ###   ########.fr       */
+/*   Updated: 2023/11/13 22:38:44 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,9 +43,12 @@ void	del_link(t_list *link, t_list **lst, t_list *lstsave)
 		*lst = (*lst)->next;
 	}	
 }
+
 void	print_lst(t_list *la, t_list *lb)
 {	
+	ft_printf("\033[%dm", 96);
 	ft_printf("~~~~~~~~~~~~~~~~~~~~ ~~(,,°>\n");
+	ft_printf("\033[0m");
 	while (la || lb)
 	{
 		if (la)
