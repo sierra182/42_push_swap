@@ -16,3 +16,11 @@ all : $(NAME)
 
 $(NAME) : $(OBJECTS)
 	$(CC) $(OBJECTS) $(LDFLAGS) -o $@
+
+clean :
+	rm -f $(OBJECTS);
+
+fclean : clean
+	rm -f $(NAME)
+
+re: fclean all
