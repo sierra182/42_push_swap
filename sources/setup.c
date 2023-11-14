@@ -49,10 +49,9 @@ static int	is_overflow(char *s)
 	return (0);
 }
 
-static int	init_args_arr(int **args, char *argv[],  int argc)
+static void	init_args_arr(int **args, char *argv[],  int argc)
 {
-	*args = (int *) malloc(sizeof(int) * (argc - 1));
-	
+	*args = (int *) malloc(sizeof(int) * (argc - 1));	
 	while (*++argv)	
 		*(*args)++ = ft_atoi(*argv);
 	*args = (*args) - (argc - 1);	
@@ -83,7 +82,7 @@ int	has_error(char *argv[], char *argv_save[], int **args, int argc)
 	return (0);
 }
 
-int	*init_list(t_list **lst, int argc, char *argv[], int *args)
+void	*init_list(t_list **lst, int argc, char *argv[], int *args)
 {
 	t_list	*new;
 	
