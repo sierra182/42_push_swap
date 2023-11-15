@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/11 13:45:00 by svidot            #+#    #+#             */
-/*   Updated: 2023/11/13 22:48:48 by marvin           ###   ########.fr       */
+/*   Updated: 2023/11/15 20:06:05 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,16 @@ void	print_lst(t_list *la, t_list *lb)
 	ft_printf("\n");	
 }
 
+void	*init_list(t_list **lst, int argc, char *argv[], int *args)
+{
+	t_list	*new;
+	
+	while (*++argv)
+	{			
+		new = ft_lstnew((void *) args++);
+		ft_lstadd_back(lst, new);
+	}		
+}
 int	main(int argc, char *argv[])
 {
 	t_list	*a_head;
@@ -77,7 +87,7 @@ int	main(int argc, char *argv[])
 	b_head = NULL;
 	if (argc <= 1)
 		return (1);
-	if (has_error(argv, argv, &args, argc))
+	if (!setup(argv, argv, &args, argc))
 		return (write(2, "Error\n", 6));
 	init_list(&a_head, argc, argv, args);
 	print_lst(a_head, b_head);

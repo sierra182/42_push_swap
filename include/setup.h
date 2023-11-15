@@ -13,9 +13,6 @@
 #ifndef SETUP_H
  #define SETUP_H
 
-#include <strings.h>
-
-int		has_error(char *argv[], char *argv_save[], int **args, int argc);
-void	*init_list(t_list **lst, int argc, char *argv[], int *args);
+int		setup(char *argv[], char *argv_save[], int **args, int argc);
 
 #endif

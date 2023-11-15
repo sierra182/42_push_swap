@@ -49,6 +49,17 @@ static int	is_overflow(char *s)
 	return (0);
 }
 
+static void	epur_input(char	**s)
+{
+	int	len;
+	
+	len = ft_strlen(*s);
+	while (--len && ft_isspace((*s)[len]))
+		(*s)[len] = 0;
+	while (ft_isspace(**s) && *(*s + 1))
+		(*s)++;
+}
+
 static void	init_args_arr(int **args, char *argv[],  int argc)
 {
 	*args = (int *) malloc(sizeof(int) * (argc - 1));	
@@ -57,38 +68,30 @@ static void	init_args_arr(int **args, char *argv[],  int argc)
 	*args = (*args) - (argc - 1);	
 }
 
-int	has_error(char *argv[], char *argv_save[], int **args, int argc)
+
+int	setup(char *argv[], char *argv_save[], int **args, int argc)
 {
 	char	*s;	
 	int		i;
 
 	while (*++argv)
 	{ 
-		s = *argv;		
+		s = *argv;
+		epur_input(&s);
 		if ((*s == '-' || *s == '+') && ft_isdigit(*(s + 1)))
 			s++;
 		while (*s++)		
 			if (!ft_isdigit(*(s - 1)))
-				return (1);
-		if (is_overflow(*argv))
-			return (1);		
+				return (0);
+		if (is_overflow(*argv) || !**argv)
+			return (0);		
 	}
 	init_args_arr(args, argv_save, argc);
 	i = 0;
 	argv = argv_save;
 	while (*++argv)	
 		if (has_twins(*args, argc - 1, (*args)[i++]))
-			return (free(*args), 1);	
-	return (0);
+			return (free(*args), 0);	
+	return (1);
 }
 
-void	*init_list(t_list **lst, int argc, char *argv[], int *args)
-{
-	t_list	*new;
-	
-	while (*++argv)
-	{			
-		new = ft_lstnew((void *) args++);
-		ft_lstadd_back(lst, new);
-	}		
-}
