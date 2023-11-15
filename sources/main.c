@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/11 13:45:00 by svidot            #+#    #+#             */
-/*   Updated: 2023/11/15 20:27:00 by marvin           ###   ########.fr       */
+/*   Updated: 2023/11/15 21:09:37 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void	del_link(t_list *link, t_list **lst, t_list *lstsave)
 
 void	print_lst(t_list *la, t_list *lb)
 {	
-	ft_printf("\033[%dm", 96);
+	ft_printf("\n\033[%dm", 96);
 	ft_printf("~~~~~~~~~~~~~~~~~~~~ ~~(,,°>\n");
 	ft_printf("\033[0m");
 	while (la || lb)
@@ -77,6 +77,34 @@ void	*init_list(t_list **lst, int argc, char *argv[], int *args_arr)
 		ft_lstadd_back(lst, new);
 	}		
 }
+
+void	swap(int *a, int *b)
+{
+	int	tmp;
+
+	tmp = *a;
+	*a = *b;
+	*b = tmp;	
+}
+
+t_list	*sort_list(t_list* lst, int (*cmp)(int, int))
+{
+	t_list *tmp;
+	
+	tmp = lst;
+	while (tmp->next)
+	{
+		if (*(int *) tmp->content > *(int *) tmp->next->content)
+		{
+			swap((int *) tmp->content, (int *) tmp->next->content);
+			tmp = lst;
+		}
+		else
+			tmp = tmp->next;
+	}
+	return (lst);
+}
+
 int	main(int argc, char *argv[])
 {
 	int		*args_arr;
@@ -91,47 +119,48 @@ int	main(int argc, char *argv[])
 		return (write(2, "Error\n", 6));
 	init_list(&a_head, argc, argv, args_arr);
 	print_lst(a_head, b_head);
-	
-	sa(a_head);
+	sort_list(a_head, ascending);
 	print_lst(a_head, b_head);
+	// sa(a_head);
+	// print_lst(a_head, b_head);
 	
-	sb(b_head);
-	print_lst(a_head, b_head);
+	// sb(b_head);
+	// print_lst(a_head, b_head);
 	
-	pb(&a_head, &b_head);
-	pb(&a_head, &b_head);
+	// pb(&a_head, &b_head);
+	// pb(&a_head, &b_head);
 	
-	print_lst(a_head, b_head);
+	// print_lst(a_head, b_head);
 	
-	ss(a_head, b_head);
-	print_lst(a_head, b_head);
+	// ss(a_head, b_head);
+	// print_lst(a_head, b_head);
 
-	pa(&a_head, &b_head);
-	pa(&a_head, &b_head);
+	// pa(&a_head, &b_head);
+	// pa(&a_head, &b_head);
 	
-	print_lst(a_head, b_head);
+	// print_lst(a_head, b_head);
 
-	pb(&a_head, &b_head);
-	pb(&a_head, &b_head);
-	pb(&a_head, &b_head);
+	// pb(&a_head, &b_head);
+	// pb(&a_head, &b_head);
+	// pb(&a_head, &b_head);
 	
-	print_lst(a_head, b_head);	
+	// print_lst(a_head, b_head);	
 
-	ra(&a_head);
-	rb(&b_head);
+	// ra(&a_head);
+	// rb(&b_head);
 	
-	print_lst(a_head, b_head);
+	// print_lst(a_head, b_head);
 	
-	rr(&a_head, &b_head);
-	print_lst(a_head, b_head);
+	// rr(&a_head, &b_head);
+	// print_lst(a_head, b_head);
 
-	rra(&a_head);
-	rrb(&b_head);
+	// rra(&a_head);
+	// rrb(&b_head);
 	
-	print_lst(a_head, b_head);
+	// print_lst(a_head, b_head);
 	
-	rrr(&a_head, &b_head);
-	print_lst(a_head, b_head);
+	// rrr(&a_head, &b_head);
+	// print_lst(a_head, b_head);
 
 	free(args_arr);
 	ft_lstclear(&a_head, NULL);
