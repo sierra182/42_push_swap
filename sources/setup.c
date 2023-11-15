@@ -14,14 +14,14 @@
 #include <stdlib.h>
 #include <limits.h>
 
-static int	has_twins(int *args, int argc, int tocheck)
+static int	has_twins(int argc, int *args_arr, int tocheck)
 {	
 	int res;
 
 	res = 0;
 	while (argc--)
 	{   
-		if (args[argc] == tocheck)
+		if (args_arr[argc] == tocheck)
 			res++;
 		if (res >= 2)
 			return (res);	
@@ -60,16 +60,15 @@ static void	epur_input(char	**s)
 		(*s)++;
 }
 
-static void	init_args_arr(int **args, char *argv[],  int argc)
+static void	init_args_arr(int argc, char *argv[], int **args_arr)
 {
-	*args = (int *) malloc(sizeof(int) * (argc - 1));	
+	*args_arr = (int *) malloc(sizeof(int) * (argc - 1));	
 	while (*++argv)	
-		*(*args)++ = ft_atoi(*argv);
-	*args = (*args) - (argc - 1);	
+		*(*args_arr)++ = ft_atoi(*argv);
+	*args_arr = (*args_arr) - (argc - 1);	
 }
 
-
-int	setup(char *argv[], char *argv_save[], int **args, int argc)
+int	setup(int argc, char *argv[], char *argv_save[], int **args_arr)
 {
 	char	*s;	
 	int		i;
@@ -86,12 +85,12 @@ int	setup(char *argv[], char *argv_save[], int **args, int argc)
 		if (is_overflow(*argv) || !**argv)
 			return (0);		
 	}
-	init_args_arr(args, argv_save, argc);
+	init_args_arr(argc, argv_save, args_arr);
 	i = 0;
 	argv = argv_save;
 	while (*++argv)	
-		if (has_twins(*args, argc - 1, (*args)[i++]))
-			return (free(*args), 0);	
+		if (has_twins(argc - 1, *args_arr, (*args_arr)[i++]))
+			return (free(*args_arr), 0);	
 	return (1);
 }
 

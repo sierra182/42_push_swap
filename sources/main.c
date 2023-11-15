@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/11 13:45:00 by svidot            #+#    #+#             */
-/*   Updated: 2023/11/15 20:06:05 by marvin           ###   ########.fr       */
+/*   Updated: 2023/11/15 20:27:00 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,29 +67,29 @@ void	print_lst(t_list *la, t_list *lb)
 	ft_printf("\n");	
 }
 
-void	*init_list(t_list **lst, int argc, char *argv[], int *args)
+void	*init_list(t_list **lst, int argc, char *argv[], int *args_arr)
 {
 	t_list	*new;
 	
 	while (*++argv)
 	{			
-		new = ft_lstnew((void *) args++);
+		new = ft_lstnew((void *) args_arr++);
 		ft_lstadd_back(lst, new);
 	}		
 }
 int	main(int argc, char *argv[])
 {
+	int		*args_arr;
 	t_list	*a_head;
 	t_list	*b_head;
-	int		*args;
 	
 	a_head = NULL;
 	b_head = NULL;
 	if (argc <= 1)
 		return (1);
-	if (!setup(argv, argv, &args, argc))
+	if (!setup(argc, argv, argv, &args_arr))
 		return (write(2, "Error\n", 6));
-	init_list(&a_head, argc, argv, args);
+	init_list(&a_head, argc, argv, args_arr);
 	print_lst(a_head, b_head);
 	
 	sa(a_head);
@@ -133,7 +133,7 @@ int	main(int argc, char *argv[])
 	rrr(&a_head, &b_head);
 	print_lst(a_head, b_head);
 
-	free(args);
+	free(args_arr);
 	ft_lstclear(&a_head, NULL);
 	ft_lstclear(&b_head, NULL);
 	return (0);
