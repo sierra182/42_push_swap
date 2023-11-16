@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: svidot <svidot@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/11 13:45:00 by svidot            #+#    #+#             */
-/*   Updated: 2023/11/16 08:56:26 by marvin           ###   ########.fr       */
+/*   Updated: 2023/11/16 11:18:53 by svidot           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ void	print_lst(t_list *la, t_list *lb)
 	ft_printf("\n");	
 }
 
-void	*init_list(t_list **lst, int argc, char *argv[], int *args_arr)
+void	init_list(t_list **lst, int argc, char *argv[], int *args_arr)
 {
 	t_list	*new;
 	
@@ -76,15 +76,6 @@ void	*init_list(t_list **lst, int argc, char *argv[], int *args_arr)
 		new = ft_lstnew((void *) args_arr++);
 		ft_lstadd_back(lst, new);
 	}		
-}
-
-void	swap(int *a, int *b)
-{
-	int	tmp;
-
-	tmp = *a;
-	*a = *b;
-	*b = tmp;	
 }
 
 t_list	*sort_list(t_list* lst)
@@ -96,7 +87,7 @@ t_list	*sort_list(t_list* lst)
 	{
 		if (*(int *) tmp->content > *(int *) tmp->next->content)
 		{
-			swap((int *) tmp->content, (int *) tmp->next->content);
+			sa(tmp);
 			tmp = lst;
 		}
 		else
@@ -108,38 +99,38 @@ t_list	*sort_list(t_list* lst)
 t_list	*alg_sort_list(t_list *lst)
 {
 	t_list *tmp;
-	int	i;
-	int len = ft_lstsize(lst);
-	ft_printf("%d", len);
+	int		i;
+	int		j;
+	int		k;
+	int		len;
+	
+	len  = ft_lstsize(lst);
 	i = 0;
+	j = 0;
+	k = 0;
 	tmp = lst;
-	while (tmp->next)
+	while (j++ < len - 1)
 	{
 		if (*(int *) tmp->content > *(int *) tmp->next->content)
 		{
-			i = 0;
 			sa(tmp);
-			rra(&tmp);
-				//ra(&tmp);
-				//ra(&tmp);
-			// while (i > 0)	
-			// {
-			// 	ft_printf("%d, %d\n", *(int *) tmp->content,  *(int *) tmp->next->content);
-			// 	//rra(&tmp);
-			// 	//i--;
-			// }		
+			while (k++ < i)
+			{
+				rra(&tmp);//tmp = lst;
+				ft_printf("if %d\n", i);
+			}
+				j = 0;		
+			k = 0;
+			i = 0;
 		}
-		else   //asc
+		else
 		{
-			i++;
-			if (i == len - 1)
-				break;
-		//	rra(&tmp);
-			//tmp = tmp->next;
+			ra(&tmp);//tmp = tmp->next;
+			i++;	
+			ft_printf("else %d\n", i);	
 		}
-	
 	}
-	//print_lst(lst, lst);
+	ra(&tmp);
 	return (lst);
 }
 void	iter_list(t_list *lst)
