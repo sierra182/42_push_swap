@@ -6,7 +6,7 @@
 /*   By: svidot <svidot@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/11 13:45:00 by svidot            #+#    #+#             */
-/*   Updated: 2023/11/16 11:18:53 by svidot           ###   ########.fr       */
+/*   Updated: 2023/11/16 12:13:35 by svidot           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,31 +107,33 @@ t_list	*alg_sort_list(t_list *lst)
 	len  = ft_lstsize(lst);
 	i = 0;
 	j = 0;
-	k = 0;
 	tmp = lst;
 	while (j++ < len - 1)
 	{
 		if (*(int *) tmp->content > *(int *) tmp->next->content)
 		{
 			sa(tmp);
+			j = 0;		
+			k = 0;
 			while (k++ < i)
 			{
 				rra(&tmp);//tmp = lst;
 				ft_printf("if %d\n", i);
 			}
-				j = 0;		
-			k = 0;
 			i = 0;
 		}
 		else
 		{
+			//if (j++ == len)
+			//	break;
+			//if (j - 2 < len)
 			ra(&tmp);//tmp = tmp->next;
 			i++;	
 			ft_printf("else %d\n", i);	
 		}
-	}
-	ra(&tmp);
-	return (lst);
+	}	
+	//ra(&tmp);
+	return (tmp);
 }
 void	iter_list(t_list *lst)
 {
