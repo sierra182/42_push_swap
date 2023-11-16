@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/11 13:45:00 by svidot            #+#    #+#             */
-/*   Updated: 2023/11/16 21:55:54 by marvin           ###   ########.fr       */
+/*   Updated: 2023/11/16 22:53:26 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,7 +147,7 @@ int	is_sort(t_list *lst, int a_size)
 	return (1);
 }
 
-int	rec(t_list **a_head, t_list **b_head, int depth, int depth_max, int a_size)
+int	rec(t_list **a_head, t_list **b_head, int depth, int depth_max, int a_size, int **op_arr)
 {
 	if (is_sort(*a_head, a_size))
 	{
@@ -160,7 +160,10 @@ int	rec(t_list **a_head, t_list **b_head, int depth, int depth_max, int a_size)
 		
 	sa(*a_head);
 	if (rec(a_head, b_head, depth, depth_max, a_size))
+	{
+		op_arr[depth - 1] = 
 		return (1);
+	}
 	sa(*a_head);
 	
 	pb(a_head, b_head);
