@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/11 13:45:00 by svidot            #+#    #+#             */
-/*   Updated: 2023/11/16 20:49:21 by marvin           ###   ########.fr       */
+/*   Updated: 2023/11/16 21:55:54 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,62 +147,72 @@ int	is_sort(t_list *lst, int a_size)
 	return (1);
 }
 
-int	rec(t_list **a_head, t_list **b_head, int depth, int a_size)
+int	rec(t_list **a_head, t_list **b_head, int depth, int depth_max, int a_size)
 {
-	depth++;
 	if (is_sort(*a_head, a_size))
 	{
-		print_lst(*a_head, *b_head);
-		return (1);
-	}		
-	else if (depth > 3)
-	{		
-		return (1);
-	}
+		ft_printf("depth: %d\n", depth);
+		return (1);		
+	}	
+	else if (depth >= depth_max)	
+		return (0);	
+	depth++;
 		
 	sa(*a_head);
-	rec(a_head, b_head, depth, a_size);
+	if (rec(a_head, b_head, depth, depth_max, a_size))
+		return (1);
 	sa(*a_head);
 	
 	pb(a_head, b_head);
-	rec(a_head, b_head, depth, a_size);
+	if (rec(a_head, b_head, depth, depth_max, a_size))
+		return (1);
 	pa(a_head, b_head);
 	
 	sb(*b_head);
-	rec(a_head, b_head, depth, a_size);
+	if (rec(a_head, b_head, depth, depth_max, a_size))
+		return (1);
 	sb(*b_head);
 	
 	ra(a_head);
-	rec(a_head, b_head, depth, a_size);
+	if (rec(a_head, b_head, depth, depth_max, a_size))
+		return (1);
 	rra(a_head);
 	
 	rb(b_head);
-	rec(a_head, b_head, depth, a_size);
+	if (rec(a_head, b_head, depth, depth_max, a_size))
+		return (1);
 	rrb(b_head);
 	
 	rra(a_head);
-	rec(a_head, b_head, depth, a_size);
+	if (rec(a_head, b_head, depth, depth_max, a_size))
+		return (1);
 	ra(a_head);
 	
 	rrb(b_head);
-	rec(a_head, b_head, depth, a_size);
+	if (rec(a_head, b_head, depth, depth_max, a_size))
+		return (1);
 	rb(b_head);
 	
 	pa(a_head, b_head);
-	rec(a_head, b_head, depth, a_size);
+	if (rec(a_head, b_head, depth, depth_max, a_size))
+		return (1);
 	pb(a_head, b_head);
 	
 	ss(*a_head, *b_head);
-	rec(a_head, b_head, depth, a_size);
+	if (rec(a_head, b_head, depth, depth_max, a_size))
+		return (1);
 	ss(*a_head, *b_head);
 	
 	rr(a_head, b_head);
-	rec(a_head, b_head, depth, a_size);
+	if (rec(a_head, b_head, depth, depth_max, a_size))
+		return (1);
 	rrr(a_head, b_head);
 	
 	rrr(a_head, b_head);
-	rec(a_head, b_head, depth, a_size);
+	if (rec(a_head, b_head, depth, depth_max, a_size))
+		return (1);
 	rr(a_head, b_head);
+	return (0);
 }
 
 int	main(int argc, char *argv[])
@@ -219,19 +229,21 @@ int	main(int argc, char *argv[])
 		return (write(2, "Error\n", 6));
 	init_list(&a_head, argc, argv, args_arr);
 	print_lst(a_head, b_head);
-	if (is_sort(a_head, ft_lstsize(a_head)))
-		ft_printf("\nOK\n");
-	else 
-		ft_printf("KO\n\n");
+	// if (is_sort(a_head, ft_lstsize(a_head)))
+	// 	ft_printf("\nOK\n");
+	// else 
+	// 	ft_printf("KO\n\n");
 	// alg_sort_list(a_head);
 	//	if (is_ascending(a_head))
-	
-	if (rec(&a_head, &b_head, 0, ft_lstsize(a_head)))
-		ft_printf("\nOK\n");
-	else 
-		ft_printf("\nKO\n");	
-	
+	int	lstsize = ft_lstsize(a_head);
+	int	depth_max = 0;
+	while (!rec(&a_head, &b_head, 0, depth_max, lstsize))
+	{
+		ft_printf("\nKO\n");
+		depth_max++;
+	}			
 	print_lst(a_head, b_head);
+	//print_lst(a_head, b_head);
 	// sa(a_head);
 	// print_lst(a_head, b_head);
 	

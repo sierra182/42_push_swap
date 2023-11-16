@@ -28,11 +28,11 @@ static void	push(t_list **tolow, t_list **toup)
 void	pa(t_list **la, t_list **lb)
 {
 	push(lb, la);
-	write(1, "pa\n", 3);
+	//write(1, "pa\n", 3);
 }
 
 void	pb(t_list **la, t_list **lb)
 {
 	push(la, lb);
-	write(1, "pb\n", 3);
+	//write(1, "pb\n", 3);
 }

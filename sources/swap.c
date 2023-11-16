@@ -30,18 +30,18 @@ static void	swap(t_list *lst)
 void	sa(t_list *lst)
 {
 	swap(lst);
-	write(1, "sa\n", 3);
+	//write(1, "sa\n", 3);
 }
 
 void	sb(t_list *lst)
 {
 	swap(lst);
-	write(1, "sb\n", 3);
+	//write(1, "sb\n", 3);
 }
 
 void	ss(t_list *la, t_list *lb)
 {
 	swap(la);
 	swap(lb);
-	write(1, "ss\n", 3);
+	//write(1, "ss\n", 3);
 }
