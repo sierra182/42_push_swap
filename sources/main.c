@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/11 13:45:00 by svidot            #+#    #+#             */
-/*   Updated: 2023/11/15 22:17:07 by marvin           ###   ########.fr       */
+/*   Updated: 2023/11/16 08:56:26 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,33 +105,49 @@ t_list	*sort_list(t_list* lst)
 	return (lst);
 }
 
-t_list	*alg_sort_list(t_list* lst)
+t_list	*alg_sort_list(t_list *lst)
 {
 	t_list *tmp;
 	int	i;
-	
+	int len = ft_lstsize(lst);
+	ft_printf("%d", len);
 	i = 0;
 	tmp = lst;
 	while (tmp->next)
 	{
 		if (*(int *) tmp->content > *(int *) tmp->next->content)
 		{
+			i = 0;
 			sa(tmp);
-			while (i > 0)	
-			{
-				ft_printf("%d", i);
-				rra(&tmp);
-				i--;
-			}		
+			rra(&tmp);
+				//ra(&tmp);
+				//ra(&tmp);
+			// while (i > 0)	
+			// {
+			// 	ft_printf("%d, %d\n", *(int *) tmp->content,  *(int *) tmp->next->content);
+			// 	//rra(&tmp);
+			// 	//i--;
+			// }		
 		}
-		else
+		else   //asc
 		{
-			ra(&tmp);
 			i++;
+			if (i == len - 1)
+				break;
+		//	rra(&tmp);
+			//tmp = tmp->next;
 		}
+	
 	}
-	print_lst(lst, lst);
+	//print_lst(lst, lst);
 	return (lst);
+}
+void	iter_list(t_list *lst)
+{
+	while (lst->next)
+	{ft_printf("%d\n", *(int *) lst->content);
+		ra(&lst);
+	}
 }
 
 int	main(int argc, char *argv[])
@@ -149,7 +165,8 @@ int	main(int argc, char *argv[])
 	init_list(&a_head, argc, argv, args_arr);
 	print_lst(a_head, b_head);
 	alg_sort_list(a_head);
-	//print_lst(a_head, b_head);
+//iter_list(a_head);
+	print_lst(a_head, b_head);
 	// sa(a_head);
 	// print_lst(a_head, b_head);
 	
