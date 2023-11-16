@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: svidot <svidot@student.42.fr>              +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/11 13:45:00 by svidot            #+#    #+#             */
-/*   Updated: 2023/11/16 15:26:52 by svidot           ###   ########.fr       */
+/*   Updated: 2023/11/16 20:49:21 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,11 +69,19 @@ void	print_lst(t_list *la, t_list *lb)
 
 void	init_list(t_list **lst, int argc, char *argv[], int *args_arr)
 {
+	int		*args_arr_save;
 	t_list	*new;
-	
+
+	args_arr_save = args_arr;
 	while (*++argv)
 	{			
 		new = ft_lstnew((void *) args_arr++);
+		if (!new)
+		{
+			free(args_arr_save);
+			ft_lstclear(lst, NULL);
+			exit(1);
+		}
 		ft_lstadd_back(lst, new);
 	}		
 }
@@ -90,11 +98,8 @@ t_list	*sort_list(t_list* lst)
 			sa(tmp);
 			tmp = lst;
 		}
-		else
-		{
-			tmp = tmp->next;
-			printf("r\n");	
-		}
+		else		
+			tmp = tmp->next;		
 	}
 	return (lst);
 }
@@ -129,68 +134,75 @@ t_list	*alg_sort_list(t_list *lst)
 	return (lst);
 }
 
-int	is_ascending(t_list *lst)
+int	is_sort(t_list *lst, int a_size)
 {
+	if (ft_lstsize(lst) != a_size)
+		return (0);
 	while (lst->next)
 	{
 		if (*(int *) lst->content > *(int *) lst->next->content)
 			return (0);
 		lst = lst->next;		
-	}
+	}	
 	return (1);
 }
 
-void	rec(t_list **lst, int depth)
+int	rec(t_list **a_head, t_list **b_head, int depth, int a_size)
 {
 	depth++;
-	if (is_ascending(*lst))
+	if (is_sort(*a_head, a_size))
 	{
-		
+		print_lst(*a_head, *b_head);
+		return (1);
+	}		
+	else if (depth > 3)
+	{		
+		return (1);
 	}
-		return ;
-	sa(a_head);
-	rec(lst, depth);
-	sa(a_head);
+		
+	sa(*a_head);
+	rec(a_head, b_head, depth, a_size);
+	sa(*a_head);
 	
-	pb(&a_head, &b_head);
-	rec(lst, depth);
-	pa(&a_head, &b_head);
+	pb(a_head, b_head);
+	rec(a_head, b_head, depth, a_size);
+	pa(a_head, b_head);
 	
-	sb(b_head);
-	rec(lst), depth;
-	sb(b_head);
+	sb(*b_head);
+	rec(a_head, b_head, depth, a_size);
+	sb(*b_head);
 	
-	ra(&a_head);
-	rec(lst, depth);
-	rra(&a_head);
+	ra(a_head);
+	rec(a_head, b_head, depth, a_size);
+	rra(a_head);
 	
-	rb(&b_head);
-	rec(lst, depth);
-	rrb(&b_head);
+	rb(b_head);
+	rec(a_head, b_head, depth, a_size);
+	rrb(b_head);
 	
-	rra(&a_head);
-	rec(lst, depth);
-	ra(&a_head);
+	rra(a_head);
+	rec(a_head, b_head, depth, a_size);
+	ra(a_head);
 	
-	rrb(&b_head);
-	rec(lst, depth);
-	rb(&b_head);
+	rrb(b_head);
+	rec(a_head, b_head, depth, a_size);
+	rb(b_head);
 	
-	pa(&a_head, &b_head);
-	rec(lst, depth);
-	pb(&a_head, &b_head);
+	pa(a_head, b_head);
+	rec(a_head, b_head, depth, a_size);
+	pb(a_head, b_head);
 	
-	ss(a_head, b_head);
-	rec(lst, depth);
-	ss(a_head, b_head);
+	ss(*a_head, *b_head);
+	rec(a_head, b_head, depth, a_size);
+	ss(*a_head, *b_head);
 	
-	rr(&a_head, &b_head);
-	rec(lst, depth);
-	rrr(&a_head, &b_head);
+	rr(a_head, b_head);
+	rec(a_head, b_head, depth, a_size);
+	rrr(a_head, b_head);
 	
-	rrr(&a_head, &b_head);
-	rec(lst, depth);
-	rr(&a_head, &b_head);
+	rrr(a_head, b_head);
+	rec(a_head, b_head, depth, a_size);
+	rr(a_head, b_head);
 }
 
 int	main(int argc, char *argv[])
@@ -207,15 +219,18 @@ int	main(int argc, char *argv[])
 		return (write(2, "Error\n", 6));
 	init_list(&a_head, argc, argv, args_arr);
 	print_lst(a_head, b_head);
-	if (is_ascending(a_head))
+	if (is_sort(a_head, ft_lstsize(a_head)))
 		ft_printf("\nOK\n");
 	else 
 		ft_printf("KO\n\n");
-	 alg_sort_list(a_head);
-		if (is_ascending(a_head))
+	// alg_sort_list(a_head);
+	//	if (is_ascending(a_head))
+	
+	if (rec(&a_head, &b_head, 0, ft_lstsize(a_head)))
 		ft_printf("\nOK\n");
 	else 
 		ft_printf("\nKO\n");	
+	
 	print_lst(a_head, b_head);
 	// sa(a_head);
 	// print_lst(a_head, b_head);

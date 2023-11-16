@@ -62,7 +62,9 @@ static void	epur_input(char	**s)
 
 static void	init_args_arr(int argc, char *argv[], int **args_arr)
 {
-	*args_arr = (int *) malloc(sizeof(int) * (argc - 1));	
+	*args_arr = (int *) malloc(sizeof(int) * (argc - 1));
+	if (!*args_arr)
+		exit(1);
 	while (*++argv)	
 		*(*args_arr)++ = ft_atoi(*argv);
 	*args_arr = (*args_arr) - (argc - 1);	
@@ -85,7 +87,7 @@ int	setup(int argc, char *argv[], char *argv_save[], int **args_arr)
 		if (is_overflow(*argv) || !**argv)
 			return (0);		
 	}
-	init_args_arr(argc, argv_save, args_arr);
+	init_args_arr(argc, argv_save, args_arr);		
 	i = 0;
 	argv = argv_save;
 	while (*++argv)	
