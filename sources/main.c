@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: svidot <svidot@student.42.fr>              +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/11 13:45:00 by svidot            #+#    #+#             */
-/*   Updated: 2023/11/17 15:41:25 by svidot           ###   ########.fr       */
+/*   Updated: 2023/11/17 18:28:57 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -149,6 +149,7 @@ int	is_sort(t_list *lst, int a_size)
 
 enum e_op
 {
+	NONE,
 	PA,
 	PB,
 	SA,
@@ -162,48 +163,54 @@ enum e_op
 	RRR
 };
 
-void	print_tab(int *arr)
+void	print_tab(int *sol_arr)
 {
-	fflush(stdout);
-	printf("\033[2K\r");	  
-	while(*arr)
+
+	//usleep(1000000);
+	//fflush(stdout);
+	//ft_printf("\033[2K\r");	  
+	ft_printf("\n");
+	//fflush(stdout); 	
+	while(*sol_arr)
 	{	
-		if (*arr == PA)
+		if (*sol_arr == PA)
 			ft_printf("pa ");
-		else if (*arr == PB)
+		else if (*sol_arr == PB)
 			ft_printf("pb ");
-		else if (*arr == SA)
+		else if (*sol_arr == SA)
 			ft_printf("sa ");
-		else if (*arr == SB)
+		else if (*sol_arr == SB)
 			ft_printf("sb ");
-		else if (*arr == SS)
+		else if (*sol_arr == SS)
 			ft_printf("ss ");
-		else if (*arr == RA)
+		else if (*sol_arr == RA)
 			ft_printf("ra ");
-		else if (*arr == RB)
+		else if (*sol_arr == RB)
 			ft_printf("rb ");		
-		else if (*arr == RR)
+		else if (*sol_arr == RR)
 			ft_printf("rr ");
-		else if (*arr == RRA)
+		else if (*sol_arr == RRA)
 			ft_printf("rra ");
-		else if (*arr == RRB)
+		else if (*sol_arr == RRB)
 			ft_printf("rrb ");
-		else if (*arr == RRR)
+		else if (*sol_arr == RRR)
 			ft_printf("rrr ");
-		arr++;
+		sol_arr++;
 	}	
 }
 
-int	rec(t_list **a_head, t_list **b_head, int depth, int depth_max, int a_size, int *sol_arr)
+int	rec(t_list **a_head, t_list **b_head, int depth, int depth_max, int a_size, int sol_arr[])
 {
 	if (is_sort(*a_head, a_size))
 	{
-		ft_printf("depth: %d\n", depth);
+		print_tab(sol_arr);	
+		ft_printf("\n depth: %d\n", depth);
 		return (1);		
 	}	
 	else if (depth >= depth_max)
 	{
-		print_tab(sol_arr);		
+		print_tab(sol_arr);
+		print_lst(*a_head, *b_head);
 		return (0);	
 	}
 	depth++;
@@ -331,12 +338,13 @@ int	main(int argc, char *argv[])
 	//	if (is_ascending(a_head))
 	int	lstsize = ft_lstsize(a_head);
 	int	depth_max = 0;
-	int sol_arr[10];
+	int sol_arr[11];
 	int	i = -1;
-	while (++i < 10)
+	while (++i < 11)
 		sol_arr[i] = 0;
 	while (!rec(&a_head, &b_head, 0, depth_max, lstsize, sol_arr))	
-		depth_max++;			
+		depth_max++;	
+	print_tab(sol_arr);			
 	print_lst(a_head, b_head);
 		//print_tab(sol_arr);
 	//print_lst(a_head, b_head);
