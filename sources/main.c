@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/11 13:45:00 by svidot            #+#    #+#             */
-/*   Updated: 2023/11/18 01:46:30 by marvin           ###   ########.fr       */
+/*   Updated: 2023/11/18 08:50:50 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -207,7 +207,7 @@ int	rec(t_list **a_head, t_list **b_head, int depth, int depth_max, int a_size, 
 	}	
 	else if (depth >= depth_max)
 	{
-		//print_tab(sol_arr);
+		print_tab(sol_arr);
 		//print_lst(*a_head, *b_head);
 		return (0);	
 	}
