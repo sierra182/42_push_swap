@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/11 13:45:00 by svidot            #+#    #+#             */
-/*   Updated: 2023/11/18 17:33:33 by marvin           ###   ########.fr       */
+/*   Updated: 2023/11/18 17:42:05 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,8 +67,6 @@ void	print_lst(t_list *la, t_list *lb)
 	ft_printf("\n");	
 }
 
-
-
 t_list	*sort_list(t_list* lst)
 {
 	t_list *tmp;
@@ -117,18 +115,19 @@ t_list	*alg_sort_list(t_list *lst)
 	return (lst);
 }
 
-int	is_sort(t_list *lst, int a_size)
+int	is_sort(t_list *la, t_list *lb)
 {
-	if (ft_lstsize(lst) != a_size)
+	if (ft_lstsize(lb))
 		return (0);
-	while (lst->next)
+	while (la->next)
 	{
-		if (*(int *) lst->content > *(int *) lst->next->content)
+		if (*(int *) la->content > *(int *) la->next->content)
 			return (0);
-		lst = lst->next;		
+		la = la->next;		
 	}	
 	return (1);
 }
+#define OP 11
 
 typedef enum e_op
 {
@@ -180,9 +179,9 @@ void	print_tab(t_op *sol_arr)
 	fflush(stdout);
 }
 
-int	rec(t_list **a_head, t_list **b_head, int depth, int depth_max, int a_size, t_op *sol_arr)
+int	rec(t_list **a_head, t_list **b_head, int depth, int depth_max, t_op *sol_arr)
 {	
-	if (is_sort(*a_head, a_size))
+	if (is_sort(*a_head, *b_head))
 	{
 		print_tab(sol_arr);
 		ft_printf("\n depth: %d\n", depth);
@@ -199,7 +198,7 @@ int	rec(t_list **a_head, t_list **b_head, int depth, int depth_max, int a_size, 
 	sol_arr[depth - 1] = SA;
 	if (sa(*a_head))
 	{
-		if (rec(a_head, b_head, depth, depth_max, a_size, sol_arr))		
+		if (rec(a_head, b_head, depth, depth_max, sol_arr))		
 			return (1);
 		sa(*a_head);		
 	}
@@ -207,7 +206,7 @@ int	rec(t_list **a_head, t_list **b_head, int depth, int depth_max, int a_size, 
 	sol_arr[depth - 1] = PB;
 	if (pb(a_head, b_head))
 	{
-		if (rec(a_head, b_head, depth, depth_max, a_size, sol_arr))
+		if (rec(a_head, b_head, depth, depth_max, sol_arr))
 			return (1);
 		pa(a_head, b_head);		
 	}
@@ -215,7 +214,7 @@ int	rec(t_list **a_head, t_list **b_head, int depth, int depth_max, int a_size, 
 	sol_arr[depth - 1] = SB;
 	if (sb(*b_head))
 	{
-		if (rec(a_head, b_head, depth, depth_max, a_size, sol_arr))
+		if (rec(a_head, b_head, depth, depth_max, sol_arr))
 			return (1);
 		sb(*b_head);		
 	}
@@ -223,7 +222,7 @@ int	rec(t_list **a_head, t_list **b_head, int depth, int depth_max, int a_size, 
 	sol_arr[depth - 1] = RA;
 	if (ra(a_head))
 	{
-		if (rec(a_head, b_head, depth, depth_max, a_size, sol_arr))
+		if (rec(a_head, b_head, depth, depth_max, sol_arr))
 			return (1);
 		rra(a_head);		
 	}
@@ -231,7 +230,7 @@ int	rec(t_list **a_head, t_list **b_head, int depth, int depth_max, int a_size, 
 	sol_arr[depth - 1] = RB;
 	if (rb(b_head))
 	{
-		if (rec(a_head, b_head, depth, depth_max, a_size, sol_arr))
+		if (rec(a_head, b_head, depth, depth_max, sol_arr))
 			return (1);
 		rrb(b_head);		
 	}
@@ -239,7 +238,7 @@ int	rec(t_list **a_head, t_list **b_head, int depth, int depth_max, int a_size, 
 	sol_arr[depth - 1] = RRA;
 	if (rra(a_head))
 	{
-		if (rec(a_head, b_head, depth, depth_max, a_size, sol_arr))
+		if (rec(a_head, b_head, depth, depth_max, sol_arr))
 			return (1);
 		ra(a_head);		
 	}
@@ -247,7 +246,7 @@ int	rec(t_list **a_head, t_list **b_head, int depth, int depth_max, int a_size, 
 	sol_arr[depth - 1] = RRB;
 	if (rrb(b_head))
 	{
-		if (rec(a_head, b_head, depth, depth_max, a_size, sol_arr))
+		if (rec(a_head, b_head, depth, depth_max, sol_arr))
 			return (1);
 		rb(b_head);		
 	}
@@ -255,33 +254,33 @@ int	rec(t_list **a_head, t_list **b_head, int depth, int depth_max, int a_size, 
 	sol_arr[depth - 1] = PA;
 	if (pa(a_head, b_head))
 	{
-		if (rec(a_head, b_head, depth, depth_max, a_size, sol_arr))
+		if (rec(a_head, b_head, depth, depth_max, sol_arr))
 			return (1);
 		pb(a_head, b_head);		
 	}	
 		
 	sol_arr[depth - 1] = SS;
 	ss(*a_head, *b_head);
-	if (rec(a_head, b_head, depth, depth_max, a_size, sol_arr))
+	if (rec(a_head, b_head, depth, depth_max, sol_arr))
 		return (1);
 	ss(*a_head, *b_head);
 		
 	sol_arr[depth - 1] = RR;
 	rr(a_head, b_head);	
-	if (rec(a_head, b_head, depth, depth_max, a_size, sol_arr))
+	if (rec(a_head, b_head, depth, depth_max, sol_arr))
 		return (1);
 	rrr(a_head, b_head);			
 		
 	sol_arr[depth - 1] = RRR;
 	rrr(a_head, b_head);
-	if (rec(a_head, b_head, depth, depth_max, a_size, sol_arr))
+	if (rec(a_head, b_head, depth, depth_max, sol_arr))
 		return (1);
 	rr(a_head, b_head);
 	
 	sol_arr[depth - 1] = 0;
 	return (0);
 }
-#define OP 11
+
 
 // void	init_op_arr(void (*op_arr[OP]) (t_list **, t_list **))
 // {
@@ -327,12 +326,12 @@ int	main(int argc, char *argv[])
 	int	lstsize = ft_lstsize(a_head);
 	ft_printf(" len: %d\n\n", lstsize);
 	int	depth_max = 0;
-	t_op sol_arr[11]; 
+	t_op sol_arr[OP]; 
 	int	i = -1;
-	while (++i < 11)
+	while (++i < OP)
 		sol_arr[i] = 0;
 	print_tab(sol_arr);	
-	while (!rec(&a_head, &b_head, 0, depth_max, lstsize, sol_arr))	
+	while (!rec(&a_head, &b_head, 0, depth_max, sol_arr))	
 		depth_max++;		
 	//print_tab(sol_arr);			
 	print_lst(a_head, b_head);
