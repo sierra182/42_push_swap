@@ -15,7 +15,7 @@
 
 #include "libft.h"
 
-void	rotate(t_list **lst);
-void	rev_rotate(t_list **lst);
+int	rotate(t_list **lst);
+int	rev_rotate(t_list **lst);
 
 #endif

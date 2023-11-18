@@ -12,7 +12,7 @@
 
 #include "libft.h"
 
-void	rotate(t_list **lst)
+int	rotate(t_list **lst)
 {		
 	t_list	*tmp;	
 	
@@ -22,10 +22,12 @@ void	rotate(t_list **lst)
 		tmp = (*lst)->next;
 		(*lst)->next = NULL;
 		*lst = tmp;
+		return (1);
 	}
+	return (0);
 }
 
-void	rev_rotate(t_list **lst)
+int	rev_rotate(t_list **lst)
 {		
 	t_list	*lstlast;
 	int		lstsize;
@@ -38,6 +40,8 @@ void	rev_rotate(t_list **lst)
 		while (--lstsize)
 			*lst = (*lst)->next;
 		(*lst)->next = NULL;
-		*lst = lstlast; 
+		*lst = lstlast;
+		return (1);
 	}
+	return (0);
 }

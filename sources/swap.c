@@ -21,22 +21,23 @@ static void	swap_data(void **a, void **b)
 	*a = *b;
 	*b = tmp;	
 }
-static void	swap(t_list *lst)
+
+static int	swap(t_list *lst)
 {	
 	if (lst && lst->next)					
 		swap_data(&lst->content, &lst->next->content);	
 }
 
-void	sa(t_list *lst)
+int	sa(t_list *lst)
 {
-	swap(lst);
 	//write(1, "sa\n", 3);
+	return (swap(lst));
 }
 
-void	sb(t_list *lst)
+int	sb(t_list *lst)
 {
-	swap(lst);
 	//write(1, "sb\n", 3);
+	return (swap(lst));
 }
 
 void	ss(t_list *la, t_list *lb)

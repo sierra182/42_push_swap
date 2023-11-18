@@ -13,7 +13,7 @@
 #include "libft.h"
 #include <unistd.h>
 
-static void	push(t_list **tolow, t_list **toup)
+static int	push(t_list **tolow, t_list **toup)
 {	
 	t_list	*tmp;
 	
@@ -22,17 +22,19 @@ static void	push(t_list **tolow, t_list **toup)
 		tmp = (*tolow)->next;
 		ft_lstadd_front(toup, *tolow);
 		*tolow = tmp;
+		return (1);
 	}
+	return (0);
 }
 
-void	pa(t_list **la, t_list **lb)
+int	pa(t_list **la, t_list **lb)
 {
-	push(lb, la);
+	return (push(lb, la));
 	//write(1, "pa\n", 3);
 }
 
-void	pb(t_list **la, t_list **lb)
+int	pb(t_list **la, t_list **lb)
 {
-	push(la, lb);
+	return (push(la, lb));
 	//write(1, "pb\n", 3);
 }
