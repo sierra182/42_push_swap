@@ -86,6 +86,17 @@ size_t	ft_wc(char *s)
 }
 
 #include <stdio.h>
+
+void	free_stdargv(char **stdargv)
+{
+	int i;
+
+	i = 0;
+	while (stdargv[i])	
+		free(stdargv[i++]);	
+	free(stdargv);
+}
+
 char	**make_stdargv(int *argc, char *argv[], char *argv_save[])
 {
 	char	**stdargv_save;
@@ -104,8 +115,10 @@ char	**make_stdargv(int *argc, char *argv[], char *argv_save[])
 	while (*argv_save)
 	{
 		split = ft_split(*argv_save++, 32);
+		char **split_save = split;
 		while (*split)		
-			*stdargv++ = *split++;	
+			*stdargv++ = *split++;			
+		free(split_save);
 	}
 	return (stdargv_save);	
 }
@@ -124,16 +137,17 @@ int	setup(int *argc, char *argv[], char *argv_save[], int **args_arr)
 			s++;
 		while (*s++)		
 			if (!ft_isdigit(*(s - 1)))
-				return (0);
+				return (free_stdargv(argv_save), 0);
 		if (is_overflow(*argv) || !**argv)
-			return (0);		
+			return (free_stdargv(argv_save), 0);		
 	}
 	init_args_arr(*argc, argv_save, args_arr);		
 	i = 0;
 	argv = argv_save;
 	while (*++argv)	
 		if (has_twins(*argc - 1, *args_arr, (*args_arr)[i++]))
-			return (free(*args_arr), 0);	
+			return (free(*args_arr), free_stdargv(argv_save), 0);
+	free_stdargv(argv_save);
 	return (1);
 }
 
