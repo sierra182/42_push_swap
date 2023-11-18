@@ -14,5 +14,6 @@
  #define SETUP_H
 
 int		setup(int *argc, char *argv[], char *argv_save[], int **args);
+void	init_list(t_list **lst, int argc, int *args_arr);
 
 #endif

@@ -49,7 +49,7 @@ static int	is_overflow(char *s)
 	return (0);
 }
 
-void	free_stdargv(char **stdargv)
+static void	free_stdargv(char **stdargv)
 {
 	int i;
 
@@ -72,7 +72,7 @@ static void	init_args_arr(int argc, char *argv[], int **args_arr)
 	*args_arr = (*args_arr) - (argc - 1);	
 }
 
-char	**make_stdargv(int *argc, char *argv[], char *argv_save[])
+static char	**make_stdargv(int *argc, char *argv[], char *argv_save[])
 {
 	char	**stdargv_save;
 	char 	**split_save;
@@ -97,6 +97,25 @@ char	**make_stdargv(int *argc, char *argv[], char *argv_save[])
 		free(split_save);
 	}
 	return (stdargv_save);	
+}
+
+void	init_list(t_list **lst, int argc, int *args_arr)
+{
+	int		*args_arr_save;
+	t_list	*new;
+
+	args_arr_save = args_arr;
+	while (--argc)
+	{			
+		new = ft_lstnew((void *) args_arr++);
+		if (!new)
+		{
+			free(args_arr_save);
+			ft_lstclear(lst, NULL);
+			exit(1);
+		}
+		ft_lstadd_back(lst, new);
+	}		
 }
 
 int	setup(int *argc, char *argv[], char *argv_save[], int **args_arr)

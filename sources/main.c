@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: svidot <svidot@student.42.fr>              +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/11 13:45:00 by svidot            #+#    #+#             */
-/*   Updated: 2023/11/18 14:25:31 by svidot           ###   ########.fr       */
+/*   Updated: 2023/11/18 17:33:33 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,24 +67,7 @@ void	print_lst(t_list *la, t_list *lb)
 	ft_printf("\n");	
 }
 
-void	init_list(t_list **lst, int argc, int *args_arr)
-{
-	int		*args_arr_save;
-	t_list	*new;
 
-	args_arr_save = args_arr;
-	while (--argc)
-	{			
-		new = ft_lstnew((void *) args_arr++);
-		if (!new)
-		{
-			free(args_arr_save);
-			ft_lstclear(lst, NULL);
-			exit(1);
-		}
-		ft_lstadd_back(lst, new);
-	}		
-}
 
 t_list	*sort_list(t_list* lst)
 {
