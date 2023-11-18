@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: svidot <svidot@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/11 13:45:00 by svidot            #+#    #+#             */
-/*   Updated: 2023/11/18 08:50:50 by marvin           ###   ########.fr       */
+/*   Updated: 2023/11/18 14:25:31 by svidot           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,13 +67,13 @@ void	print_lst(t_list *la, t_list *lb)
 	ft_printf("\n");	
 }
 
-void	init_list(t_list **lst, int argc, char *argv[], int *args_arr)
+void	init_list(t_list **lst, int argc, int *args_arr)
 {
 	int		*args_arr_save;
 	t_list	*new;
 
 	args_arr_save = args_arr;
-	while (*++argv)
+	while (--argc)
 	{			
 		new = ft_lstnew((void *) args_arr++);
 		if (!new)
@@ -331,9 +331,9 @@ int	main(int argc, char *argv[])
 	b_head = NULL;
 	if (argc <= 1)
 		return (1);
-	if (!setup(argc, argv, argv, &args_arr))
+	if (!setup(&argc, argv, argv, &args_arr))
 		return (write(2, "Error\n", 6));
-	init_list(&a_head, argc, argv, args_arr);
+	init_list(&a_head, argc, args_arr);
 	print_lst(a_head, b_head);
 	// if (is_sort(a_head, ft_lstsize(a_head)))
 	// 	ft_printf("\nOK\n");

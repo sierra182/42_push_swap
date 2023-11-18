@@ -49,16 +49,16 @@ static int	is_overflow(char *s)
 	return (0);
 }
 
-static void	epur_input(char	**s)
-{
-	int	len;
+// static void	epur_input(char	**s)
+// {
+// 	int	len;
 	
-	len = ft_strlen(*s);
-	while (--len && ft_isspace((*s)[len]))
-		(*s)[len] = 0;
-	while (ft_isspace(**s) && *(*s + 1))
-		(*s)++;
-}
+// 	len = ft_strlen(*s);
+// 	while (--len && ft_isspace((*s)[len]))
+// 		(*s)[len] = 0;
+// 	while (ft_isspace(**s) && *(*s + 1))
+// 		(*s)++;
+// }
 
 static void	init_args_arr(int argc, char *argv[], int **args_arr)
 {
@@ -70,15 +70,56 @@ static void	init_args_arr(int argc, char *argv[], int **args_arr)
 	*args_arr = (*args_arr) - (argc - 1);	
 }
 
-int	setup(int argc, char *argv[], char *argv_save[], int **args_arr)
+size_t	ft_wc(char *s)
+{
+	int		flag;
+	size_t	n_word;
+
+	n_word = 0;
+	while (*s)
+	{
+		flag = 0;
+		while (*s && !ft_isspace(*s++) && ++flag || flag && !++n_word)
+			;
+	}
+	return (n_word);
+}
+
+#include <stdio.h>
+char	**make_stdargv(int *argc, char *argv[], char *argv_save[])
+{
+	char	**stdargv_save;
+	char	**stdargv;
+	char	**split;
+	size_t	n_word;
+
+	n_word = 0;
+	while (*argv)	
+		n_word += ft_wc(*argv++);	
+	*argc = n_word;		
+	stdargv = (char **) ft_calloc(sizeof(char *), n_word + 1);
+	if (!stdargv)
+		exit(1);
+	stdargv_save = stdargv;	
+	while (*argv_save)
+	{
+		split = ft_split(*argv_save++, 32);
+		while (*split)		
+			*stdargv++ = *split++;	
+	}
+	return (stdargv_save);	
+}
+
+int	setup(int *argc, char *argv[], char *argv_save[], int **args_arr)
 {
 	char	*s;	
 	int		i;
 
+	argv = make_stdargv(argc, argv, argv);
+	argv_save = argv;	
 	while (*++argv)
 	{ 
-		s = *argv;
-		epur_input(&s);
+		s = *argv;		
 		if ((*s == '-' || *s == '+') && ft_isdigit(*(s + 1)))
 			s++;
 		while (*s++)		
@@ -87,11 +128,11 @@ int	setup(int argc, char *argv[], char *argv_save[], int **args_arr)
 		if (is_overflow(*argv) || !**argv)
 			return (0);		
 	}
-	init_args_arr(argc, argv_save, args_arr);		
+	init_args_arr(*argc, argv_save, args_arr);		
 	i = 0;
 	argv = argv_save;
 	while (*++argv)	
-		if (has_twins(argc - 1, *args_arr, (*args_arr)[i++]))
+		if (has_twins(*argc - 1, *args_arr, (*args_arr)[i++]))
 			return (free(*args_arr), 0);	
 	return (1);
 }

@@ -13,6 +13,6 @@
 #ifndef SETUP_H
  #define SETUP_H
 
-int		setup(int argc, char *argv[], char *argv_save[], int **args);
+int		setup(int *argc, char *argv[], char *argv_save[], int **args);
 
 #endif
