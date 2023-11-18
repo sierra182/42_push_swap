@@ -49,44 +49,6 @@ static int	is_overflow(char *s)
 	return (0);
 }
 
-// static void	epur_input(char	**s)
-// {
-// 	int	len;
-	
-// 	len = ft_strlen(*s);
-// 	while (--len && ft_isspace((*s)[len]))
-// 		(*s)[len] = 0;
-// 	while (ft_isspace(**s) && *(*s + 1))
-// 		(*s)++;
-// }
-
-static void	init_args_arr(int argc, char *argv[], int **args_arr)
-{
-	*args_arr = (int *) malloc(sizeof(int) * (argc - 1));
-	if (!*args_arr)
-		exit(1);
-	while (*++argv)	
-		*(*args_arr)++ = ft_atoi(*argv);
-	*args_arr = (*args_arr) - (argc - 1);	
-}
-
-size_t	ft_wc(char *s)
-{
-	int		flag;
-	size_t	n_word;
-
-	n_word = 0;
-	while (*s)
-	{
-		flag = 0;
-		while (*s && !ft_isspace(*s++) && ++flag || flag && !++n_word)
-			;
-	}
-	return (n_word);
-}
-
-#include <stdio.h>
-
 void	free_stdargv(char **stdargv)
 {
 	int i;
@@ -97,9 +59,23 @@ void	free_stdargv(char **stdargv)
 	free(stdargv);
 }
 
+static void	init_args_arr(int argc, char *argv[], int **args_arr)
+{
+	*args_arr = (int *) malloc(sizeof(int) * (argc - 1));
+	if (!*args_arr)
+	{
+		free_stdargv(argv);
+		exit(1);
+	}
+	while (*++argv)	
+		*(*args_arr)++ = ft_atoi(*argv);
+	*args_arr = (*args_arr) - (argc - 1);	
+}
+
 char	**make_stdargv(int *argc, char *argv[], char *argv_save[])
 {
 	char	**stdargv_save;
+	char 	**split_save;
 	char	**stdargv;
 	char	**split;
 	size_t	n_word;
@@ -115,7 +91,7 @@ char	**make_stdargv(int *argc, char *argv[], char *argv_save[])
 	while (*argv_save)
 	{
 		split = ft_split(*argv_save++, 32);
-		char **split_save = split;
+		split_save = split;
 		while (*split)		
 			*stdargv++ = *split++;			
 		free(split_save);
@@ -141,7 +117,7 @@ int	setup(int *argc, char *argv[], char *argv_save[], int **args_arr)
 		if (is_overflow(*argv) || !**argv)
 			return (free_stdargv(argv_save), 0);		
 	}
-	init_args_arr(*argc, argv_save, args_arr);		
+	init_args_arr(*argc, argv_save, args_arr);
 	i = 0;
 	argv = argv_save;
 	while (*++argv)	
