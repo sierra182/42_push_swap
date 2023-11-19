@@ -11,23 +11,9 @@
 /* ************************************************************************** */
 
 #include "alg_backtr.h"
-void	print_tab(t_eop *); //
-int		is_sort(t_list *, t_list *); //
+#include "ft_printf.h"
 
-void	init_op_arr(int (*op_arr[]) (t_list **, t_list **))
-{
-	op_arr[PA] = pa;
-	op_arr[PB] = pb;	
-	op_arr[SA] = sa;
-	op_arr[SB] = sb;
-	op_arr[SS] = ss;
-	op_arr[RA] = ra;
-	op_arr[RB] = rb;
-	op_arr[RR] = rr;
-	op_arr[RRA] = rra;
-	op_arr[RRB] = rrb;
-	op_arr[RRR] = rrr;	
-}
+int		is_sort(t_list *, t_list *); //
 
 void	init_rev_op_arr(int (*rev_op_arr[]) (t_list **, t_list **))
 {
@@ -44,16 +30,46 @@ void	init_rev_op_arr(int (*rev_op_arr[]) (t_list **, t_list **))
 	rev_op_arr[RRR] = rr;
 }
 
+void	print_tab_style(t_eop *sol_arr)
+{
+	ft_printf("\033[%dm", 95);
+	ft_printf("\033[2K\r ");
+	while(*sol_arr)
+	{	
+		if (*sol_arr == PA)
+			ft_printf("pa ");
+		else if (*sol_arr == PB)
+			ft_printf("pb ");
+		else if (*sol_arr == SA)
+			ft_printf("sa ");
+		else if (*sol_arr == SB)
+			ft_printf("sb ");
+		else if (*sol_arr == SS)
+			ft_printf("ss ");
+		else if (*sol_arr == RA)
+			ft_printf("ra ");
+		else if (*sol_arr == RB)
+			ft_printf("rb ");		
+		else if (*sol_arr == RR)
+			ft_printf("rr ");
+		else if (*sol_arr == RRA)
+			ft_printf("rra ");
+		else if (*sol_arr == RRB)
+			ft_printf("rrb ");
+		else if (*sol_arr == RRR)
+			ft_printf("rrr ");
+		sol_arr++;
+	}	
+	ft_printf("\033[0m");	
+}
+
 int	rec(t_list **a_head, t_list **b_head, int depth, int depth_max, t_eop *sol_arr, int (*op_arr[]) (t_list **, t_list **), int (*rev_op_arr[]) (t_list **, t_list **))
 {	
 	t_eop op;
 	
-	if (is_sort(*a_head, *b_head))
-	{
-		print_tab(sol_arr);		
-		return (1);		
-	}	
-	else if (depth >= depth_max)
+	if (is_sort(*a_head, *b_head))	
+		return (1);			
+	else if (depth >= depth_max)						
 		return (0);		
 	depth++;
 	op = NONE;

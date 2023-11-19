@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "libft.h"
+#include "operations.h"
 #include <stdlib.h>
 #include <limits.h>
 
@@ -116,6 +117,36 @@ void	init_list(t_list **lst, int argc, int *args_arr)
 		}
 		ft_lstadd_back(lst, new);
 	}		
+}
+
+void	init_op_arr(int (*op_arr[]) (t_list **, t_list **))
+{
+	op_arr[PA] = pa;
+	op_arr[PB] = pb;	
+	op_arr[SA] = sa;
+	op_arr[SB] = sb;
+	op_arr[SS] = ss;
+	op_arr[RA] = ra;
+	op_arr[RB] = rb;
+	op_arr[RR] = rr;
+	op_arr[RRA] = rra;
+	op_arr[RRB] = rrb;
+	op_arr[RRR] = rrr;	
+}
+
+void	init_op_char_arr(char **op_char_arr)
+{
+	op_char_arr[PA] = "pa\n";
+	op_char_arr[PB] = "pb\n";
+	op_char_arr[SA] = "sa\n";
+	op_char_arr[SB] = "sb\n";
+	op_char_arr[SS] = "ss\n";
+	op_char_arr[RA] = "ra\n";
+	op_char_arr[RB] = "rb\n";
+	op_char_arr[RR] = "rr\n";
+	op_char_arr[RRA] = "rra\n";
+	op_char_arr[RRB] = "rrb\n";
+	op_char_arr[RRR] = "rrr\n";
 }
 
 int	setup(int *argc, char *argv[], char *argv_save[], int **args_arr)

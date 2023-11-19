@@ -1,21 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   setup.h                                            :+:      :+:    :+:   */
+/*   ps_utils.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/12 19:31:26 by marvin            #+#    #+#             */
-/*   Updated: 2023/11/12 19:31:26 by marvin           ###   ########.fr       */
+/*   Created: 2023/11/19 21:25:37 by marvin            #+#    #+#             */
+/*   Updated: 2023/11/19 21:25:37 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef SETUP_H
- #define SETUP_H
+#ifndef PS_UTILS_H
+ #define PS_UTILS_H
 
-int		setup(int *argc, char *argv[], char *argv_save[], int **args);
-void	init_list(t_list **lst, int argc, int *args_arr);
-void	init_op_arr(int (*op_arr[]) (t_list **, t_list **));
-void	init_op_char_arr(char **op_char_arr);
+#include "libft.h"
+#include "operations.h"
+
+int		is_sort(t_list *la, t_list *lb);
+void	print_lst(t_list *la, t_list *lb);
+void	print_tab(t_eop *sol_arr, char **op_char_arr);
 
 #endif

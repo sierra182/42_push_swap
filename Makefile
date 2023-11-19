@@ -5,12 +5,12 @@ LDFLAGS = ft_printf/libftprintf.a
 SRC_DIR = sources
 BONUS_DIR = bonus
 GNL_DIR = gnl
-SOURCES = $(SRC_DIR)/main.c $(SRC_DIR)/setup.c $(SRC_DIR)/push.c $(SRC_DIR)/swap.c \
-$(SRC_DIR)/rotate.c $(SRC_DIR)/rev_rotate.c $(SRC_DIR)/rotate_utils.c \
+SOURCES = $(SRC_DIR)/main.c $(SRC_DIR)/setup.c $(SRC_DIR)/ps_utils.c \
+$(SRC_DIR)/push.c $(SRC_DIR)/swap.c $(SRC_DIR)/rotate.c $(SRC_DIR)/rev_rotate.c $(SRC_DIR)/rotate_utils.c \
 $(SRC_DIR)/alg_backtr.c
 SOURCES_BONUS = $(BONUS_DIR)/checker.c \
 $(SRC_DIR)/rotate.c $(SRC_DIR)/rev_rotate.c $(SRC_DIR)/rotate_utils.c \
-$(SRC_DIR)/setup.c $(SRC_DIR)/push.c $(SRC_DIR)/swap.c \
+$(SRC_DIR)/setup.c $(SRC_DIR)/ps_utils.c $(SRC_DIR)/push.c $(SRC_DIR)/swap.c \
 $(GNL_DIR)/get_next_line.c $(GNL_DIR)/get_next_line_utils.c
 OBJECTS = $(SOURCES:.c=.o)
 OBJECTS_BONUS = $(SOURCES_BONUS:.c=.o)
