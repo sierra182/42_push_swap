@@ -6,14 +6,14 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/11 13:46:50 by svidot            #+#    #+#             */
-/*   Updated: 2023/11/19 16:58:12 by marvin           ###   ########.fr       */
+/*   Updated: 2023/11/19 16:58:17 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef OPERATIONS_H
 # define OPERATIONS_H
 
-#include "libft.h"
+#include "../ft_printf/libft/libft.h"
 #define OP 12
 
 typedef enum e_op

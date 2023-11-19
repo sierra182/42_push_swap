@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/02 14:15:23 by svidot            #+#    #+#             */
-/*   Updated: 2023/11/18 17:11:46 by marvin           ###   ########.fr       */
+/*   Updated: 2023/11/19 17:41:28 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,4 +68,6 @@ t_list	*ft_lstmap(t_list *lst, void *(*f) (void *), void (*del) (void *));
 
 int		ft_isspace(int c);
 size_t	ft_wc(char *s);
+int		ft_strcmp(const char *s1, const char *s2);
+
 #endif
