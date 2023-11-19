@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/11 13:45:00 by svidot            #+#    #+#             */
-/*   Updated: 2023/11/19 12:07:03 by marvin           ###   ########.fr       */
+/*   Updated: 2023/11/19 12:19:12 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -192,7 +192,7 @@ void	print_tab(t_eop *sol_arr)
 	}		
 }
 
-int	rec(t_list **a_head, t_list **b_head, int depth, int depth_max, t_eop *sol_arr, int (*op_arr[OP]) (t_list **, t_list **), int (*rev_op_arr[OP]) (t_list **, t_list **))
+int	rec(t_list **a_head, t_list **b_head, int depth, int depth_max, t_eop *sol_arr, int (*op_arr[]) (t_list **, t_list **), int (*rev_op_arr[]) (t_list **, t_list **))
 {	
 	t_eop op;
 	
@@ -219,52 +219,7 @@ int	rec(t_list **a_head, t_list **b_head, int depth, int depth_max, t_eop *sol_a
 	return (0);
 }
 
-// int	apply_sol(t_eop *sol_arr, t_sop op_arr[], t_list **la, t_list **lb)
-// {		
-// 	while (*sol_arr)
-// 	{				
-// 		if (*sol_arr == SS)	
-// 			op_arr[*sol_arr].op.bi_sp(*la, *lb);		
-// 		if (*sol_arr >= SA && *sol_arr <= SB)	
-// 			op_arr[*sol_arr].op.un_sp(*la);	
-// 		if (*sol_arr >= PA && *sol_arr <= RRR)	
-// 			op_arr[*sol_arr].op.bi_dp(la, lb);		
-// 		if (*sol_arr >= RA && *sol_arr <= RRB)	
-// 			op_arr[*sol_arr].op.un_dp(la);
-// 		sol_arr++;
-// 	}
-// }	
-
-// void	init_op_arr(t_sop op_arr[])
-// {	
-// 	op_arr[PA].op.bi_dp = pa;	
-// 	op_arr[PB].op.bi_dp = pb;	
-// 	op_arr[SA].op.un_sp = sa;
-// 	op_arr[SB].op.un_sp = sb;
-// 	op_arr[SS].op.bi_sp = ss;
-// 	op_arr[RA].op.un_dp = ra;
-// 	op_arr[RB].op.un_dp = rb;
-// 	op_arr[RR].op.bi_dp = rr;
-// 	op_arr[RRA].op.un_dp = rra;
-// 	op_arr[RRB].op.un_dp = rrb;
-// 	op_arr[RRR].op.bi_dp = rrr;	
-// }
-
-// void	init_op_arr(t_sop op_arr[])
-// {	
-// 	op_arr[PA].op.pa = pa;	
-// 	op_arr[PB].op.pb = pb;	
-// 	op_arr[SA].op.sa = sa;
-// 	op_arr[SB].op.sb = sb;
-// 	op_arr[SS].op.ss = ss;
-// 	op_arr[RA].op.ra = ra;
-// 	op_arr[RB].op.rb = rb;
-// 	op_arr[RR].op.rr = rr;
-// 	op_arr[RRA].op.rra = rra;
-// 	op_arr[RRB].op.rrb = rrb;
-// 	op_arr[RRR].op.rrr = rrr;	
-// }
-void	init_op_arr(int (*op_arr[OP]) (t_list **, t_list **))
+void	init_op_arr(int (*op_arr[]) (t_list **, t_list **))
 {
 	op_arr[PA] = pa;
 	op_arr[PB] = pb;	
@@ -278,7 +233,7 @@ void	init_op_arr(int (*op_arr[OP]) (t_list **, t_list **))
 	op_arr[RRB] = rrb;
 	op_arr[RRR] = rrr;	
 }
-void	init_rev_op_arr(int (*rev_op_arr[OP]) (t_list **, t_list **))
+void	init_rev_op_arr(int (*rev_op_arr[]) (t_list **, t_list **))
 {
 	rev_op_arr[PA] = pb;
 	rev_op_arr[PB] = pa;	
@@ -293,7 +248,7 @@ void	init_rev_op_arr(int (*rev_op_arr[OP]) (t_list **, t_list **))
 	rev_op_arr[RRR] = rr;
 }
 
-int	apply_sol(t_eop *sol_arr, int (*op_arr[OP]) (t_list **, t_list **), t_list **la, t_list **lb)
+int	apply_sol(t_eop *sol_arr, int (*op_arr[]) (t_list **, t_list **), t_list **la, t_list **lb)
 {
 	while (*sol_arr)	
 		op_arr[*sol_arr++](la, lb);
@@ -313,22 +268,13 @@ int	main(int argc, char *argv[])
 		return (write(2, "Error\n", 6));
 	init_list(&a_head, argc, args_arr);
 
-	//print_lst(a_head, b_head);
-	
-	// if (is_sort(a_head, ft_lstsize(a_head)))
-	// 	ft_printf("\nOK\n");
-	// else 
-	// 	ft_printf("KO\n\n");
-	// alg_sort_list(a_head);
-	//	if (is_ascending(a_head))
-	int	lstsize = ft_lstsize(a_head);
-	
-	//ft_printf(" len: %d\n\n", lstsize);
+	int	lstsize = ft_lstsize(a_head);	
+	ft_printf(" len: %d\n\n", lstsize);
 	
 	int	depth_max = 0;
-	t_eop sol_arr[OP]; 
+	t_eop sol_arr[42]; 
 	int	i = -1;
-	while (++i < OP)
+	while (++i < 42)
 		sol_arr[i] = 0;
 	int (*op_arr[OP]) (t_list **, t_list **);
 	int (*rev_op_arr[OP]) (t_list **, t_list **);
@@ -349,48 +295,6 @@ int	main(int argc, char *argv[])
 		ft_printf("\nOK\n");
 	else 
 		ft_printf("KO\n\n");
-		//print_tab(sol_arr);
-	//print_lst(a_head, b_head);
-	// sa(a_head);
-	// print_lst(a_head, b_head);
-	
-	// sb(b_head);
-	// print_lst(a_head, b_head);
-	
-	// pb(&a_head, &b_head);
-	// pb(&a_head, &b_head);
-	
-	// print_lst(a_head, b_head);
-	
-	// ss(a_head, b_head);
-	// print_lst(a_head, b_head);
-
-	// pa(&a_head, &b_head);
-	// pa(&a_head, &b_head);
-	
-	// print_lst(a_head, b_head);
-
-	// pb(&a_head, &b_head);
-	// pb(&a_head, &b_head);
-	// pb(&a_head, &b_head);
-	
-	// print_lst(a_head, b_head);	
-
-	// ra(&a_head);
-	// rb(&b_head);
-	
-	// print_lst(a_head, b_head);
-	
-	// rr(&a_head, &b_head);
-	// print_lst(a_head, b_head);
-
-	// rra(&a_head);
-	// rrb(&b_head);
-	
-	// print_lst(a_head, b_head);
-	
-	// rrr(&a_head, &b_head);
-	// print_lst(a_head, b_head);
 
 	free(args_arr);
 	ft_lstclear(&a_head, NULL);
