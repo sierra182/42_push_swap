@@ -10,30 +10,13 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <unistd.h>
-#include <stdio.h>
 #include "operations.h"
 #include "setup.h"
 #include "ps_utils.h"
 #include "ft_printf.h"
 #include "get_next_line.h"
+#include <unistd.h>
 
-t_eop	is_valid_op(char *s, char **op_char_arr)
-{
-	t_eop	op;
-
-	op = 0;
-	while (op++ < RRR)
-		if (!ft_strcmp(op_char_arr[op], s))
-			return (op);
-	return (0);
-}
-
-void	read_stdin()
-{
-
-}
-int
 int	error_input_handle(char *line, int *args_arr, t_list **la, t_list **lb)
 {
 	get_next_line(3);
@@ -42,17 +25,49 @@ int	error_input_handle(char *line, int *args_arr, t_list **la, t_list **lb)
 	ft_lstclear(la, NULL);
 	ft_lstclear(lb, NULL);
 	ft_putstr_fd("Error\n", 2);
-	return (1);
+	exit(1);
+}
+
+t_eop	is_valid_op(char *s)
+{
+	t_eop	op;
+	char	*op_char_arr[OP];
+
+	init_op_char_arr(op_char_arr);
+	op = 0;
+	while (op++ < RRR)
+		if (!ft_strcmp(op_char_arr[op], s))
+			return (op);
+	return (0);
+}
+
+void	read_stdin(t_list **la, t_list **lb, int *args_arr)
+{
+	char	*line;
+	t_eop 	sol_input;
+	int 	(*op_arr[OP]) (t_list **, t_list **);
+
+	init_op_arr(op_arr);
+	line = "l";
+	while (line)
+	{
+		line = get_next_line(0);
+		if (line)
+		{
+			sol_input = is_valid_op(line);
+			if (sol_input)			
+				op_arr[sol_input](la, lb);			
+			else							 	
+				error_input_handle(line, args_arr, la, lb);
+			free(line);
+			line = "l";				
+		}
+	}
 }
 
 int	main(int argc, char *argv[])
-{
-	int 	(*op_arr[OP]) (t_list **, t_list **);
-	char	*op_char_arr[OP];
-	t_eop 	sol_input; 
-	char 	buffer[5];
-	int		*args_arr;
-	char	*line;
+{		
+	int		*args_arr;	
 	t_list	*a_head;
 	t_list	*b_head;
 
@@ -63,26 +78,11 @@ int	main(int argc, char *argv[])
 	if (!setup(&argc, argv, argv, &args_arr))
 		return (write(2, "Error\n", 6));
 	init_list(&a_head, argc, args_arr);	
-	init_op_char_arr(op_char_arr);
-	init_op_arr(op_arr);
-	line = "l";
-	while (line)
-	{
-		line = get_next_line(0);
-		if (line)
-		{
-			sol_input = is_valid_op(line, op_char_arr);
-			if (sol_input)			
-				op_arr[sol_input](&a_head, &b_head);			
-			else							 	
-				return (error_input_handle(line, args_arr, &a_head, &b_head));
-			free(line);
-			line = "l";				
-		}
-	}
-	print_lst(a_head, b_head);
+	if (!is_sort(a_head, b_head))
+		read_stdin(&a_head, &b_head, args_arr);
+	print_lst(a_head, b_head); // !!!!!!!!!!!!!!!!!!!!!!
 	if (is_sort(a_head, b_head))
-		ft_printf("\nOK\n");
+		ft_printf("OK\n");
 	else 
 		ft_printf("KO\n");
 	free(args_arr);
