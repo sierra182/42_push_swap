@@ -6,12 +6,13 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/11 13:45:00 by svidot            #+#    #+#             */
-/*   Updated: 2023/11/19 12:19:12 by marvin           ###   ########.fr       */
+/*   Updated: 2023/11/19 12:47:36 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include "setup.h"
+#include "alg_backtr.h"
 #include <unistd.h>
 #include <stdlib.h>
 
@@ -66,68 +67,6 @@ void	print_lst(t_list *la, t_list *lb)
 	}
 	ft_printf("\n");	
 }
-
-// t_list	*sort_list(t_list* lst)
-// {
-// 	t_list *tmp;
-	
-// 	tmp = lst;
-// 	while (tmp->next)
-// 	{
-// 		if (*(int *) tmp->content > *(int *) tmp->next->content)
-// 		{
-// 			sa(tmp);
-// 			tmp = lst;
-// 		}
-// 		else		
-// 			tmp = tmp->next;		
-// 	}
-// 	return (lst);
-// }
-
-// t_list	*alg_sort_list(t_list *lst)
-// {
-// 	t_list *tmp;
-// 	int		i;
-// 	int		j;	
-// 	int		len;
-	
-// 	len  = ft_lstsize(lst);
-// 	i = 0;
-// 	j = 0;
-// 	tmp = lst;
-// 	while (j++ < len - 1)
-// 	{
-// 		if (*(int *) tmp->content > *(int *) tmp->next->content)
-// 		{
-// 			j = 0;		
-// 			sa(tmp);
-// 			while (i && i--)			
-// 				rra(&tmp);			
-// 		}
-// 		else
-// 		{		
-// 			ra(&tmp);			
-// 			i++;				
-// 		}
-// 	}
-// 	ra(&tmp);
-// 	return (lst);
-// }
-
-int	is_sort(t_list *la, t_list *lb)
-{
-	if (ft_lstsize(lb))
-		return (0);
-	while (la->next)
-	{
-		if (*(int *) la->content > *(int *) la->next->content)
-			return (0);
-		la = la->next;		
-	}	
-	return (1);
-}
-
 void	print_tab_perso(t_eop *sol_arr)
 {
 	ft_printf("\033[%dm", 95);
@@ -191,62 +130,68 @@ void	print_tab(t_eop *sol_arr)
 		sol_arr++;
 	}		
 }
-
-int	rec(t_list **a_head, t_list **b_head, int depth, int depth_max, t_eop *sol_arr, int (*op_arr[]) (t_list **, t_list **), int (*rev_op_arr[]) (t_list **, t_list **))
-{	
-	t_eop op;
-	
-	if (is_sort(*a_head, *b_head))
+int	is_sort(t_list *la, t_list *lb)
+{
+	if (ft_lstsize(lb))
+		return (0);
+	while (la->next)
 	{
-		print_tab(sol_arr);		
-		return (1);		
+		if (*(int *) la->content > *(int *) la->next->content)
+			return (0);
+		la = la->next;		
 	}	
-	else if (depth >= depth_max)
-		return (0);		
-	depth++;
-	op = NONE;
-	while (++op <= RRR)
-	{ 
-		if (op_arr[op](a_head, b_head))
-		{
-			sol_arr[depth - 1] = op;
-			if (rec(a_head, b_head, depth, depth_max, sol_arr, op_arr, rev_op_arr))		
-				return (1);
-			rev_op_arr[op](a_head, b_head);		
-		}
-	}	
-	sol_arr[depth - 1] = 0;
-	return (0);
+	return (1);
 }
 
-void	init_op_arr(int (*op_arr[]) (t_list **, t_list **))
-{
-	op_arr[PA] = pa;
-	op_arr[PB] = pb;	
-	op_arr[SA] = sa;
-	op_arr[SB] = sb;
-	op_arr[SS] = ss;
-	op_arr[RA] = ra;
-	op_arr[RB] = rb;
-	op_arr[RR] = rr;
-	op_arr[RRA] = rra;
-	op_arr[RRB] = rrb;
-	op_arr[RRR] = rrr;	
-}
-void	init_rev_op_arr(int (*rev_op_arr[]) (t_list **, t_list **))
-{
-	rev_op_arr[PA] = pb;
-	rev_op_arr[PB] = pa;	
-	rev_op_arr[SA] = sa;
-	rev_op_arr[SB] = sb;
-	rev_op_arr[SS] = ss;
-	rev_op_arr[RA] = rra;
-	rev_op_arr[RB] = rrb;
-	rev_op_arr[RR] = rrr;
-	rev_op_arr[RRA] = ra;
-	rev_op_arr[RRB] = rb;
-	rev_op_arr[RRR] = rr;
-}
+// t_list	*sort_list(t_list* lst)
+// {
+// 	t_list *tmp;
+	
+// 	tmp = lst;
+// 	while (tmp->next)
+// 	{
+// 		if (*(int *) tmp->content > *(int *) tmp->next->content)
+// 		{
+// 			sa(tmp);
+// 			tmp = lst;
+// 		}
+// 		else		
+// 			tmp = tmp->next;		
+// 	}
+// 	return (lst);
+// }
+
+// t_list	*alg_sort_list(t_list *lst)
+// {
+// 	t_list *tmp;
+// 	int		i;
+// 	int		j;	
+// 	int		len;
+	
+// 	len  = ft_lstsize(lst);
+// 	i = 0;
+// 	j = 0;
+// 	tmp = lst;
+// 	while (j++ < len - 1)
+// 	{
+// 		if (*(int *) tmp->content > *(int *) tmp->next->content)
+// 		{
+// 			j = 0;		
+// 			sa(tmp);
+// 			while (i && i--)			
+// 				rra(&tmp);			
+// 		}
+// 		else
+// 		{		
+// 			ra(&tmp);			
+// 			i++;				
+// 		}
+// 	}
+// 	ra(&tmp);
+// 	return (lst);
+// }
+
+
 
 int	apply_sol(t_eop *sol_arr, int (*op_arr[]) (t_list **, t_list **), t_list **la, t_list **lb)
 {
