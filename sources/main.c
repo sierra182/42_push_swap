@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/11 13:45:00 by svidot            #+#    #+#             */
-/*   Updated: 2023/11/19 21:38:37 by marvin           ###   ########.fr       */
+/*   Updated: 2023/11/20 00:13:13 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,10 +96,10 @@ void	del_link(t_list *link, t_list **lst, t_list *lstsave)
 
 int	main(int argc, char *argv[])
 {
+	char	*op_char_arr[OP];
 	int		*args_arr;
 	t_list	*a_head;
 	t_list	*b_head;
-	char	*op_char_arr[OP];
 	
 	a_head = NULL;
 	b_head = NULL;
