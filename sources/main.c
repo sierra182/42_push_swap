@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/11 13:45:00 by svidot            #+#    #+#             */
-/*   Updated: 2023/11/19 12:47:36 by marvin           ###   ########.fr       */
+/*   Updated: 2023/11/19 12:50:13 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,6 +142,11 @@ int	is_sort(t_list *la, t_list *lb)
 	}	
 	return (1);
 }
+int	apply_sol(t_eop *sol_arr, int (*op_arr[]) (t_list **, t_list **), t_list **la, t_list **lb)
+{
+	while (*sol_arr)	
+		op_arr[*sol_arr++](la, lb);
+}	
 
 // t_list	*sort_list(t_list* lst)
 // {
@@ -193,11 +198,6 @@ int	is_sort(t_list *la, t_list *lb)
 
 
 
-int	apply_sol(t_eop *sol_arr, int (*op_arr[]) (t_list **, t_list **), t_list **la, t_list **lb)
-{
-	while (*sol_arr)	
-		op_arr[*sol_arr++](la, lb);
-}	
 
 int	main(int argc, char *argv[])
 {
