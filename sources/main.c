@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/11 13:45:00 by svidot            #+#    #+#             */
-/*   Updated: 2023/11/19 12:50:13 by marvin           ###   ########.fr       */
+/*   Updated: 2023/11/19 19:08:22 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -196,9 +196,6 @@ int	apply_sol(t_eop *sol_arr, int (*op_arr[]) (t_list **, t_list **), t_list **l
 // 	return (lst);
 // }
 
-
-
-
 int	main(int argc, char *argv[])
 {
 	int		*args_arr;
@@ -213,8 +210,8 @@ int	main(int argc, char *argv[])
 		return (write(2, "Error\n", 6));
 	init_list(&a_head, argc, args_arr);
 
-	int	lstsize = ft_lstsize(a_head);	
-	ft_printf(" len: %d\n\n", lstsize);
+	//int	lstsize = ft_lstsize(a_head);	
+	//ft_printf(" len: %d\n\n", lstsize);
 	
 	int	depth_max = 0;
 	t_eop sol_arr[42]; 
@@ -230,16 +227,16 @@ int	main(int argc, char *argv[])
 		depth_max++;	
 
 	//print_tab(sol_arr);			
-	print_lst(a_head, b_head);
-	ft_lstclear(&a_head, NULL);
-	init_list(&a_head, argc, args_arr);
-	print_lst(a_head, b_head);
-	apply_sol(sol_arr, op_arr, &a_head, &b_head);
-	print_lst(a_head, b_head);
-	if (is_sort(a_head, b_head))
-		ft_printf("\nOK\n");
-	else 
-		ft_printf("KO\n\n");
+	// print_lst(a_head, b_head);
+	// ft_lstclear(&a_head, NULL);
+	// init_list(&a_head, argc, args_arr);
+	// print_lst(a_head, b_head);
+	// apply_sol(sol_arr, op_arr, &a_head, &b_head);
+	// print_lst(a_head, b_head);
+	// if (is_sort(a_head, b_head))
+	// 	ft_printf("\nOK\n");
+	// else 
+	// 	ft_printf("KO\n\n");
 
 	free(args_arr);
 	ft_lstclear(&a_head, NULL);
