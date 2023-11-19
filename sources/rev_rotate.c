@@ -13,21 +13,30 @@
 #include "rotate_utils.h"
 #include <unistd.h>
 
-int	rra(t_list **lst)
+int	rra(t_list **la, t_list **lb)
 {
 	//write(1, "rra\n", 4);
-	return (rev_rotate(lst));
+	return (rev_rotate(la));
 }
 
-int	rrb(t_list **lst)
+int	rrb(t_list **la, t_list **lb)
 {
 	//write(1, "rrb\n", 4);
-	return (rev_rotate(lst));
+	return (rev_rotate(lb));
 }
 
-void	rrr(t_list **la, t_list **lb)
+int	rrr(t_list **la, t_list **lb)
 {
-	rev_rotate(la);
-	rev_rotate(lb);
 	//write(1, "rrr\n", 4);
+	if (rev_rotate(la))
+	{
+		if (rev_rotate(lb))
+			return (1);
+		else
+		{
+			rotate(la);
+			return (0);
+		} 
+	}
+	return (0);		
 }

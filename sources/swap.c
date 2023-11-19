@@ -24,25 +24,38 @@ static void	swap_data(void **a, void **b)
 
 static int	swap(t_list *lst)
 {	
-	if (lst && lst->next)					
+	if (lst && lst->next)
+	{
 		swap_data(&lst->content, &lst->next->content);	
+		return (1);
+	}
+	return (0);			
 }
 
-int	sa(t_list *lst)
+int	sa(t_list **la, t_list **lb)
 {
 	//write(1, "sa\n", 3);
-	return (swap(lst));
+	return (swap(*la));
 }
 
-int	sb(t_list *lst)
+int	sb(t_list **la, t_list **lb)
 {
 	//write(1, "sb\n", 3);
-	return (swap(lst));
+	return (swap(*lb));
 }
 
-void	ss(t_list *la, t_list *lb)
+int	ss(t_list **la, t_list **lb)
 {
-	swap(la);
-	swap(lb);
 	//write(1, "ss\n", 3);
+	if (swap(*la))
+	{
+		if (swap(*lb))
+			return (1);
+		else 
+		{
+			swap(*la);
+			return (0);
+		}
+	}
+	return (0);
 }
