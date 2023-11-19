@@ -29,17 +29,27 @@ t_eop	is_valid_op(char *s, char **op_char_arr)
 	return (0);
 }
 
-int	apply_sol(t_eop *sol_arr, int (*op_arr[]) (t_list **, t_list **), t_list **la, t_list **lb)
+void	read_stdin()
 {
-	while (*sol_arr)	
-		op_arr[*sol_arr++](la, lb);
+
+}
+int
+int	error_input_handle(char *line, int *args_arr, t_list **la, t_list **lb)
+{
+	get_next_line(3);
+	free(line);
+	free(args_arr);
+	ft_lstclear(la, NULL);
+	ft_lstclear(lb, NULL);
+	ft_putstr_fd("Error\n", 2);
+	return (1);
 }
 
 int	main(int argc, char *argv[])
 {
 	int 	(*op_arr[OP]) (t_list **, t_list **);
 	char	*op_char_arr[OP];
-	t_eop 	sol_arr[1]; 
+	t_eop 	sol_input; 
 	char 	buffer[5];
 	int		*args_arr;
 	char	*line;
@@ -52,22 +62,23 @@ int	main(int argc, char *argv[])
 		return (1);
 	if (!setup(&argc, argv, argv, &args_arr))
 		return (write(2, "Error\n", 6));
-	init_list(&a_head, argc, args_arr);
+	init_list(&a_head, argc, args_arr);	
 	init_op_char_arr(op_char_arr);
 	init_op_arr(op_arr);
-	line = "1";
+	line = "l";
 	while (line)
 	{
 		line = get_next_line(0);
 		if (line)
 		{
-			sol_arr[0] = is_valid_op(line, op_char_arr);
-			if (sol_arr[0])			
-				apply_sol(sol_arr, op_arr, &a_head, &b_head);			
-			else				 	
-				printf("Error\n");
+			sol_input = is_valid_op(line, op_char_arr);
+			if (sol_input)			
+				op_arr[sol_input](&a_head, &b_head);			
+			else							 	
+				return (error_input_handle(line, args_arr, &a_head, &b_head));
+			free(line);
+			line = "l";				
 		}
-		free(line);		
 	}
 	print_lst(a_head, b_head);
 	if (is_sort(a_head, b_head))
