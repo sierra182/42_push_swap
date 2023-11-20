@@ -12,6 +12,8 @@
 
 #include "alg_backtr.h"
 #include "ft_printf.h"
+#include "setup.h"
+#include "ps_utils.h"
 
 int		is_sort(t_list *, t_list *); //
 
@@ -85,4 +87,25 @@ int	rec(t_list **a_head, t_list **b_head, int depth, int depth_max, t_eop *sol_a
 	}	
 	sol_arr[depth - 1] = 0;
 	return (0);
+}
+
+void	launch_backtr(t_list **la, t_list **lb)
+{
+	char	*op_char_arr[OP];
+	t_eop sol_arr[MX_DEPTH];
+	int	depth_max;
+	
+	depth_max = 0;	
+	int	i = -1;
+	while (++i < MX_DEPTH)
+		sol_arr[i] = 0;
+	int (*op_arr[OP]) (t_list **, t_list **);
+	int (*rev_op_arr[OP]) (t_list **, t_list **);
+	init_op_arr(op_arr);
+	init_rev_op_arr(rev_op_arr);
+	
+	while (!rec(la, lb, 0, depth_max, sol_arr, op_arr, rev_op_arr))
+		depth_max++;
+	init_op_char_arr(op_char_arr);
+	print_tab(sol_arr, op_char_arr);	
 }

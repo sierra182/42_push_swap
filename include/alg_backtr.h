@@ -13,10 +13,10 @@
 #ifndef ALG_BACKTR_H
 # define ALG_BACKTR_H
 
+#define MX_DEPTH 42
+
 #include "operations.h"
 
-void	init_op_arr(int (*op_arr[]) (t_list **, t_list **));
-void	init_rev_op_arr(int (*rev_op_arr[]) (t_list **, t_list **));
-int		rec(t_list **a_head, t_list **b_head, int depth, int depth_max, t_eop *sol_arr, int (*op_arr[]) (t_list **, t_list **), int (*rev_op_arr[]) (t_list **, t_list **));
+void	launch_backtr(t_list **la, t_list **lb);
 
 #endif
