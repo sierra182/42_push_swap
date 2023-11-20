@@ -6,7 +6,7 @@
 /*   By: svidot <svidot@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/11 13:45:00 by svidot            #+#    #+#             */
-/*   Updated: 2023/11/20 09:32:35 by svidot           ###   ########.fr       */
+/*   Updated: 2023/11/20 14:57:33 by svidot           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +95,51 @@ void	del_link(t_list *link, t_list **lst, t_list *lstsave)
 // }
 
 
+t_list	*get_middle(t_list *lst)
+{
+	int	len;
+	int	middle;
+		
+	len = ft_lstsize(lst) - 1;
+	middle = len / 2;
+	while (--len >= middle)
+		lst = lst->next;
+			
+	return (lst);
+}
+
+void	rec_qs(t_list **la_start, t_list **lb_end, t_list *lb)
+{
+	
+}
+
+void	alg_quick_sort(t_list **la, t_list **lb)
+{
+	t_list	*piv;
+	int	a_len;
+	int b_len;
+	
+	a_len = ft_lstsize(*la);
+	piv = get_middle(*la);
+	ft_printf("piv :%d\n", *(int *)piv->content);
+	//ft_printf("%d\n", *(int *) (*la)->content));
+	//ft_printf("len :%d\n", len);
+	while (a_len--)
+	{//ft_printf("%d\n", *(int *) (*la)->content); 
+		if (*(int *) (*la)->content < *(int *) piv->content)
+			pb(la, lb);				
+		else 
+			ra(la, lb);			
+	}
+	// b_len = ft_lstsize(*lb);
+	// while (b_len--)
+	// {
+	// 	pa(la, lb);
+	// }
+	// rec(la, lb);
+	
+}
+
 void	alg_forwarding(t_list **la, t_list **lb, int argc)
 {
 	if (argc - 1 <= 7) 
@@ -116,9 +161,11 @@ int	main(int argc, char *argv[])
 	if (!setup(&argc, argv, argv, &args_arr))
 		return (write(2, "Error\n", 6));
 	init_list(&a_head, argc, args_arr);
-	alg_forwarding(&a_head, &b_head, argc);
-	//int	lstsize = ft_lstsize(a_head);	
-	//ft_printf(" len: %d\n\n", lstsize);
+	//alg_forwarding(&a_head, &b_head, argc);
+	int	lstsize = ft_lstsize(a_head);	
+	ft_printf(" len: %d\n\n", lstsize);
+	alg_quick_sort(&a_head, &b_head);
+			
 	print_lst(a_head, b_head);	
 
 	free(args_arr);
