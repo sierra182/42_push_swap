@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "ps_utils.h"
+#include "ft_printf.h"
 
 int	is_sort(t_list *la, t_list *lb)
 {
@@ -33,9 +34,9 @@ void	print_tab(t_eop *sol_arr, char **op_char_arr)
 
 void	print_lst(t_list *la, t_list *lb)
 {	
-	ft_printf("\n\033[%dm", 96);
+//	ft_printf("\n\033[%dm", 96);
 	ft_printf(" ~~~~~~~~~~~~~~~~~~~~ ~~(,,°>\n");
-	ft_printf("\033[0m");
+//	ft_printf("\033[0m");
 	while (la || lb)
 	{
 		if (la)

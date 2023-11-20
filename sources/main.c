@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: svidot <svidot@student.42.fr>              +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/11 13:45:00 by svidot            #+#    #+#             */
-/*   Updated: 2023/11/20 14:57:33 by svidot           ###   ########.fr       */
+/*   Updated: 2023/11/20 22:58:42 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,48 +95,116 @@ void	del_link(t_list *link, t_list **lst, t_list *lstsave)
 // }
 
 
-t_list	*get_middle(t_list *lst)
+t_list	*get_middle(t_list *l_start, t_list *l_end)
 {
 	int	len;
 	int	middle;
-		
-	len = ft_lstsize(lst) - 1;
-	middle = len / 2;
-	while (--len >= middle)
-		lst = lst->next;
-			
-	return (lst);
+	t_list	*tmp;
+	
+	tmp = l_start;
+	middle = 0;
+	while ( tmp && tmp != l_end) 
+	{
+		middle++;
+		tmp = tmp->next;
+	}
+	middle /= 2;
+	while (middle--)
+		l_start = l_start->next;			
+	return (l_start);
 }
 
-void	rec_qs(t_list **la_start, t_list **lb_end, t_list *lb)
+void	rec_qs(t_list **la_start, t_list **la_end, t_list **lb)
 {
+	t_list	*lstlast;
+	t_list	*piv;
+	int		flag;
+	int		b_len;
 	
+	flag = 1;
+	piv = get_middle(*la_start, *la_end);
+	if ((*(int *) piv->content == *(int *) (*la_start)->content))
+	{		
+		sa(la_start, la_end);
+		ft_printf("BZZZREHHHH\n");
+		ft_printf("piv :%d\n", *(int *)piv->content);
+		ft_printf("las :%d\n", *(int *)(*la_start)->content);
+		ft_printf("lae :%d\n", *(int *)(*la_end)->content);		
+		
+		return ;
+	}
+	
+	ft_printf("piv :%d\n", *(int *)piv->content);
+	ft_printf("las :%d\n", *(int *)(*la_start)->content);
+	ft_printf("lae :%d\n", *(int *)(*la_end)->content);
+	
+	while (*la_start != *la_end && flag || flag--)
+	{
+		// ft_printf("BLOUUUOOUUO\n");
+		// ft_printf("las :%d\n", *(int *)(*la_start)->content);
+		// ft_printf("lae :%d\n", *(int *)(*la_end)->content);
+		//print_lst(*la_start, *lb);
+		
+		if (*(int *) (*la_start)->content < *(int *) piv->content)
+	 		pb(la_start, lb);			
+	 	else 
+	 		ra(la_start, lb);
+	}
+	
+	ft_printf("AV: ");	
+	print_lst(*la_start, *lb);
+	piv = *lb;
+	//if (!lb_tmp || !lb_end_tmp)
+		//return ;
+	//t_list lb_tmp = *lb_start;
+	//t_list *la_end_tmp = *la_start;
+	b_len = ft_lstsize(*lb);
+	while (b_len--)
+		pa(la_start, lb);
+	ft_printf("APRES: ");
+	print_lst(*la_start, *lb);
+	//piv = get_middle(*la_start, piv);
+	
+	t_list *la_tmp = *la_start;
+	t_list *la_end_tmp = piv;
+	t_list *lb_tmp = piv->next;
+	t_list *lb_end_tmp = ft_lstlast(*la_start);
+	ft_printf("\033[%dm", 96); //turquoise
+	if (la_tmp)
+		rec_qs(&la_tmp, &la_end_tmp, lb);	 //turquoise
+	ft_printf("\033[%dm", 95);	// mauve
+	lstlast = ft_lstlast(*la_start);
+	//piv = get_middle(*la_start, lstlast);
+	if (lb_tmp)
+		rec_qs(&lb_tmp, &lb_end_tmp, lb);	// mauve
 }
 
 void	alg_quick_sort(t_list **la, t_list **lb)
 {
+	t_list	*lstlast;
 	t_list	*piv;
-	int	a_len;
-	int b_len;
 	
-	a_len = ft_lstsize(*la);
-	piv = get_middle(*la);
-	ft_printf("piv :%d\n", *(int *)piv->content);
+	print_lst(*la, *lb);
+	lstlast = ft_lstlast(*la);
+	rec_qs(la, &lstlast, lb);
+	ft_printf("Avant alg_quickS: ");
+	print_lst(*la, *lb);
 	//ft_printf("%d\n", *(int *) (*la)->content));
 	//ft_printf("len :%d\n", len);
-	while (a_len--)
-	{//ft_printf("%d\n", *(int *) (*la)->content); 
-		if (*(int *) (*la)->content < *(int *) piv->content)
-			pb(la, lb);				
-		else 
-			ra(la, lb);			
-	}
+	// while (a_len--)
+	// {//ft_printf("%d\n", *(int *) (*la)->content); 
+	// 	if (*(int *) (*la)->content < *(int *) piv->content)
+	// 		pb(la, lb);				
+	// 	else 
+	// 		ra(la, lb);			
+	// }
+	// print_lst(*la, *lb);
 	// b_len = ft_lstsize(*lb);
 	// while (b_len--)
 	// {
 	// 	pa(la, lb);
 	// }
-	// rec(la, lb);
+	//rec(la, lb);
 	
 }
 
@@ -163,7 +231,7 @@ int	main(int argc, char *argv[])
 	init_list(&a_head, argc, args_arr);
 	//alg_forwarding(&a_head, &b_head, argc);
 	int	lstsize = ft_lstsize(a_head);	
-	ft_printf(" len: %d\n\n", lstsize);
+	ft_printf(" len: %d\n", lstsize);
 	alg_quick_sort(&a_head, &b_head);
 			
 	print_lst(a_head, b_head);	
