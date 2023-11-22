@@ -29,12 +29,12 @@ static int	push(t_list **tolow, t_list **toup)
 
 int	pa(t_list **la, t_list **lb)
 {
+	write(1, "pa\n", 3);
 	return (push(lb, la));
-	//write(1, "pa\n", 3);
 }
 
 int	pb(t_list **la, t_list **lb)
 {
+	write(1, "pb\n", 3);
 	return (push(la, lb));
-	//write(1, "pb\n", 3);
 }

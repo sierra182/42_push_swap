@@ -34,19 +34,19 @@ static int	swap(t_list *lst)
 
 int	sa(t_list **la, t_list **lb)
 {
-	//write(1, "sa\n", 3);
+	write(1, "sa\n", 3);
 	return (swap(*la));
 }
 
 int	sb(t_list **la, t_list **lb)
 {
-	//write(1, "sb\n", 3);
+	write(1, "sb\n", 3);
 	return (swap(*lb));
 }
 
 int	ss(t_list **la, t_list **lb)
 {
-	//write(1, "ss\n", 3);
+	write(1, "ss\n", 3);
 	if (swap(*la))
 	{
 		if (swap(*lb))
