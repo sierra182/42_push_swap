@@ -6,7 +6,7 @@
 /*   By: svidot <svidot@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/11 13:45:00 by svidot            #+#    #+#             */
-/*   Updated: 2023/11/22 15:23:32 by svidot           ###   ########.fr       */
+/*   Updated: 2023/11/22 16:59:27 by svidot           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,15 +93,33 @@ void	del_link(t_list *link, t_list **lst, t_list *lstsave)
 // 	ra(&tmp);
 // 	return (lst);
 // }
+
+int	get_range_size(t_list *la, t_list *lb)
+{
+	int i;
+	
+	i = 0;
+	while (la != lb)
+	{
+		i++;
+		la = la->next;
+	}
+	return (i);
+}
+
 int	is_sort_range(t_list *la, t_list *lb)
 {	
+	int	i;
+	
+	i = 1;	
 	while (la->next && la != lb)
 	{
 		if (*(int *) la->content > *(int *) la->next->content)	
 			return (0);		
-		la = la->next;		
+		la = la->next;
+		i++;		
 	}	
-	return (1);
+	return (i);
 }
 
 t_list	*get_middle(t_list *l_start, t_list *l_end)
@@ -125,12 +143,29 @@ t_list	*get_middle(t_list *l_start, t_list *l_end)
 
 int	rec_qs(t_list **la_start, t_list **la_end, t_list **lb)
 {
+	static int first_play = 0;
 	t_list	*lstlast;
 	t_list	*piv;
 	int		flag;
 	int		b_len;
 	int		ra_count;
-
+	int		sort;
+	
+	static int mycount = 0;
+	//ft_printf("%d\n\n\n\n\n", get_range_size(*la_start, *la_end));
+	if (get_range_size(*la_start, *la_end) < 7)
+	{
+		mycount++;
+	}
+	
+	flag = 0;
+	sort = is_sort_range(*la_start, *la_end);
+	if (sort > 2)
+		while (sort-- && ++flag)
+			ra(la_start, la_end);
+	if (flag)
+		return (0);
+		
 	piv = *la_start;
 	if (*la_start == *la_end || (*la_start)->next == *la_end)
 	{			
@@ -144,7 +179,10 @@ int	rec_qs(t_list **la_start, t_list **la_end, t_list **lb)
 		ra(la_start, la_end);
 		
 		if (is_sort(*la_start, *lb))
+		{
+			//ft_printf("AAAAAAA :%d\n", mycount);
 			return(1);
+		}
 		return (0);
 	}
 	flag = 1;
@@ -160,8 +198,13 @@ int	rec_qs(t_list **la_start, t_list **la_end, t_list **lb)
 		}	
 	}	
 	t_list *new_lb_end = ft_lstlast(*la_start);
-	while (ra_count--)
-		rra(la_start, lb);
+	if (first_play)
+	{
+		while (ra_count--)
+			rra(la_start, lb);
+	}	
+	else
+		first_play = 1;	
 	t_list *new_lb_start = piv->next;
 	t_list *new_la_end = piv;
 	b_len = ft_lstsize(*lb);
@@ -209,7 +252,10 @@ int	main(int argc, char *argv[])
 	//alg_forwarding(&a_head, &b_head, argc);
 	//int	lstsize = ft_lstsize(a_head);	
 	//ft_printf(" len: %d\n", lstsize); 
-
+	//int sort = is_sort_range(a_head, b_head);
+	//ft_printf("%d", sort);
+	
+	// ft_printf("%d", get_range_size(a_head, b_head));
 	alg_quick_sort(&a_head, &b_head);
 	
 	free(args_arr);
