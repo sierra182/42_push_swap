@@ -6,7 +6,7 @@
 /*   By: svidot <svidot@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/11 13:45:00 by svidot            #+#    #+#             */
-/*   Updated: 2023/11/22 13:11:43 by svidot           ###   ########.fr       */
+/*   Updated: 2023/11/22 13:25:53 by svidot           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,7 +114,7 @@ t_list	*get_middle(t_list *l_start, t_list *l_end)
 	return (l_start);
 }
 
-void	rec_qs(t_list **la_start, t_list **la_end, t_list **lb)
+int	rec_qs(t_list **la_start, t_list **la_end, t_list **lb)
 {
 	t_list	*lstlast;
 	t_list	*piv;
@@ -140,10 +140,10 @@ void	rec_qs(t_list **la_start, t_list **la_end, t_list **lb)
 		ra(la_start, la_end);
 		// ft_printf("return...\n"); !!!!!!!!!!!!!!!
 		// print_lst(*la_start, *lb); !!!!!!!!!!!!!!!!!!!!!
-		return ;
-		// if (is_sort(*la_start, *lb))
-		// 	return(1);
-		// return (0);
+		//return ;
+		if (is_sort(*la_start, *lb))
+			return(1);
+		return (0);
 	}
 	
 	flag = 1;
@@ -196,19 +196,21 @@ void	rec_qs(t_list **la_start, t_list **la_end, t_list **lb)
 	// 	ft_printf("nw la start est null\n"); !!!!!!!!!!!!!!!!!!!!!
 		
 	//ft_printf("AP"); !!!!!!!!!!!!!!!!!!!!!!!!!!!1
-	//	print_lst(*la_start, *lb); !!!!!!!!!!!!!!!!11
+		//print_lst(*la_start, *lb); 
 	//	ft_printf("1\n"); !!!!!!!!!!
 	//ft_printf("LATMP: %d, LAEND: %d, LBTMP: %d, LBEND: %d\n", *(int *) new_la_start->content, *(int *) new_la_end->content, *(int *) new_lb_start->content, *(int *) new_lb_end->content); !!!!!!!
 	//	ft_printf("2\n"); !!!!!!!!!
 	//ft_printf("ICICI PIV NEXT: %d, LAEND: %d\n", *(int *) pivnext_tmp->content, *(int *) (*la_end)->content);
 	//ft_printf("\033[%dm", 96); //turquoise	!!!!!!!!!!
-	rec_qs(&new_la_start, &new_la_end, lb);	 //turquoise
-	
+	if (rec_qs(&new_la_start, &new_la_end, lb))	 //turquoise
+		return (1);
 	//ft_printf("LATMP: %d, LAEND: %d, LBTMP: %d, LBEND: %d\n", *(int *) new_la_start->content, *(int *) new_la_end->content, *(int *) new_lb_start->content, *(int *) new_lb_end->content); !!!!!!
 
 	//ft_printf("\033[%dm", 95);	// mauve !!!!!!!
 	//ft_printf("PIV NEXT: %d, LAEND: %d\n", *(int *) pivnext_tmp, *(int *) (*la_end)->content);
-	rec_qs(&new_lb_start, &new_lb_end, lb);
+	if (rec_qs(&new_lb_start, &new_lb_end, lb))
+		return (1);
+	return (0);
 	
 }
 
@@ -271,7 +273,7 @@ int	main(int argc, char *argv[])
 	//ft_printf(" len: %d\n", lstsize); !!!!!!!!!!!!!!!!!!!!!!!!!!!
 	alg_quick_sort(&a_head, &b_head);
 			
-	print_lst(a_head, b_head);	
+	//print_lst(a_head, b_head);	
 
 	free(args_arr);
 	ft_lstclear(&a_head, NULL);
