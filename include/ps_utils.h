@@ -17,7 +17,9 @@
 #include "operations.h"
 
 int		is_sort(t_list *la, t_list *lb);
+int		is_sort_simpl(t_list *lst);
 void	print_lst(t_list *la, t_list *lb);
 void	print_tab(t_eop *sol_arr, char **op_char_arr);
+void	print_tab_simpl(t_eop_simpl *sol_arr, char **op_char_arr);
 
 #endif

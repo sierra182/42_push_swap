@@ -119,7 +119,14 @@ void	init_list(t_list **lst, int argc, int *args_arr)
 	}		
 }
 
-void	init_op_arr(int (*op_arr[]) (t_list **, t_list **))
+void	init_op_arr_simpl(int (*op_arr[]) (t_list **, t_list **, int))
+{			
+	op_arr[SB_SIMPL] = sb;	
+	op_arr[RB_SIMPL] = rb;
+	op_arr[RRB_SIMPL] = rrb;	
+}
+
+void	init_op_arr(int (*op_arr[]) (t_list **, t_list **, int))
 {
 	op_arr[PA] = pa;
 	op_arr[PB] = pb;	
@@ -147,6 +154,13 @@ void	init_op_char_arr(char **op_char_arr)
 	op_char_arr[RRA] = "rra\n";
 	op_char_arr[RRB] = "rrb\n";
 	op_char_arr[RRR] = "rrr\n";
+}
+
+void	init_op_char_arr_simpl(char **op_char_arr)
+{	
+	op_char_arr[SB_SIMPL] = "sb\n";
+	op_char_arr[RB_SIMPL] = "rb\n";
+	op_char_arr[RRB_SIMPL] = "rrb\n";
 }
 
 int	setup(int *argc, char *argv[], char *argv_save[], int **args_arr)

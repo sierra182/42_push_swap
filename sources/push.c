@@ -27,14 +27,16 @@ static int	push(t_list **tolow, t_list **toup)
 	return (0);
 }
 
-int	pa(t_list **la, t_list **lb)
+int	pa(t_list **la, t_list **lb, int wflag)
 {
-	write(1, "pa\n", 3);
+	if (wflag)	
+		write(1, "pa\n", 3);
 	return (push(lb, la));
 }
 
-int	pb(t_list **la, t_list **lb)
+int	pb(t_list **la, t_list **lb, int wflag)
 {
-	write(1, "pb\n", 3);
+	if (wflag)	
+		write(1, "pb\n", 3);
 	return (push(la, lb));
 }

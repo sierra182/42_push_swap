@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: svidot <svidot@student.42.fr>              +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/11 13:45:00 by svidot            #+#    #+#             */
-/*   Updated: 2023/11/22 16:59:27 by svidot           ###   ########.fr       */
+/*   Updated: 2023/11/22 21:00:19 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -153,16 +153,12 @@ int	rec_qs(t_list **la_start, t_list **la_end, t_list **lb)
 	
 	static int mycount = 0;
 	//ft_printf("%d\n\n\n\n\n", get_range_size(*la_start, *la_end));
-	if (get_range_size(*la_start, *la_end) < 7)
-	{
-		mycount++;
-	}
-	
+		
 	flag = 0;
 	sort = is_sort_range(*la_start, *la_end);
 	if (sort > 2)
 		while (sort-- && ++flag)
-			ra(la_start, la_end);
+			ra(la_start, la_end, 1);
 	if (flag)
 		return (0);
 		
@@ -171,12 +167,12 @@ int	rec_qs(t_list **la_start, t_list **la_end, t_list **lb)
 	{			
 		if (*(int *) (*la_start)->content > *(int *) (*la_end)->content)
 		{			
-			sa(la_start, lb);
-			ra(la_start, la_end);			
+			sa(la_start, lb, 1);
+			ra(la_start, la_end, 1);			
 		}
 		else if (*(int *) (*la_start)->content < *(int *) (*la_end)->content)
-			ra(la_start, la_end);
-		ra(la_start, la_end);
+			ra(la_start, la_end, 1);
+		ra(la_start, la_end, 1);
 		
 		if (is_sort(*la_start, *lb))
 		{
@@ -190,18 +186,24 @@ int	rec_qs(t_list **la_start, t_list **la_end, t_list **lb)
 	while (*la_start != *la_end && flag || flag--)
 	{		
 		if (*(int *) (*la_start)->content < *(int *) piv->content)				
-	 		pb(la_start, lb);				
+	 		pb(la_start, lb, 1);				
 	 	else 
 		{
-	 		ra(la_start, lb);
+	 		ra(la_start, lb, 1);
 			ra_count++;	
 		}	
-	}	
+	}
+	print_lst(*la_start, *lb);
+	if (ft_lstsize(*lb) < 7 && ft_lstsize(*lb) > 2)
+	{
+		launch_backtr_simpl(lb);
+	}
+	print_lst(*la_start, *lb);
 	t_list *new_lb_end = ft_lstlast(*la_start);
 	if (first_play)
 	{
 		while (ra_count--)
-			rra(la_start, lb);
+			rra(la_start, lb, 1);
 	}	
 	else
 		first_play = 1;	
@@ -209,7 +211,7 @@ int	rec_qs(t_list **la_start, t_list **la_end, t_list **lb)
 	t_list *new_la_end = piv;
 	b_len = ft_lstsize(*lb);
 	while (b_len--)
-		pa(la_start, lb);
+		pa(la_start, lb, 1);
 	t_list *new_la_start = *la_start;
 	if (rec_qs(&new_la_start, &new_la_end, lb))	 
 		return (1);	
@@ -254,10 +256,10 @@ int	main(int argc, char *argv[])
 	//ft_printf(" len: %d\n", lstsize); 
 	//int sort = is_sort_range(a_head, b_head);
 	//ft_printf("%d", sort);
-	
-	// ft_printf("%d", get_range_size(a_head, b_head));
+//	launch_backtr_simpl(&a_head);
+	// ft_printf("%d", get_range_size(a_head, b_head));//
 	alg_quick_sort(&a_head, &b_head);
-	
+//	print_lst(a_head, b_head);
 	free(args_arr);
 	ft_lstclear(&a_head, NULL);
 	ft_lstclear(&b_head, NULL);

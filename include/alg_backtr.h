@@ -13,10 +13,11 @@
 #ifndef ALG_BACKTR_H
 # define ALG_BACKTR_H
 
-#define MX_DEPTH 42
+#define MX_DEPTH 420
 
 #include "operations.h"
 
 void	launch_backtr(t_list **la, t_list **lb);
+void	launch_backtr_simpl(t_list **la);
 
 #endif

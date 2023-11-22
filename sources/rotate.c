@@ -13,21 +13,24 @@
 #include "rotate_utils.h"
 #include <unistd.h>
 
-int	ra(t_list **la, t_list **lb)
+int	ra(t_list **la, t_list **lb, int wflag)
 {
-	write(1, "ra\n", 3);
+	if (wflag)
+		write(1, "ra\n", 3);
 	return (rotate(la));
 }
 
-int	rb(t_list **la, t_list **lb)
+int	rb(t_list **la, t_list **lb, int wflag)
 {
-	write(1, "rb\n", 3);
+	if (wflag)
+		write(1, "rb\n", 3);
 	return (rotate(lb));
 }
 
-int	rr(t_list **la, t_list **lb)
+int	rr(t_list **la, t_list **lb, int wflag)
 {
-	write(1, "rr\n", 3);
+	if (wflag)	
+		write(1, "rr\n", 3);
 	if (rotate(la))
 	{
 		if(rotate(lb))

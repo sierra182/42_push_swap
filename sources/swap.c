@@ -32,21 +32,24 @@ static int	swap(t_list *lst)
 	return (0);			
 }
 
-int	sa(t_list **la, t_list **lb)
+int	sa(t_list **la, t_list **lb, int wflag)
 {
-	write(1, "sa\n", 3);
+	if (wflag)
+		write(1, "sa\n", 3);
 	return (swap(*la));
 }
 
-int	sb(t_list **la, t_list **lb)
+int	sb(t_list **la, t_list **lb, int wflag)
 {
-	write(1, "sb\n", 3);
+	if (wflag)
+		write(1, "sb\n", 3);
 	return (swap(*lb));
 }
 
-int	ss(t_list **la, t_list **lb)
+int	ss(t_list **la, t_list **lb, int wflag)
 {
-	write(1, "ss\n", 3);
+	if (wflag)
+		write(1, "ss\n", 3);
 	if (swap(*la))
 	{
 		if (swap(*lb))

@@ -14,9 +14,9 @@
 #include "ft_printf.h"
 
 int	is_sort(t_list *la, t_list *lb)
-{
+{	
 	if (ft_lstsize(lb))
-		return (0);
+		return (0);	
 	while (la->next)
 	{
 		if (*(int *) la->content > *(int *) la->next->content)
@@ -26,7 +26,24 @@ int	is_sort(t_list *la, t_list *lb)
 	return (1);
 }
 
+int	is_sort_simpl(t_list *lst)
+{	
+	while (lst->next)
+	{
+		if (*(int *) lst->content > *(int *) lst->next->content)
+			return (0);
+		lst = lst->next;		
+	}	
+	return (1);
+}
+
 void	print_tab(t_eop *sol_arr, char **op_char_arr)
+{	
+	while (*sol_arr)	
+		ft_printf("%s", op_char_arr[*sol_arr++]);	
+}
+
+void	print_tab_simpl(t_eop_simpl *sol_arr, char **op_char_arr)
 {	
 	while (*sol_arr)	
 		ft_printf("%s", op_char_arr[*sol_arr++]);	
