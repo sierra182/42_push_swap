@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/11 13:45:00 by svidot            #+#    #+#             */
-/*   Updated: 2023/11/20 22:58:42 by marvin           ###   ########.fr       */
+/*   Updated: 2023/11/21 22:09:16 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,63 +120,72 @@ void	rec_qs(t_list **la_start, t_list **la_end, t_list **lb)
 	t_list	*piv;
 	int		flag;
 	int		b_len;
-	
-	flag = 1;
+	int		ra_count;
 	piv = get_middle(*la_start, *la_end);
-	if ((*(int *) piv->content == *(int *) (*la_start)->content))
-	{		
-		sa(la_start, la_end);
-		ft_printf("BZZZREHHHH\n");
-		ft_printf("piv :%d\n", *(int *)piv->content);
-		ft_printf("las :%d\n", *(int *)(*la_start)->content);
-		ft_printf("lae :%d\n", *(int *)(*la_end)->content);		
-		
-		return ;
-	}
 	
 	ft_printf("piv :%d\n", *(int *)piv->content);
 	ft_printf("las :%d\n", *(int *)(*la_start)->content);
 	ft_printf("lae :%d\n", *(int *)(*la_end)->content);
 	
-	while (*la_start != *la_end && flag || flag--)
-	{
-		// ft_printf("BLOUUUOOUUO\n");
-		// ft_printf("las :%d\n", *(int *)(*la_start)->content);
-		// ft_printf("lae :%d\n", *(int *)(*la_end)->content);
-		//print_lst(*la_start, *lb);
-		
-		if (*(int *) (*la_start)->content < *(int *) piv->content)
-	 		pb(la_start, lb);			
-	 	else 
-	 		ra(la_start, lb);
+	if (*la_start == *la_end || *(int *) (*la_start)->content == *(int *) piv->content)
+	{			
+		if (*(int *) (*la_start)->content > *(int *) (*la_end)->content)
+		{			
+			sa(la_start, lb);
+			ra(la_start, la_end);
+		}
+		else if (*(int *) (*la_start)->content < *(int *) (*la_end)->content)
+			ra(la_start, la_end);
+		ra(la_start, la_end);
+		ft_printf("return...\n");
+		print_lst(*la_start, *lb);
+		return ;
 	}
 	
-	ft_printf("AV: ");	
+	flag = 1;
+	ra_count = 0;
+	while (*la_start != *la_end && flag || flag--)
+	{		
+		if (*(int *) (*la_start)->content < *(int *) piv->content)
+		{			
+	 		pb(la_start, lb);			
+		}
+	 	else // if (*(int *) (*la_start)->content > *(int *) piv->content)
+		{
+	 		ra(la_start, lb);
+			ra_count++;	
+		}
+		// else	
+		// 	if(!sa(la_start, lb))
+		// 		break;
+	}
+	ft_printf("AV");
 	print_lst(*la_start, *lb);
-	piv = *lb;
-	//if (!lb_tmp || !lb_end_tmp)
-		//return ;
-	//t_list lb_tmp = *lb_start;
-	//t_list *la_end_tmp = *la_start;
+	while (ra_count--)
+		rra(la_start, lb);
+	
+	t_list *new_lb_start = *la_start;
+	t_list *new_lb_end = ft_lstlast(*la_start);
+	t_list *new_la_start = ft_lstlast(*lb);
+	t_list *new_la_end = *lb;
+	//piv = *lb;
+	//print_lst(*la_start, *lb);
+
 	b_len = ft_lstsize(*lb);
 	while (b_len--)
 		pa(la_start, lb);
-	ft_printf("APRES: ");
-	print_lst(*la_start, *lb);
-	//piv = get_middle(*la_start, piv);
-	
-	t_list *la_tmp = *la_start;
-	t_list *la_end_tmp = piv;
-	t_list *lb_tmp = piv->next;
-	t_list *lb_end_tmp = ft_lstlast(*la_start);
-	ft_printf("\033[%dm", 96); //turquoise
-	if (la_tmp)
-		rec_qs(&la_tmp, &la_end_tmp, lb);	 //turquoise
+
+	ft_printf("AP");
+		print_lst(*la_start, *lb);
+	ft_printf("LATMP: %d, LAEND: %d, LBTMP: %d, LBEND: %d\n", *(int *) new_la_start->content, *(int *) new_la_end->content, *(int *) new_lb_start->content, *(int *) new_lb_end->content);
+	//ft_printf("ICICI PIV NEXT: %d, LAEND: %d\n", *(int *) pivnext_tmp->content, *(int *) (*la_end)->content);
+	ft_printf("\033[%dm", 96); //turquoise	
+	rec_qs(&new_la_start, &new_la_end, lb);	 //turquoise
+		ft_printf("LATMP: %d, LAEND: %d, LBTMP: %d, LBEND: %d\n", *(int *) new_la_start->content, *(int *) new_la_end->content, *(int *) new_lb_start->content, *(int *) new_lb_end->content);
+
 	ft_printf("\033[%dm", 95);	// mauve
-	lstlast = ft_lstlast(*la_start);
-	//piv = get_middle(*la_start, lstlast);
-	if (lb_tmp)
-		rec_qs(&lb_tmp, &lb_end_tmp, lb);	// mauve
+	//ft_printf("PIV NEXT: %d, LAEND: %d\n", *(int *) pivnext_tmp, *(int *) (*la_end)->content);
+	rec_qs(&new_lb_start, &new_lb_end, lb);	// mauve
 }
 
 void	alg_quick_sort(t_list **la, t_list **lb)
@@ -184,10 +193,13 @@ void	alg_quick_sort(t_list **la, t_list **lb)
 	t_list	*lstlast;
 	t_list	*piv;
 	
+	t_list	*keep;
+	keep = *la;
 	print_lst(*la, *lb);
 	lstlast = ft_lstlast(*la);
 	rec_qs(la, &lstlast, lb);
-	ft_printf("Avant alg_quickS: ");
+	ft_printf("apres rec alg_quickS: \n");
+	
 	print_lst(*la, *lb);
 	//ft_printf("%d\n", *(int *) (*la)->content));
 	//ft_printf("len :%d\n", len);
