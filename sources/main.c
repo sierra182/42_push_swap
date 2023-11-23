@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/11 13:45:00 by svidot            #+#    #+#             */
-/*   Updated: 2023/11/23 20:33:39 by marvin           ###   ########.fr       */
+/*   Updated: 2023/11/23 21:01:29 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,18 +135,26 @@ t_list	*choose_one(t_list **la, t_list **lb, int lstsize, t_list *top_item, t_li
 		one = top_item;
 		while (top_ind--)
 			ra(la, lb, 1);
-		pb(la, lb, 1);	
+		//pb(la, lb, 1);	
 	}
 	else if (lstsize - bot_ind < top_ind)
 	{
 		one = bot_item;
 		while (lstsize-- - bot_ind)
 			rra(la, lb, 1);
-		pb(la, lb, 1);
+		//pb(la, lb, 1);
 	}
 	return (one);
 }
-
+void	set_second_list(t_list *one, t_list **lst)
+{
+	while (*lst)
+	{
+		if (*(int *) (*lst)->content > *(int *) one->content)
+			
+		*lst = (*lst)->next;
+	}
+}
 void	alg(t_list **la, t_list **lb)
 {
 	t_list	*top_item;
@@ -173,7 +181,11 @@ void	alg(t_list **la, t_list **lb)
 				ft_printf("null bot\n");
 			one = choose_one(la, lb, ft_lstsize(*la), top_item, bot_item);
 			if (one)
+			{
+				set_secondlist(one, lb);
+				pb(la, lb, 1);
 				ft_printf("%d\n", *(int *) one->content);
+			}
 			else
 				ft_printf("NULL\n");
 			print_lst(*la, *lb);		
