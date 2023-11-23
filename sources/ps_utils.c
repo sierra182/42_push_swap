@@ -51,9 +51,9 @@ void	print_tab_simpl(t_eop_simpl *sol_arr, char **op_char_arr)
 
 void	print_lst(t_list *la, t_list *lb)
 {	
-//	ft_printf("\n\033[%dm", 96);
+	ft_printf("\n\033[%dm", 96);
 	ft_printf(" ~~~~~~~~~~~~~~~~~~~~ ~~(,,°>\n");
-//	ft_printf("\033[0m");
+	ft_printf("\033[0m");
 	while (la || lb)
 	{
 		if (la)

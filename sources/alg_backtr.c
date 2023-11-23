@@ -146,7 +146,7 @@ void	launch_backtr_simpl(t_list **lst)
 	char		*op_char_arr[OP];
 	t_eop_simpl	sol_arr[MX_DEPTH];
 	int			depth_max;
-	//ft_printf("back!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n\n");
+
 	depth_max = 0;	
 	int	i = -1;
 	while (++i < MX_DEPTH)
@@ -157,7 +157,6 @@ void	launch_backtr_simpl(t_list **lst)
 	init_rev_op_arr_simpl(rev_op_arr);	
 	while (!rec_simpl(lst, 0, depth_max, sol_arr, op_arr, rev_op_arr))
 		depth_max++;	
-//	print_lst(*lst, *lst);
 	init_op_char_arr_simpl(op_char_arr);
 	print_tab_simpl(sol_arr, op_char_arr);	
 }
