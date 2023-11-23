@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/11 13:45:00 by svidot            #+#    #+#             */
-/*   Updated: 2023/11/22 21:00:19 by marvin           ###   ########.fr       */
+/*   Updated: 2023/11/23 05:06:43 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -159,6 +159,11 @@ int	rec_qs(t_list **la_start, t_list **la_end, t_list **lb)
 	if (sort > 2)
 		while (sort-- && ++flag)
 			ra(la_start, la_end, 1);
+	if (is_sort(*la_start, *lb))
+		{
+			//ft_printf("AAAAAAA :%d\n", mycount);
+			return(1);
+		}
 	if (flag)
 		return (0);
 		
@@ -193,12 +198,9 @@ int	rec_qs(t_list **la_start, t_list **la_end, t_list **lb)
 			ra_count++;	
 		}	
 	}
-	print_lst(*la_start, *lb);
-	if (ft_lstsize(*lb) < 7 && ft_lstsize(*lb) > 2)
-	{
-		launch_backtr_simpl(lb);
-	}
-	print_lst(*la_start, *lb);
+//print_lst(*la_start, *lb);
+	
+//	print_lst(*la_start, *lb);
 	t_list *new_lb_end = ft_lstlast(*la_start);
 	if (first_play)
 	{
@@ -207,6 +209,10 @@ int	rec_qs(t_list **la_start, t_list **la_end, t_list **lb)
 	}	
 	else
 		first_play = 1;	
+	// if (ft_lstsize(*lb) < 7 && ft_lstsize(*lb) > 2)
+	// {
+	// 	launch_backtr_simpl(lb);
+	// }
 	t_list *new_lb_start = piv->next;
 	t_list *new_la_end = piv;
 	b_len = ft_lstsize(*lb);
