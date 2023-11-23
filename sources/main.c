@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/11 13:45:00 by svidot            #+#    #+#             */
-/*   Updated: 2023/11/23 16:53:57 by marvin           ###   ########.fr       */
+/*   Updated: 2023/11/23 18:15:53 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ int	get_min_value(t_list *lst)
 }
 #include <stdio.h>
 #define GROUP 5
+
 double	get_range(t_list *lst)
 {
 	double	range;
@@ -61,7 +62,7 @@ double	get_range(t_list *lst)
 	max_value = get_max_value(lst);
 	while (min_value != max_value--)
 		range++;
-	printf("range: %f\n", range);
+	//printf("range: %f\n", range);
 	return (range / GROUP);
 }
 
@@ -100,11 +101,43 @@ t_list	*get_bot_item(t_list *lst, double range, int actual_piece)
 	}
 	return (bot_item);
 }
+int	get_item_index(t_list *lst, t_list *item)
+{
+	int	i;
+
+	i = 0;
+	while (lst && ++i)
+	{
+		if (lst == item)
+			return (--i);
+		lst = lst->next;
+	}
+	return (--i);
+}
+
+t_list	*choose_one(t_list *lst, int lstsize, t_list *top_item, t_list *bot_item)
+{
+	t_list	*one;
+	int		top_ind;
+	int		bot_ind;
+	
+	one = NULL;
+	if (top_item)
+		top_ind = get_item_index(lst, top_item);
+	if (bot_item) 
+		bot_ind = get_item_index(lst, bot_item);	
+	if (lstsize - bot_ind >= top_ind)
+		one = top_item;
+	else if  (lstsize - bot_ind < top_ind)
+		one = bot_item;
+	return (one);
+}
 
 void	alg(t_list **la, t_list **lb)
 {
 	t_list	*top_item;
 	t_list	*bot_item;
+	t_list	*one;	
 	int 	actual_piece;
 	double	range;
 	
@@ -122,6 +155,12 @@ void	alg(t_list **la, t_list **lb)
 			ft_printf("bot item: %d, actual p : %d\n", *(int *) bot_item->content, actual_piece);
 		else
 			ft_printf("null bot\n");
+		one = choose_one(*la, ft_lstsize(*la), top_item, bot_item);
+		if (one)
+			ft_printf("%d\n", *(int *) one->content);
+		else
+			ft_printf("NULL\n");
+		
 	}
 }
 
