@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/11 13:45:00 by svidot            #+#    #+#             */
-/*   Updated: 2023/11/23 16:32:01 by marvin           ###   ########.fr       */
+/*   Updated: 2023/11/23 16:53:57 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,23 +82,46 @@ t_list	*get_top_item(t_list *lst, double range, int actual_piece)
 			return (lst); 
 		lst = lst->next;
 	}
-	return (NULL);
+	return (NULL);		
 }
+
+t_list	*get_bot_item(t_list *lst, double range, int actual_piece)
+{	
+	int		min_value;
+	t_list	*bot_item;
+	
+	bot_item = NULL; 
+	min_value = get_min_value(lst);
+	while (lst)
+	{
+		if (is_in_actualpiece(min_value, actual_piece, *(int *) lst->content, range))
+			bot_item = lst; 
+		lst = lst->next;
+	}
+	return (bot_item);
+}
+
 void	alg(t_list **la, t_list **lb)
 {
+	t_list	*top_item;
+	t_list	*bot_item;
 	int 	actual_piece;
 	double	range;
 	
 	range = get_range(*la);
-	t_list *top_item;
 	actual_piece = 0;
 	while (++actual_piece <= 5)
 	{
 		top_item = get_top_item(*la, range, actual_piece);
-		if(top_item)
-			ft_printf("item: %d, actual p : %d\n", *(int *) top_item->content, actual_piece);
+		if (top_item)
+			ft_printf("top item: %d, actual p : %d\n", *(int *) top_item->content, actual_piece);
 		else
-			ft_printf("null\n");
+			ft_printf("null top\n");
+		bot_item = get_bot_item(*la, range, actual_piece);
+		if (bot_item)
+			ft_printf("bot item: %d, actual p : %d\n", *(int *) bot_item->content, actual_piece);
+		else
+			ft_printf("null bot\n");
 	}
 }
 
