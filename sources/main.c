@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: svidot <svidot@student.42.fr>              +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/11 13:45:00 by svidot            #+#    #+#             */
-/*   Updated: 2023/11/23 10:03:55 by svidot           ###   ########.fr       */
+/*   Updated: 2023/11/23 16:32:01 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,40 +48,57 @@ int	get_min_value(t_list *lst)
 	}
 	return (min_value);
 }
-
-int	calculate_maxrange(t_list *lst)
+#include <stdio.h>
+#define GROUP 5
+double	get_range(t_list *lst)
 {
-	int	range;
-	int	min_value;
-	int	max_value;
+	double	range;
+	int		min_value;
+	int		max_value;
 	
 	range = 1;
 	min_value = get_min_value(lst);
 	max_value = get_max_value(lst);
 	while (min_value != max_value--)
 		range++;
-	return (range);
+	printf("range: %f\n", range);
+	return (range / GROUP);
 }
 
-int	is_in_actualpiece(int actualpiece, int nbr, int range)
+int	is_in_actualpiece(int min_value, int actual_piece, int nbr, double range)
 {	
-	return (nbr >= (actualpiece - 1) * range && nbr <= (actualpiece) * range);	
+	//printf("range: %f\n", range);
+	//printf("range: %d, %f\n", (int) (min_value + (range * (actual_piece - 1))), (min_value + (range * actual_piece)));
+	return (nbr >= min_value + (range * (actual_piece - 1)) && nbr <= min_value + (range * actual_piece));	
 }
-
-void	alg(t_list *la, t_list *lb)
+t_list	*get_top_item(t_list *lst, double range, int actual_piece)
+{	
+	int	min_value;
+	
+	min_value = get_min_value(lst);
+	while (lst)
+	{
+		if (is_in_actualpiece(min_value, actual_piece, *(int *) lst->content, range))
+			return (lst); 
+		lst = lst->next;
+	}
+	return (NULL);
+}
+void	alg(t_list **la, t_list **lb)
 {
 	int 	actual_piece;
-	t_list	*lstlast;
+	double	range;
 	
-	lstlast = ft_lstlast(la);
+	range = get_range(*la);
+	t_list *top_item;
 	actual_piece = 0;
 	while (++actual_piece <= 5)
 	{
-		while (la)
-		{
-			
-			la = la->next;
-		}
+		top_item = get_top_item(*la, range, actual_piece);
+		if(top_item)
+			ft_printf("item: %d, actual p : %d\n", *(int *) top_item->content, actual_piece);
+		else
+			ft_printf("null\n");
 	}
 }
 
@@ -96,6 +113,7 @@ void	alg_forwarding(t_list **la, t_list **lb, int argc)
 int	main(int argc, char *argv[])
 { 
 	int		*args_arr;
+	int 	range;
 	t_list	*a_head;
 	t_list	*b_head;
 	
@@ -106,10 +124,9 @@ int	main(int argc, char *argv[])
 	if (!setup(&argc, argv, argv, &args_arr))
 		return (write(2, "Error\n", 6));
 	init_list(&a_head, argc, args_arr);
-	
-	//ft_printf("%d\n", calculate_maxrange(a_head) / 5);	
-	ft_printf("%d\n", is_in_actualpiece(4, 580, calculate_maxrange(a_head) / 5));
-	
+	//_printf("%d\n", range);	
+	//ft_printf("%d\n", is_in_actualpiece(4, 580, range));
+	alg(&a_head, &b_head);
 	//int	lstsize = ft_lstsize(a_head);	
 	//ft_printf(" len: %d\n", lstsize); 	
 	//print_lst(a_head, b_head);	
