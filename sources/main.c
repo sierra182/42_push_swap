@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/11 13:45:00 by svidot            #+#    #+#             */
-/*   Updated: 2023/11/24 15:18:58 by marvin           ###   ########.fr       */
+/*   Updated: 2023/11/24 21:27:48 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,15 +61,12 @@ double	get_range(t_list *lst)
 	min_value = *(int *) get_min_item(lst)->content;
 	max_value = *(int *) get_max_item(lst)->content;
 	while (min_value != max_value--)
-		range++;
-	//printf("range: %f\n", range);
+		range++;	
 	return (range / GROUP);
 }
 
 int	is_in_actualpiece(int min_value, int actual_piece, int nbr, double range)
 {	
-	//printf("range: %f\n", range);
-	//printf("range: %d, %f\n", (int) (min_value + (range * (actual_piece - 1))), (min_value + (range * actual_piece)));
 	return (nbr >= min_value + (range * (actual_piece - 1)) && nbr <= min_value + (range * actual_piece));	
 }
 t_list	*get_top_item(t_list *lst, double range, int actual_piece)
@@ -124,9 +121,6 @@ t_list	*choose_one(t_list **la, t_list **lb, int lstsize, t_list *top_item, t_li
 	top_ind = 0;
 	bot_ind = 0;
 	one = NULL;
-	//ft_printf("CHOOSE\n");
-			//	print_lst(*la, *lb);
-		//	ft_printf("END\n");	
 	if (!top_item && !bot_item)
 		return (NULL);
 	if (top_item)
@@ -155,52 +149,23 @@ void	set_secondlist(t_list **la, t_list **lb, t_list *one, int lstsize)
 	int		to_up_ind;
 	
 	tmp = *lb;
-	//if (*(int *) one->content > 0)//pos		
-	//{
-		to_up =  get_min_item(*lb);
-//	}
-	//else 
-		//to_up =  get_max_item(*lb);
-	
-	if (to_up && *(int *) to_up->content > *( int *) one->content)
-	{
-		to_up = get_max_item(*lb);
-		//ft_printf("YEE TOUP%d\n", *(int *) to_up->content);
-	}
+	to_up =  get_min_item(*lb);
+	if (to_up && *(int *) to_up->content > *( int *) one->content)	
+		to_up = get_max_item(*lb);	
 	else 
 	{
 		while (tmp)
-		{
-		//	if (*(int *) one->content >= 0)//pos		
-			//{
-				if (*(int *) tmp->content > *(int *) to_up->content && *(int *) tmp->content < *(int *) one->content)
+		{	
+			if (*(int *) tmp->content > *(int *) to_up->content && *(int *) tmp->content < *(int *) one->content)
 				to_up = tmp;
-		//	}
-			// else if (*(int *) one->content < 0)//neg		
-			// {
-			// 	if (*(int *) tmp->content < *(int *) to_up->content && *(int *) tmp->content > *(int *) one->content)
-			// 	to_up = tmp;
-			// }
 			tmp = tmp->next;
 		}
 	}
-
-	// 		if (to_up)
-	// 	ft_printf("YEE TOUP%d\n", *(int *) to_up->content);
-	// else 
-	// {
-	// 	ft_printf("YEE NULLL");
-	// }
-	
 	to_up_ind = get_item_index(*lb, to_up);
-	//ft_printf("WAAA TOUP%d\n", to_up_ind);
 	if (to_up_ind > 0 && lstsize - to_up_ind >= to_up_ind)
-	{	//ft_printf("WAAA%d\n", to_up_ind);
+	{	
 		while (to_up_ind-- > 0)
-		{
-			//ft_printf("%d", to_up_ind);
-			rb(la, lb, 1);		
-		}
+			rb(la, lb, 1);				
 	}
 	else if (to_up_ind > 0)
 	{		
@@ -216,13 +181,10 @@ void	rewind_secondlist(t_list **la, t_list **lb, int lstsize)
 	
 	to_up =  get_max_item(*lb);	
 	to_up_ind = get_item_index(*lb, to_up);
-	if (to_up_ind > 0 && lstsize - to_up_ind <= to_up_ind) //>=
+	if (to_up_ind > 0 && lstsize - to_up_ind >= to_up_ind) 
 	{	
 		while (to_up_ind-- > 0)
-		{
-		//	ft_printf("%d", to_up_ind);
-			rb(la, lb, 1);		
-		}
+			rb(la, lb, 1);			
 	}
 	else if (to_up_ind > 0)
 	{		
@@ -239,43 +201,27 @@ void	alg(t_list **la, t_list **lb)
 	int 	actual_piece;
 	double	range;
 	
-	range = get_range(*la);
-	
+	range = get_range(*la);	
 	actual_piece = 0;
 	while (++actual_piece <= 5)
 	{
 		while (*la)
 		{			
 			top_item = get_top_item(*la, range, actual_piece);
-			if (top_item)
-				;//ft_printf("top item: %d, actual p : %d\n", *(int *) top_item->content, actual_piece);
-			else
-				break;//ft_printf("null top\n");
-			bot_item = get_bot_item(*la, range, actual_piece);
-			if (bot_item)
-				;//ft_printf("bot item: %d, actual p : %d\n", *(int *) bot_item->content, actual_piece);
-			else
-				;//ft_printf("null bot\n");
+			if (!top_item)		
+				break;
+			bot_item = get_bot_item(*la, range, actual_piece);		
 			one = choose_one(la, lb, ft_lstsize(*la), top_item, bot_item);
 			if (one)
-			{
-			//	ft_printf("%d\n", *(int *) one->content);
-			//	print_lst(*la, *lb);
-				set_secondlist(la, lb, one, ft_lstsize(*lb));
-			//	print_lst(*la, *lb);
-				pb(la, lb, 1);
-				//ft_printf("FIN\n");
-			}
-			else
-				;//ft_printf("NULL\n");
-			//print_lst(*la, *lb);		
+			{		
+				set_secondlist(la, lb, one, ft_lstsize(*lb));		
+				pb(la, lb, 1);				
+			}					
 		}	
 	}
 	rewind_secondlist(la, lb, ft_lstsize(*lb));		
 	while (pa(la, lb, 1))
 	 	;
-	//print_lst(*la, *lb);
-	//printf("range; %f", range);
 }
 
 void	alg_forwarding(t_list **la, t_list **lb, int argc)
