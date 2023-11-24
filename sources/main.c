@@ -6,7 +6,7 @@
 /*   By: svidot <svidot@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/11 13:45:00 by svidot            #+#    #+#             */
-/*   Updated: 2023/11/24 10:05:32 by svidot           ###   ########.fr       */
+/*   Updated: 2023/11/24 10:41:18 by svidot           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -177,6 +177,29 @@ void	set_secondlist(t_list **la, t_list **lb, t_list *one, int lstsize)
 			rrb(la, lb, 1);	
 	}
 }
+
+void	rewind_secondlist(t_list **la, t_list **lb, int lstsize)
+{	
+	t_list	*to_up;
+	int		to_up_ind;
+	
+	to_up =  get_max_item(*lb);	
+	to_up_ind = get_item_index(*lb, to_up);
+	if (to_up_ind > 0 && lstsize - to_up_ind >= to_up_ind)
+	{	
+		while (to_up_ind-- > 0)
+		{
+		//	ft_printf("%d", to_up_ind);
+			rb(la, lb, 1);		
+		}
+	}
+	else if (to_up_ind > 0)
+	{		
+		while (lstsize-- - to_up_ind)
+			rrb(la, lb, 1);	
+	}
+}
+
 void	alg(t_list **la, t_list **lb)
 {
 	t_list	*top_item;
@@ -211,8 +234,12 @@ void	alg(t_list **la, t_list **lb)
 			else
 				ft_printf("NULL\n");
 			print_lst(*la, *lb);		
-		}
+		}	
 	}
+	rewind_secondlist(la, lb, ft_lstsize(*lb));		
+	while (pa(la, lb, 1))
+		;
+	print_lst(*la, *lb);
 }
 
 void	alg_forwarding(t_list **la, t_list **lb, int argc)
