@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: svidot <svidot@student.42.fr>              +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/11 13:45:00 by svidot            #+#    #+#             */
-/*   Updated: 2023/11/24 12:58:52 by svidot           ###   ########.fr       */
+/*   Updated: 2023/11/24 15:18:58 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,6 +124,9 @@ t_list	*choose_one(t_list **la, t_list **lb, int lstsize, t_list *top_item, t_li
 	top_ind = 0;
 	bot_ind = 0;
 	one = NULL;
+	//ft_printf("CHOOSE\n");
+			//	print_lst(*la, *lb);
+		//	ft_printf("END\n");	
 	if (!top_item && !bot_item)
 		return (NULL);
 	if (top_item)
@@ -256,9 +259,12 @@ void	alg(t_list **la, t_list **lb)
 			one = choose_one(la, lb, ft_lstsize(*la), top_item, bot_item);
 			if (one)
 			{
-				//ft_printf("%d\n", *(int *) one->content);
+			//	ft_printf("%d\n", *(int *) one->content);
+			//	print_lst(*la, *lb);
 				set_secondlist(la, lb, one, ft_lstsize(*lb));
+			//	print_lst(*la, *lb);
 				pb(la, lb, 1);
+				//ft_printf("FIN\n");
 			}
 			else
 				;//ft_printf("NULL\n");
