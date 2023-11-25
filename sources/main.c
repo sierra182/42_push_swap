@@ -6,7 +6,7 @@
 /*   By: svidot <svidot@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/11 13:45:00 by svidot            #+#    #+#             */
-/*   Updated: 2023/11/25 16:20:48 by svidot           ###   ########.fr       */
+/*   Updated: 2023/11/25 17:19:42 by svidot           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -244,7 +244,7 @@ void	try_rr(t_eop **sol_arr, int n_ra, int n_rb, int seclst_size)
 		{		
 			delone_sol(sol_arr);
 			//*(*sol_arr - (++n_rb)) = RRR;
-			
+			ft_printf("OPERATE\n");	
 		}
 		while (*--(*sol_arr) == RA && need--) 
 		{			
@@ -281,7 +281,7 @@ void	sol_optim_extrem(t_eop **sol_arr)
 	n_ra = 0;
 	n_rb = 0;
 	while (**sol_arr)
-	{		//ft_printf("EXTREM IN\n");
+	{		//ft_printf("EXTREM IN\n");		
 		if (**sol_arr == PB)
 			seclst_size++;
 		n_ra = 0;	
@@ -298,9 +298,11 @@ void	sol_optim_extrem(t_eop **sol_arr)
 		}
 		if (n_ra >= n_rb)
 		{
-			sol_arr_sav = sol_arr;
+			sol_arr_sav = *sol_arr;
 			try_rr(sol_arr, n_ra, n_rb, seclst_size);
+			*sol_arr = sol_arr_sav;
 		}
+		ft_printf("EXTREM size:%d\n", seclst_size);
 		// else
 		// try_rrr(sol_arr, n_ra, n_rb);		
 		(*sol_arr)++;
@@ -352,12 +354,12 @@ void	alg(t_list **la, t_list **lb, int n_piece, int ok)
 	int 	actual_piece;
 	double	range;
 	
-	t_eop sl_arr[420000];
+	t_eop sl_arr[42000];
 	
 	
 	
 	int	i = -1;
-	while (++i < 420000)
+	while (++i < 42000)
 		sl_arr[i] = 0;
 	t_eop *sol_arr = sl_arr;
 		
@@ -403,9 +405,9 @@ void	alg(t_list **la, t_list **lb, int n_piece, int ok)
 			i++;		
 	}
 	ft_printf("sol: %d\n", i);
-	//if (ok)
-	//	print_tab(sol_arr, op_char_arr);
-	//print_lst(*la, *lb);
+	// if (ok)
+	 	print_tab(sol_arr, op_char_arr);
+	// print_lst(*la, *lb);
 }
 
 void	alg_forwarding(t_list **la, t_list **lb, int argc)
@@ -438,8 +440,8 @@ int	main(int argc, char *argv[])
 	//print_lst(a_head, b_head);	
 	//alg_forwarding(&a_head, &b_head, argc);
 	//alg_quick_sort(&a_head, &b_head);
-	int	n_piece = 0;
-	while (++n_piece < 100)
+	int	n_piece = 5;
+	while (++n_piece < 7)
 	{
 		alg(&a_head, &b_head, n_piece, 0);
 		ft_lstclear(&a_head, NULL);
