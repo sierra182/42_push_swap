@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: svidot <svidot@student.42.fr>              +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/11 13:45:00 by svidot            #+#    #+#             */
-/*   Updated: 2023/11/25 17:19:42 by svidot           ###   ########.fr       */
+/*   Updated: 2023/11/25 21:39:24 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,8 +145,7 @@ t_list	*choose_one(t_list **la, t_list **lb, int lstsize, t_list *top_item, t_li
 			rra(la, lb, 0);		
 			*(*sol_arr)++ = RRA;
 		}		
-	}
-		
+	}		
 	return (one);
 }
 
@@ -234,36 +233,51 @@ void	try_rr(t_eop **sol_arr, int n_ra, int n_rb, int seclst_size)
 	//ft_printf("TRYRR\n");
 	need = seclst_size - n_rb;
 	gain = n_ra - need;
+	 ft_printf("TRY need:%d, gain: %d\n", need, gain);	
+	 ft_printf("TRY AVANT MY INSIDE gain:%d, -gain: %d, n_rb: %d\n", gain, -gain, n_rb);
 	if (gain >= 0 || -gain < n_rb)
 	{
-			
-
+		ft_printf("TRY INSIDEMAN  gain: %d, -gain: %d n_rb: %d\n", gain, -gain, n_rb);	
 		// les cas ou il y a sudffisamment dans nra pour combler need act ou que meme avec le manque n_ra est quand meme superieur en action
 		//	replby_rr(need_act);
 		while (*--(*sol_arr) == RRB) // suppr tous les rrb et autant de ra quil y aura de rr 
-		{		
+		{		ft_printf("JE SUPPRIME UN RRB\n"); 
 			delone_sol(sol_arr);
+			ft_printf("JAI FINIT DE LE SUPPRIMER\n"); 
 			//*(*sol_arr - (++n_rb)) = RRR;
-			ft_printf("OPERATE\n");	
+			//ft_printf("OPERATE\n");	
 		}
-		while (*--(*sol_arr) == RA && need--) 
-		{			
-			**sol_arr = RR;		
+		while (*--(*sol_arr) == RA && need) 
+		{ft_printf("JREMPLACE UN RA PAR UN RR, need: %d\n", need);
+			**sol_arr = RR;	
+			need--;	
 		}
 		while (*++(*sol_arr) != PB)
-			;
+			ft_printf("javance jusquau pb\n");
 		t_eop tmp;	
-		while (need--)
-		{
-			tmp = **sol_arr;
-			**sol_arr = RB;			
-			while (*(*sol_arr + 1))
-			{			
-				*(*sol_arr + 1)  = **sol_arr;
-				**sol_arr = tmp;
+		t_eop tmp2;
+		ft_printf("AVAVAVAVAVANT need: %d solarr actuel: %d , plus un %d \n", need, **sol_arr, (*sol_arr)++);
+	t_eop *sol_arr_sav; 
+		while (need-- >= 0)
+		{	ft_printf("jinsere un rb\n");
+			tmp = RB;//**sol_arr; // pb
+			//**sol_arr = RB;		// rb	
+			sol_arr_sav = *sol_arr;
+	
+			while (*(*sol_arr))
+			{	
+				tmp2 = **sol_arr;
+				**sol_arr = tmp;	
+			//	tmp = *(*sol_arr + 1)	
+			//	*(*sol_arr + 1) = tmp;//**sol_arr; // rb
+				tmp = tmp2;
 				(*sol_arr)++;
-			}				
+			}
+			**sol_arr = tmp;
+			*sol_arr = sol_arr_sav;		
 		}
+	
+		ft_printf("jai finit walllaradim\n");
 	}
 }
 
@@ -296,13 +310,16 @@ void	sol_optim_extrem(t_eop **sol_arr)
 			n_rb++;			
 			(*sol_arr)++;		
 		}
-		if (n_ra >= n_rb)
+		if (n_ra && n_rb && n_ra >= n_rb)
 		{
+			//ft_printf("EXTREM size:%d, na: %d, nb: %d\n", seclst_size, n_ra, n_rb);		
 			sol_arr_sav = *sol_arr;
 			try_rr(sol_arr, n_ra, n_rb, seclst_size);
 			*sol_arr = sol_arr_sav;
+		//	ft_printf("EXTREM FIN size:%d, na: %d, nb: %d\n", seclst_size, n_ra, n_rb);		
 		}
-		ft_printf("EXTREM size:%d\n", seclst_size);
+		// if (n_ra && n_rb)
+		// 	ft_printf("EXTREM size:%d, na: %d, nb: %d\n", seclst_size, n_ra, n_rb);
 		// else
 		// try_rrr(sol_arr, n_ra, n_rb);		
 		(*sol_arr)++;
@@ -397,16 +414,16 @@ void	alg(t_list **la, t_list **lb, int n_piece, int ok)
 	sol_optim_extrem(&sol_arr);
 //	ft_printf("choose another alg\n");
 	sol_arr = sl_arr;
-	ft_printf("group: %d\n", n_piece);
+//	ft_printf("group: %d\n", n_piece);
 	if(!ok)
 	{
 		i = 0;
 		while (*sol_arr++)	
 			i++;		
 	}
-	ft_printf("sol: %d\n", i);
+//	ft_printf("sol: %d\n", i);
 	// if (ok)
-	 	print_tab(sol_arr, op_char_arr);
+	 //	print_tab(sol_arr, op_char_arr);
 	// print_lst(*la, *lb);
 }
 
@@ -437,21 +454,21 @@ int	main(int argc, char *argv[])
 
 	//int	lstsize = ft_lstsize(a_head);	
 	//ft_printf(" len: %d\n", lstsize); 	
-	//print_lst(a_head, b_head);	
 	//alg_forwarding(&a_head, &b_head, argc);
 	//alg_quick_sort(&a_head, &b_head);
-	int	n_piece = 5;
-	while (++n_piece < 7)
-	{
-		alg(&a_head, &b_head, n_piece, 0);
-		ft_lstclear(&a_head, NULL);
-		ft_lstclear(&b_head, NULL);
-		init_list(&a_head, argc, args_arr);
-	}
-		ft_lstclear(&a_head, NULL);
-		ft_lstclear(&b_head, NULL);
+	int	n_piece = 11;
+	//while (++n_piece < 7)
+//	{
+		// alg(&a_head, &b_head, n_piece, 0);
+		// ft_lstclear(&a_head, NULL);
+		// ft_lstclear(&b_head, NULL);
+		// init_list(&a_head, argc, args_arr);
+//	}
+	//	ft_lstclear(&a_head, NULL);
+	//	ft_lstclear(&b_head, NULL);
 		init_list(&a_head, argc, args_arr);
 	alg(&a_head, &b_head, n_piece, 1);
+	//print_lst(a_head, b_head);	
 	free(args_arr);
 	ft_lstclear(&a_head, NULL);
 	ft_lstclear(&b_head, NULL);
