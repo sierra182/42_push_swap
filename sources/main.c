@@ -6,7 +6,7 @@
 /*   By: svidot <svidot@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/11 13:45:00 by svidot            #+#    #+#             */
-/*   Updated: 2023/11/25 13:51:11 by svidot           ###   ########.fr       */
+/*   Updated: 2023/11/25 16:20:48 by svidot           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -227,57 +227,85 @@ void	delone_sol(t_eop **sol_arr)
 	//ft_printf("del fin\n");
 }
 
-// void	try_rr(t_eop **sol_arr, int n_ra, int n_rb)
-// {
-// 	while (n_rb)
-// 	{		
-// 		while (**sol_arr == RA)
-// 		{		
-// 			n_ra++;		
-// 			(*sol_arr)++;
-// 		}
-// 		n_rb = 0;
-// 		while ((**sol_arr == RRB))
-// 		{		
-// 			n_rb++;			
-// 			(*sol_arr)++;		
-// 		}
-// 		if (n_ra >= n_rb)
-// 			try_rr(sol_arr, n_ra, n_rb);
-// 		// else
-// 		// 	try_rrr(sol_arr, n_ra, n_rb);		
-// 		n_rb--;
-// 	}
-// }
+void	try_rr(t_eop **sol_arr, int n_ra, int n_rb, int seclst_size)
+{
+	int	need;
+	int gain;
+	//ft_printf("TRYRR\n");
+	need = seclst_size - n_rb;
+	gain = n_ra - need;
+	if (gain >= 0 || -gain < n_rb)
+	{
+			
 
-// void	sol_optim_extrem(t_eop **sol_arr)
-// {
-// 	int		n_ra;
-// 	int		n_rb;
+		// les cas ou il y a sudffisamment dans nra pour combler need act ou que meme avec le manque n_ra est quand meme superieur en action
+		//	replby_rr(need_act);
+		while (*--(*sol_arr) == RRB) // suppr tous les rrb et autant de ra quil y aura de rr 
+		{		
+			delone_sol(sol_arr);
+			//*(*sol_arr - (++n_rb)) = RRR;
+			
+		}
+		while (*--(*sol_arr) == RA && need--) 
+		{			
+			**sol_arr = RR;		
+		}
+		while (*++(*sol_arr) != PB)
+			;
+		t_eop tmp;	
+		while (need--)
+		{
+			tmp = **sol_arr;
+			**sol_arr = RB;			
+			while (*(*sol_arr + 1))
+			{			
+				*(*sol_arr + 1)  = **sol_arr;
+				**sol_arr = tmp;
+				(*sol_arr)++;
+			}				
+		}
+	}
+}
+
+void	sol_optim_extrem(t_eop **sol_arr)
+{
+	int		seclst_size;
+	int		n_ra;
+	int		n_rb;
+
+	t_eop	*sol_arr_sav;
+
 	
-// 	n_ra = 0;
-// 	n_rb = 0;
-// 	while (**sol_arr)
-// 	{	
-// 		n_ra = 0;	
-// 		while (**sol_arr == RA)
-// 		{		
-// 			n_ra++;			
-// 			(*sol_arr)++;
-// 		}
-// 		n_rb = 0;
-// 		while ((**sol_arr == RRB))
-// 		{		
-// 			n_rb++;			
-// 			(*sol_arr)++;		
-// 		}
-// 		if (n_ra >= n_rb)
-// 			try_rr(sol_arr, n_ra, n_rb);
-// 		// else
-// 		// try_rrr(sol_arr, n_ra, n_rb);		
-// 		(*sol_arr)++;
-// 	}	
-// }
+//	ft_printf("EXTREM\n");
+	seclst_size = 0;
+	n_ra = 0;
+	n_rb = 0;
+	while (**sol_arr)
+	{		//ft_printf("EXTREM IN\n");
+		if (**sol_arr == PB)
+			seclst_size++;
+		n_ra = 0;	
+		while (**sol_arr == RA)
+		{		
+			n_ra++;			
+			(*sol_arr)++;
+		}
+		n_rb = 0;
+		while (**sol_arr == RRB)
+		{		
+			n_rb++;			
+			(*sol_arr)++;		
+		}
+		if (n_ra >= n_rb)
+		{
+			sol_arr_sav = sol_arr;
+			try_rr(sol_arr, n_ra, n_rb, seclst_size);
+		}
+		// else
+		// try_rrr(sol_arr, n_ra, n_rb);		
+		(*sol_arr)++;
+	}	
+}
 
 void	sol_optim(t_eop **sol_arr)
 {
@@ -295,9 +323,9 @@ void	sol_optim(t_eop **sol_arr)
 			(*sol_arr)++;
 		}
 		n_rb = 0;
-		while ((**sol_arr == RB && n_ra--))
+		while (**sol_arr == RB && n_ra--)
 		{		
-			*(*sol_arr - (++n_rb)) = RR;				
+			*(*sol_arr - ++n_rb) = RR;				
 			delone_sol(sol_arr);			
 		}
 		n_ra = 0;
@@ -307,7 +335,7 @@ void	sol_optim(t_eop **sol_arr)
 			(*sol_arr)++;
 		}
 		n_rb = 0;
-		while ((**sol_arr == RRB && n_ra--))
+		while (**sol_arr == RRB && n_ra--)
 		{		
 			*(*sol_arr - (++n_rb)) = RRR;				
 			delone_sol(sol_arr);			
@@ -363,6 +391,8 @@ void	alg(t_list **la, t_list **lb, int n_piece, int ok)
 	init_op_char_arr(op_char_arr);
 	//print_tab(sol_arr, op_char_arr);
 	sol_optim(&sol_arr);
+	sol_arr = sl_arr;
+	sol_optim_extrem(&sol_arr);
 //	ft_printf("choose another alg\n");
 	sol_arr = sl_arr;
 	ft_printf("group: %d\n", n_piece);
@@ -409,7 +439,7 @@ int	main(int argc, char *argv[])
 	//alg_forwarding(&a_head, &b_head, argc);
 	//alg_quick_sort(&a_head, &b_head);
 	int	n_piece = 0;
-while (++n_piece < 100)
+	while (++n_piece < 100)
 	{
 		alg(&a_head, &b_head, n_piece, 0);
 		ft_lstclear(&a_head, NULL);
