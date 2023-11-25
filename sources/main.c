@@ -6,7 +6,7 @@
 /*   By: svidot <svidot@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/11 13:45:00 by svidot            #+#    #+#             */
-/*   Updated: 2023/11/25 11:42:45 by svidot           ###   ########.fr       */
+/*   Updated: 2023/11/25 13:51:11 by svidot           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,9 @@
 #include "ft_printf.h"
 #include "operations.h"
 #include <stdio.h>
+
+#include <stdio.h>
+#define GROUP 11
 
 t_list	*get_max_item(t_list *lst)
 {
@@ -48,10 +51,8 @@ t_list	*get_min_item(t_list *lst)
 	}
 	return (min_item);
 }
-#include <stdio.h>
-#define GROUP 5
 
-double	get_range(t_list *lst)
+double	get_range(t_list *lst, int n_piece)
 {
 	double	range;
 	int		min_value;
@@ -62,7 +63,7 @@ double	get_range(t_list *lst)
 	max_value = *(int *) get_max_item(lst)->content;
 	while (min_value != max_value--)
 		range++;	
-	return (range / GROUP);
+	return (range / n_piece);
 }
 
 int	is_in_actualpiece(int min_value, int actual_piece, int nbr, double range)
@@ -226,6 +227,58 @@ void	delone_sol(t_eop **sol_arr)
 	//ft_printf("del fin\n");
 }
 
+// void	try_rr(t_eop **sol_arr, int n_ra, int n_rb)
+// {
+// 	while (n_rb)
+// 	{		
+// 		while (**sol_arr == RA)
+// 		{		
+// 			n_ra++;		
+// 			(*sol_arr)++;
+// 		}
+// 		n_rb = 0;
+// 		while ((**sol_arr == RRB))
+// 		{		
+// 			n_rb++;			
+// 			(*sol_arr)++;		
+// 		}
+// 		if (n_ra >= n_rb)
+// 			try_rr(sol_arr, n_ra, n_rb);
+// 		// else
+// 		// 	try_rrr(sol_arr, n_ra, n_rb);		
+// 		n_rb--;
+// 	}
+// }
+
+// void	sol_optim_extrem(t_eop **sol_arr)
+// {
+// 	int		n_ra;
+// 	int		n_rb;
+	
+// 	n_ra = 0;
+// 	n_rb = 0;
+// 	while (**sol_arr)
+// 	{	
+// 		n_ra = 0;	
+// 		while (**sol_arr == RA)
+// 		{		
+// 			n_ra++;			
+// 			(*sol_arr)++;
+// 		}
+// 		n_rb = 0;
+// 		while ((**sol_arr == RRB))
+// 		{		
+// 			n_rb++;			
+// 			(*sol_arr)++;		
+// 		}
+// 		if (n_ra >= n_rb)
+// 			try_rr(sol_arr, n_ra, n_rb);
+// 		// else
+// 		// try_rrr(sol_arr, n_ra, n_rb);		
+// 		(*sol_arr)++;
+// 	}	
+// }
+
 void	sol_optim(t_eop **sol_arr)
 {
 	int		n_ra;
@@ -260,10 +313,10 @@ void	sol_optim(t_eop **sol_arr)
 			delone_sol(sol_arr);			
 		}				
 		(*sol_arr)++;
-	}
-	
+	}	
 }
-void	alg(t_list **la, t_list **lb)
+
+void	alg(t_list **la, t_list **lb, int n_piece, int ok)
 {
 	t_list	*top_item;
 	t_list	*bot_item;
@@ -271,16 +324,18 @@ void	alg(t_list **la, t_list **lb)
 	int 	actual_piece;
 	double	range;
 	
-	t_eop sl_arr[20000];
+	t_eop sl_arr[420000];
+	
+	
 	
 	int	i = -1;
-	while (++i < 20000)
+	while (++i < 420000)
 		sl_arr[i] = 0;
-	t_eop *sol_arr = sl_arr;		
-	range = get_range(*la);	
-	actual_piece = 0;
-	
-	while (++actual_piece <= 5)
+	t_eop *sol_arr = sl_arr;
+		
+	range = get_range(*la, n_piece);	
+	actual_piece = 0;	
+	while (actual_piece++ <= n_piece)
 	{
 		while (*la)
 		{			
@@ -310,7 +365,16 @@ void	alg(t_list **la, t_list **lb)
 	sol_optim(&sol_arr);
 //	ft_printf("choose another alg\n");
 	sol_arr = sl_arr;
-	print_tab(sol_arr, op_char_arr);
+	ft_printf("group: %d\n", n_piece);
+	if(!ok)
+	{
+		i = 0;
+		while (*sol_arr++)	
+			i++;		
+	}
+	ft_printf("sol: %d\n", i);
+	//if (ok)
+	//	print_tab(sol_arr, op_char_arr);
 	//print_lst(*la, *lb);
 }
 
@@ -338,13 +402,24 @@ int	main(int argc, char *argv[])
 	init_list(&a_head, argc, args_arr);
 	//_printf("%d\n", range);	
 	//ft_printf("%d\n", is_in_actualpiece(4, 580, range));
-	alg(&a_head, &b_head);
+
 	//int	lstsize = ft_lstsize(a_head);	
 	//ft_printf(" len: %d\n", lstsize); 	
 	//print_lst(a_head, b_head);	
 	//alg_forwarding(&a_head, &b_head, argc);
 	//alg_quick_sort(&a_head, &b_head);
-
+	int	n_piece = 0;
+while (++n_piece < 100)
+	{
+		alg(&a_head, &b_head, n_piece, 0);
+		ft_lstclear(&a_head, NULL);
+		ft_lstclear(&b_head, NULL);
+		init_list(&a_head, argc, args_arr);
+	}
+		ft_lstclear(&a_head, NULL);
+		ft_lstclear(&b_head, NULL);
+		init_list(&a_head, argc, args_arr);
+	alg(&a_head, &b_head, n_piece, 1);
 	free(args_arr);
 	ft_lstclear(&a_head, NULL);
 	ft_lstclear(&b_head, NULL);
