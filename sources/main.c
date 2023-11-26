@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/11 13:45:00 by svidot            #+#    #+#             */
-/*   Updated: 2023/11/26 13:39:59 by marvin           ###   ########.fr       */
+/*   Updated: 2023/11/26 13:51:50 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -438,7 +438,7 @@ void	try_rr2(t_eop **sol_arr, int n_ra, int n_rb, int seclst_size)
 		sol_arr_sav = *sol_arr;
 		while (need > 0)
 		{
-			tmp = RB;
+			tmp = RRB;
 			while (*(*sol_arr))
 			{	
 				tmp2 = **sol_arr;
@@ -606,7 +606,7 @@ void	alg(t_list **la, t_list **lb, int n_piece, int ok)
 	sol_optim_extrem(&sol_arr);
 //	ft_printf("choose another alg\n");
 	sol_arr = sl_arr;
-	sol_optim_extrem2(&sol_arr);
+	//sol_optim_extrem2(&sol_arr);
 	sol_arr = sl_arr;
 //	ft_printf("group: %d\n", n_piece);
 	if(!ok)
@@ -615,7 +615,7 @@ void	alg(t_list **la, t_list **lb, int n_piece, int ok)
 		while (*sol_arr++)	
 			i++;		
 	}
-//	ft_printf("sol: %d\n", i);
+	//ft_printf("sol: %d\n", i);
 	// if (ok)
 	  	print_tab(sol_arr, op_char_arr);
 	// print_lst(*la, *lb);
@@ -686,6 +686,7 @@ int	main(int argc, char *argv[])
 	// 	ft_lstclear(&a_head, NULL);
 	// 	ft_lstclear(&b_head, NULL);
 	// 	init_list(&a_head, argc, args_arr);
+		
 	alg(&a_head, &b_head, n_piece, 1);
 	//print_lst(a_head, b_head);	
 	free(args_arr);
