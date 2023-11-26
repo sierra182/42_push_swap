@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/11 13:45:00 by svidot            #+#    #+#             */
-/*   Updated: 2023/11/26 21:48:10 by marvin           ###   ########.fr       */
+/*   Updated: 2023/11/26 22:36:26 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -472,24 +472,24 @@ void	sol_optim(t_eop **sol_arr)
 	}	
 }
 
-int	get_target(int value, t_list *lst)
+t_list	*get_target(int value, t_list *lst)
 {	
-	int target;
+	t_list *target;
 		
-	target = *(int *) get_min_item(lst);	
-	if (value < target)
-		target = *(int *) get_max_item(lst);
+	target = get_min_item(lst);	
+	if (value < *(int *) target->content)
+		target = get_max_item(lst);
 	else
 		while (lst)
 		{
-			if (*(int *) lst->content > target && *(int *) lst->content < value)
-				target = *(int *) lst->content;
+			if (*(int *) lst->content > *(int *) target->content && *(int *) lst->content < value)
+				target = lst;
 			lst = lst->next;
 		}
 	return (target);
 }
 
-void	calcul(int ind_item_a, int lstsize_a, int ind_item_b, int lstsize_b)
+void	calcul(int ind_item_a, int lstsize_a, int ind_item_b, int lstsize_b, t_best best)
 {
 	static int	best_item_a;
 	static int	best_item_b;
@@ -581,6 +581,21 @@ void	calcul(int ind_item_a, int lstsize_a, int ind_item_b, int lstsize_b)
 		best_n_rra = n_rra;
 		best_cost = cost;
 	}		
+}
+
+void	alg_turk(t_list	*la, t_list *lb)
+{
+	int	ind_la;
+
+	ind_la = 0;
+	while (la)	
+		while (la)
+		{
+			calcul_best(ind_la+++, ft_lstsize(la), get_item_index(lb, 
+				get_target(*(int *) la->content, lb)), ft_lstsize(lb));
+			apply_best();
+			la = la->next;
+		}		
 }
 
 void	alg(t_list **la, t_list **lb, int n_piece, int ok)
