@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/11 13:45:00 by svidot            #+#    #+#             */
-/*   Updated: 2023/11/26 21:05:41 by marvin           ###   ########.fr       */
+/*   Updated: 2023/11/26 21:48:10 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -470,6 +470,23 @@ void	sol_optim(t_eop **sol_arr)
 		}				
 		(*sol_arr)++;
 	}	
+}
+
+int	get_target(int value, t_list *lst)
+{	
+	int target;
+		
+	target = *(int *) get_min_item(lst);	
+	if (value < target)
+		target = *(int *) get_max_item(lst);
+	else
+		while (lst)
+		{
+			if (*(int *) lst->content > target && *(int *) lst->content < value)
+				target = *(int *) lst->content;
+			lst = lst->next;
+		}
+	return (target);
 }
 
 void	calcul(int ind_item_a, int lstsize_a, int ind_item_b, int lstsize_b)
