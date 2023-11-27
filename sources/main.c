@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: svidot <svidot@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/11 13:45:00 by svidot            #+#    #+#             */
-/*   Updated: 2023/11/26 22:36:26 by marvin           ###   ########.fr       */
+/*   Updated: 2023/11/27 13:43:19 by svidot           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -475,8 +475,8 @@ void	sol_optim(t_eop **sol_arr)
 t_list	*get_target(int value, t_list *lst)
 {	
 	t_list *target;
-		
-	target = get_min_item(lst);	
+		// target -2 // value = -22
+	target = get_min_item(lst);	//	ft_printf("target : %d\n", *(int *) target->content);
 	if (value < *(int *) target->content)
 		target = get_max_item(lst);
 	else
@@ -486,14 +486,13 @@ t_list	*get_target(int value, t_list *lst)
 				target = lst;
 			lst = lst->next;
 		}
+	//ft_printf("target : %d\n", *(int *) target->content);
 	return (target);
 }
 
-void	calcul(int ind_item_a, int lstsize_a, int ind_item_b, int lstsize_b, t_best best)
-{
 	static int	best_item_a;
 	static int	best_item_b;
-	static int	best_cost;
+	static int	best_cost = -1;
 	static int	best_n_rr;
 	static int	best_n_rrr;
 	static int	best_n_rb;
@@ -501,6 +500,8 @@ void	calcul(int ind_item_a, int lstsize_a, int ind_item_b, int lstsize_b, t_best
 	static int	best_n_ra;
 	static int	best_n_rra;
 	
+void	calcul_best(int ind_item_a, int lstsize_a, int ind_item_b, int lstsize_b)
+{	
 	int			up_need_a;
 	int			down_need_a;
 	int			up_need_b; 
@@ -508,94 +509,180 @@ void	calcul(int ind_item_a, int lstsize_a, int ind_item_b, int lstsize_b, t_best
 	int			cost;
 	int 		sense;
 	
+	int	n_ra = 0;
+	int	n_rb = 0;
+	int n_rr = 0;
+	int n_rra = 0;
+	int n_rrb = 0;
+	int n_rrr = 0;
+	
 	up_need_a = ind_item_a;
 	down_need_a = lstsize_a - ind_item_a;
 	up_need_b = ind_item_b;
 	down_need_b = lstsize_b - ind_item_b;
-	
+	//ft_printf("DEB up need_a: %d, lstsize_a:%d,  lstsize_b:%d down need_a: %d, up need b: %d down need b: %d\n", up_need_a, lstsize_a, lstsize_b, down_need_a, up_need_b, down_need_b);
 	if (up_need_a <= down_need_a && up_need_b <= down_need_b)
-	{		
+	{		// 0    // 3             1 //        // 1
 		if (up_need_a >= up_need_b)
 		{
-			n_rb = 0;
+			//n_rb = 0; 
 			n_ra = up_need_a - up_need_b;			
 			n_rr = up_need_b;
-			cost = up_need_a;
+			cost = up_need_a; //ft_printf("la 1 cost:%d, best cost: %d\n", cost, best_cost);
 		}
 		else
 		{
-			n_ra = 0;
+			//n_ra = 0; 
 			n_rb = up_need_b - up_need_a;			
 			n_rr = up_need_a;
-			cost = up_need_b;
+			cost = up_need_b; //ft_printf("la 2 cost:%d, best cost: %d\n", cost, best_cost);
 		}	
-		n_rrr = 0;
+		//n_rrr = 0;
 	}
 	else if (down_need_a <= up_need_a && down_need_b <= up_need_b)
 	{		
 		if (down_need_a >= down_need_b)
 		{
-			n_rrb = 0;
+			//n_rrb = 0; 
 			n_rra = down_need_a - down_need_b;			
 			n_rrr = down_need_b;
-			cost = down_need_a;
+			cost = down_need_a; //ft_printf("la 3 cost:%d, best cost: %d\n", cost, best_cost);
 		}
 		else
 		{
-			n_rrb = 0;
+			//n_rrb = 0; 
 			n_rrb = down_need_b - down_need_a;			
 			n_rrr = down_need_a;
-			cost = down_need_b;
+			cost = down_need_b; //ft_printf("la 4 cost:%d, best cost: %d\n", cost, best_cost);
 		}
-		n_rr = 0;
+		//n_rr = 0;
 	}
 	else if (up_need_a <= down_need_a && up_need_b >= down_need_b)
 	{
-		n_rr = 0;
-		n_rrr = 0;
-		n_rb = 0;
-		n_rra = 0;
+		//n_rr = 0; 
+		//n_rrr = 0;
+	//	n_rb = 0;
+	//	n_rra = 0;
 		n_ra = up_need_a;
 		n_rrb = down_need_b;
-		cost = up_need_a + down_need_b;
+		cost = up_need_a + down_need_b;//ft_printf("la 5 cost:%d, best cost: %d\n", cost, best_cost);
 	}
 	else if (up_need_a >= down_need_a && up_need_b <= down_need_b)
 	{
-		n_rr = 0;
-		n_rrr = 0;
-		n_ra = 0
-		n_rrb = 0;
+		//n_rr = 0; 
+		//n_rrr = 0;
+		//n_ra = 0;
+		//n_rrb = 0;
 		n_rb = up_need_b;
 		n_rra = down_need_a;
-		cost = up_need_b + down_need_a;
+		cost = up_need_b + down_need_a; //ft_printf("la 6 cost:%d, best cost: %d\n", cost, best_cost);
 	}
-	if (cost < best_cost)
+	
+	if (cost < best_cost || best_cost == -1)
 	{
-		best_item_a = ind_item_a;
+		best_item_a = ind_item_a; 
 		best_item_b = ind_item_b;
 		best_n_rr = n_rr;
 		best_n_rrr = n_rrr;
-		best_n_rb = n_rr;
-		best_n_rrb = n_rrr;
+		best_n_rb = n_rb;
+		best_n_rrb = n_rrb;
 		best_n_ra = n_ra;
 		best_n_rra = n_rra;
 		best_cost = cost;
+		//ft_printf("YOU best_item_a: %d, best_item_b: %d, best cost:%d\n", best_item_a, best_item_b, best_cost);
 	}		
 }
+//ft_printf("Where is my segfault?!\n");
+void	rewind_lst(t_list **la, t_list **lb, int lstsize)
+{	
+	t_list	*target;
+	int		target_ind;
 
+	target =  get_max_item(*lb);	
+	target_ind = get_item_index(*lb, target);
+	if (target_ind > 0 && lstsize - target_ind >= target_ind) 
+	{	
+		while (target_ind-- > 0)
+		{
+			rb(la, lb, 1);				
+			//*(*sol_arr)++ = RB;
+		}
+	}
+	else if (target_ind > 0)
+	{		
+		while (lstsize-- - target_ind)
+		{		
+			rrb(la, lb, 1);	
+			//*(*sol_arr)++ = RRB;
+		}
+	}
+}
 void	alg_turk(t_list	*la, t_list *lb)
 {
-	int	ind_la;
-
-	ind_la = 0;
-	while (la)	
+	int		ind_la;
+	t_list	*la_sav;
+	int		lstsize_a;
+	int		lstsize_b;
+	
+	t_eop sl_arr[42000];	
+ 	int	i = -1;
+ 	while (++i < 42000)
+ 		sl_arr[i] = 0;
+	t_eop *sol_arr = sl_arr;
+	
+	pb(&la, &lb, 1);
+	*sol_arr++ = PB;
+	//pb(&la, &lb, 1);
+	while (la)
+	{				
+		ind_la = 0;
+		la_sav = la;
+		lstsize_a = ft_lstsize(la);
+		lstsize_b = ft_lstsize(lb);
 		while (la)
-		{
-			calcul_best(ind_la+++, ft_lstsize(la), get_item_index(lb, 
-				get_target(*(int *) la->content, lb)), ft_lstsize(lb));
-			apply_best();
+		{			
+			calcul_best(ind_la++, lstsize_a, get_item_index(lb, 
+				get_target(*(int *) la->content, lb)), lstsize_b);					
 			la = la->next;
-		}		
+		}			
+		la = la_sav;//print_lst(la, lb);		
+		while (best_n_rr--)
+		{
+			*sol_arr++ = PB;
+			rr(&la, &lb, 1);
+		}
+		while (best_n_rrr--)
+		{
+			*sol_arr++ = PB;
+			rrr(&la, &lb, 1);
+		}	
+		while (best_n_ra--)
+		{}
+			ra(&la, &lb, 1);
+		while (best_n_rb--)
+		{
+			//ft_printf("aie\n %d", best_n_rb);
+			rb(&la, &lb, 1);
+		}
+		while (best_n_rrb--)	
+			rrb(&la, &lb, 1);
+		while (best_n_rra--)
+			rra(&la, &lb, 1);
+		pb(&la, &lb, 1);	
+		best_item_a = 0;
+		best_item_b = 0;
+		best_cost = -1;
+		best_n_rr = 0;
+		best_n_rrr = 0;
+		best_n_rb = 0;
+		best_n_rrb = 0;
+		best_n_ra = 0;
+		best_n_rra = 0;
+	}
+	rewind_lst(&la, &lb, lstsize_b + 1);
+	while (pa(&la, &lb, 1))
+		;
+	//print_lst(la, lb);	
 }
 
 void	alg(t_list **la, t_list **lb, int n_piece, int ok)
@@ -718,7 +805,9 @@ int	main(int argc, char *argv[])
 	//ft_printf(" len: %d\n", lstsize); 	
 	//alg_forwarding(&a_head, &b_head, argc);
 	//alg_quick_sort(&a_head, &b_head);
-	int	n_piece = 15;
+	
+	//int	n_piece = 15;
+	
 	// while (++n_piece < 37)
 	// {
 	// 	alg(&a_head, &b_head, n_piece, 0);
@@ -730,7 +819,8 @@ int	main(int argc, char *argv[])
 	// 	ft_lstclear(&b_head, NULL);
 	// 	init_list(&a_head, argc, args_arr);
 		
-	alg(&a_head, &b_head, n_piece, 1);
+	//alg(&a_head, &b_head, n_piece, 1);
+	alg_turk(a_head, b_head);
 	//print_lst(a_head, b_head);	
 	free(args_arr);
 	ft_lstclear(&a_head, NULL);
