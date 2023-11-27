@@ -6,7 +6,7 @@
 /*   By: svidot <svidot@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/11 13:45:00 by svidot            #+#    #+#             */
-/*   Updated: 2023/11/27 13:43:19 by svidot           ###   ########.fr       */
+/*   Updated: 2023/11/27 14:05:14 by svidot           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -226,9 +226,9 @@ void	try_rr(t_eop **sol_arr, int n_ra, int n_rb, int seclst_size)
 	int gain;
 	
 	need = seclst_size - n_rb; 
-	gain = n_ra - need;	
+	gain = n_ra - need;	//ft_printf("YEYE RR\n");
 	if (gain >= 0 || -gain < n_rb)
-	{
+	{ft_printf("YEYE RR\n");
 		(*sol_arr)--;
 		while (**sol_arr == RRB) 
 		{	
@@ -307,7 +307,7 @@ void	sol_optim_extrem(t_eop **sol_arr)
 			// *sol_arr = sol_arr_sav;
 			// print_tab(*sol_arr, op_char_arr);			
 			// *sol_arr = sol_arr_sav2;
-			
+			//("YEYE DEUX\n");
 			try_rr(sol_arr, n_ra, n_rb, seclst_size);
 			//ft_printf("AP TRY");
 			
@@ -332,7 +332,7 @@ void	try_rr2(t_eop **sol_arr, int n_ra, int n_rb, int seclst_size)
 {
 	int	need;
 	int gain;
-	
+	//ft_printf("YEYE\n");
 	need = seclst_size - n_rb; 
 	gain = n_ra - need;	
 	if (gain >= 0 || -gain < n_rb)
@@ -405,9 +405,9 @@ void	sol_optim_extrem2(t_eop **sol_arr)
 			n_rb++;			
 			(*sol_arr)++;		
 		}
-		if (n_ra && n_rb && n_ra >= n_rb)
-		{
-		
+		//if (n_ra && n_rb && n_ra >= n_rb)
+		//{
+	//	ft_printf("YEYE IN\n");
 			char	*op_char_arr[OP];
 		 	init_op_char_arr(op_char_arr);
 				
@@ -425,7 +425,7 @@ void	sol_optim_extrem2(t_eop **sol_arr)
 			
 			//*sol_arr = sol_arr_sav;
 		//	ft_printf("EXTREM FIN size:%d, na: %d, nb: %d\n", seclst_size, n_ra, n_rb);		
-		}
+	//	}
 		if (n_rb || n_ra)
 			(*sol_arr)--;
 		// if (n_ra && n_rb)
@@ -593,7 +593,7 @@ void	calcul_best(int ind_item_a, int lstsize_a, int ind_item_b, int lstsize_b)
 	}		
 }
 //ft_printf("Where is my segfault?!\n");
-void	rewind_lst(t_list **la, t_list **lb, int lstsize)
+void	rewind_lst(t_list **la, t_list **lb, int lstsize, t_eop **sol_arr)
 {	
 	t_list	*target;
 	int		target_ind;
@@ -604,16 +604,16 @@ void	rewind_lst(t_list **la, t_list **lb, int lstsize)
 	{	
 		while (target_ind-- > 0)
 		{
-			rb(la, lb, 1);				
-			//*(*sol_arr)++ = RB;
+			rb(la, lb, 0);				
+			*(*sol_arr)++ = RB;
 		}
 	}
 	else if (target_ind > 0)
 	{		
 		while (lstsize-- - target_ind)
 		{		
-			rrb(la, lb, 1);	
-			//*(*sol_arr)++ = RRB;
+			rrb(la, lb, 0);	
+			*(*sol_arr)++ = RRB;
 		}
 	}
 }
@@ -630,7 +630,7 @@ void	alg_turk(t_list	*la, t_list *lb)
  		sl_arr[i] = 0;
 	t_eop *sol_arr = sl_arr;
 	
-	pb(&la, &lb, 1);
+	pb(&la, &lb, 0);
 	*sol_arr++ = PB;
 	//pb(&la, &lb, 1);
 	while (la)
@@ -648,27 +648,36 @@ void	alg_turk(t_list	*la, t_list *lb)
 		la = la_sav;//print_lst(la, lb);		
 		while (best_n_rr--)
 		{
-			*sol_arr++ = PB;
-			rr(&la, &lb, 1);
+			*sol_arr++ = RR;
+			rr(&la, &lb, 0);
 		}
 		while (best_n_rrr--)
 		{
-			*sol_arr++ = PB;
-			rrr(&la, &lb, 1);
+			*sol_arr++ = RRR;
+			rrr(&la, &lb, 0);
 		}	
 		while (best_n_ra--)
-		{}
-			ra(&la, &lb, 1);
+		{
+			*sol_arr++ = RA;
+			ra(&la, &lb, 0);
+		}
 		while (best_n_rb--)
 		{
-			//ft_printf("aie\n %d", best_n_rb);
-			rb(&la, &lb, 1);
+			*sol_arr++ = RB;
+			rb(&la, &lb, 0);
 		}
-		while (best_n_rrb--)	
-			rrb(&la, &lb, 1);
+		while (best_n_rrb--)
+		{
+			*sol_arr++ = RRB;
+			rrb(&la, &lb, 0);
+		}	
 		while (best_n_rra--)
-			rra(&la, &lb, 1);
-		pb(&la, &lb, 1);	
+		{
+			*sol_arr++ = RRA;
+			rra(&la, &lb, 0);
+		}
+		pb(&la, &lb, 0);
+		*sol_arr++ = PB;	
 		best_item_a = 0;
 		best_item_b = 0;
 		best_cost = -1;
@@ -679,9 +688,18 @@ void	alg_turk(t_list	*la, t_list *lb)
 		best_n_ra = 0;
 		best_n_rra = 0;
 	}
-	rewind_lst(&la, &lb, lstsize_b + 1);
-	while (pa(&la, &lb, 1))
-		;
+	rewind_lst(&la, &lb, lstsize_b + 1, &sol_arr);
+	while (pa(&la, &lb, 0))
+		*sol_arr++ = PA;
+		
+	sol_arr = sl_arr;
+	sol_optim_extrem(&sol_arr);
+	sol_arr = sl_arr;
+	sol_optim_extrem2(&sol_arr);
+	sol_arr = sl_arr;
+	char	*op_char_arr[OP];
+	init_op_char_arr(op_char_arr);
+	print_tab(sol_arr, op_char_arr);
 	//print_lst(la, lb);	
 }
 
