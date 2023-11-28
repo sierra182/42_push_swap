@@ -35,7 +35,7 @@ t_eop	is_valid_op(char *s)
 
 	init_op_char_arr(op_char_arr);
 	op = 0;
-	while (op++ < RRR)
+	while (op++ < RRR) 
 		if (!ft_strcmp(op_char_arr[op], s))
 			return (op);
 	return (0);

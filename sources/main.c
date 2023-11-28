@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: svidot <svidot@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/11 13:45:00 by svidot            #+#    #+#             */
-/*   Updated: 2023/11/28 05:53:35 by marvin           ###   ########.fr       */
+/*   Updated: 2023/11/28 11:05:56 by svidot           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -490,87 +490,194 @@ t_list	*get_target(int value, t_list *lst)
 }
 
 	static int	best_cost = -1;
-	static int	best_n_rr;
-	static int	best_n_rrr;
-	static int	best_n_rb;
-	static int	best_n_rrb;
-	static int	best_n_ra;
-	static int	best_n_rra;
+
+typedef struct s_cost_utils
+{
+	int	up_need_a;
+	int	down_need_a;
+	int	up_need_b; 
+	int	down_need_b;
+	int	cost;
+} t_scost;
 	
-void	calcul_best(int ind_item_a, int lstsize_a, int ind_item_b, int lstsize_b)
-{	
-	int			up_need_a;
-	int			down_need_a;
-	int			up_need_b; 
-	int			down_need_b;
-	int			cost;
-	int 		sense;
-	
-	int	n_ra = 0;
-	int	n_rb = 0;
-	int n_rr = 0;
-	int n_rra = 0;
-	int n_rrb = 0;
-	int n_rrr = 0;
-	
-	up_need_a = ind_item_a;
-	down_need_a = lstsize_a - ind_item_a;
-	up_need_b = ind_item_b;
-	down_need_b = lstsize_b - ind_item_b;
-	if (up_need_a <= down_need_a && up_need_b <= down_need_b)
-	{	
-		if (up_need_a >= up_need_b)
-		{		
-			n_ra = up_need_a - up_need_b;			
-			n_rr = up_need_b;
-			cost = up_need_a; 
-		}
-		else
-		{
-			n_rb = up_need_b - up_need_a;			
-			n_rr = up_need_a;
-			cost = up_need_b; 
-		}		
-	}
-	else if (down_need_a <= up_need_a && down_need_b <= up_need_b)
-	{		
-		if (down_need_a >= down_need_b)
-		{
-			n_rra = down_need_a - down_need_b;			
-			n_rrr = down_need_b;
-			cost = down_need_a; 
-		}
-		else
-		{
-			n_rrb = down_need_b - down_need_a;			
-			n_rrr = down_need_a;
-			cost = down_need_b; 
-		}
-	}
-	else if (up_need_a <= down_need_a && up_need_b >= down_need_b)
-	{	
-		n_ra = up_need_a;
-		n_rrb = down_need_b;
-		cost = up_need_a + down_need_b;
-	}
-	else if (up_need_a >= down_need_a && up_need_b <= down_need_b)
-	{	
-		n_rb = up_need_b;
-		n_rra = down_need_a;
-		cost = up_need_b + down_need_a; 
-	}	
-	if (cost < best_cost || best_cost == -1)
-	{		
-		best_n_rr = n_rr;
-		best_n_rrr = n_rrr;
-		best_n_rb = n_rb;
-		best_n_rrb = n_rrb;
-		best_n_ra = n_ra;
-		best_n_rra = n_rra;
-		best_cost = cost;
-	}		
+typedef struct s_n_op
+{
+	int	n_ra;
+	int	n_rb;
+	int n_rr;
+	int n_rra;
+	int n_rrb;
+	int n_rrr;
+} t_snop;
+
+void	init_snop(t_snop *snop)
+{
+	snop->n_ra = 0;
+	snop->n_rb = 0;
+	snop->n_rr = 0;
+	snop->n_rra = 0;
+	snop->n_rrb = 0;
+	snop->n_rrr = 0;
 }
 
+int	assign_up_up(t_scost *scost, t_snop *snop)
+{		
+	if (scost->up_need_a <= scost->down_need_a && scost->up_need_b <= scost->down_need_b)
+	{	
+		if (scost->up_need_a >= scost->up_need_b)
+		{		
+			snop->n_ra = scost->up_need_a - scost->up_need_b;			
+			snop->n_rr = scost->up_need_b;
+			scost->cost = scost->up_need_a; 
+		}
+		else
+		{
+			snop->n_rb = scost->up_need_b - scost->up_need_a;			
+			snop->n_rr = scost->up_need_a;
+			scost->cost = scost->up_need_b; 
+		}
+		return (1);
+	}
+	return (0);
+}
+int	assign_down_down(t_scost *scost, t_snop *snop)
+{		
+	if (scost->down_need_a <= scost->up_need_a && scost->down_need_b <= scost->up_need_b)
+	{	
+		if (scost->down_need_a >= scost->down_need_b)
+		{
+			snop->n_rra = scost->down_need_a - scost->down_need_b;			
+			snop->n_rrr = scost->down_need_b;
+			scost->cost = scost->down_need_a; 
+		}
+		else
+		{
+			snop->n_rrb = scost->down_need_b - scost->down_need_a;			
+			snop->n_rrr = scost->down_need_a;
+			scost->cost = scost->down_need_b; 
+		}
+		return (1);
+	}
+	return (0);
+}	
+
+void	assign_updown_downup(t_scost *scost, t_snop *snop)
+{		
+	if (scost->up_need_a <= scost->down_need_a && scost->up_need_b >= scost->down_need_b)
+	{	
+		snop->n_ra = scost->up_need_a;
+		snop->n_rrb = scost->down_need_b;
+		scost->cost = scost->up_need_a + scost->down_need_b;
+	}
+	else if (scost->up_need_a >= scost->down_need_a && scost->up_need_b <= scost->down_need_b)
+	{	
+		snop->n_rb = scost->up_need_b;
+		snop->n_rra = scost->down_need_a;
+		scost->cost = scost->up_need_b + scost->down_need_a; 
+	}	
+}
+
+void	calcul_best(int ind_item_a, int lstsize_a, int ind_item_b, int lstsize_b, int *best_sol)
+{	
+	t_scost scost;
+	t_snop 	snop;
+		
+	init_snop(&snop);	
+	scost.up_need_a = ind_item_a;
+	scost.down_need_a = lstsize_a - ind_item_a;
+	scost.up_need_b = ind_item_b;
+	scost.down_need_b = lstsize_b - ind_item_b;	
+	if (assign_up_up(&scost, &snop))
+		;	
+	else if (assign_down_down(&scost, &snop))
+		;
+	else
+		assign_updown_downup(&scost, &snop);
+	if (scost.cost < best_cost || best_cost == -1)
+	{		
+		best_sol[RR] = snop.n_rr;
+		best_sol[RRR] = snop.n_rrr;
+		best_sol[RB] = snop.n_rb;
+		best_sol[RRB] = snop.n_rrb;
+		best_sol[RA] = snop.n_ra;
+		best_sol[RRA] = snop.n_rra;
+		best_cost = scost.cost;
+	}		
+}
+// void	calcul_best(int ind_item_a, int lstsize_a, int ind_item_b, int lstsize_b, int *best_sol)
+// {	
+// 	int			up_need_a;
+// 	int			down_need_a;
+// 	int			up_need_b; 
+// 	int			down_need_b;
+// 	int			cost;
+	
+// 	t_snop n_op;
+		
+// 	int	n_ra = 0;
+// 	int	n_rb = 0;
+// 	int n_rr = 0;
+// 	int n_rra = 0;
+// 	int n_rrb = 0;
+// 	int n_rrr = 0;
+	
+// 	up_need_a = ind_item_a;
+// 	down_need_a = lstsize_a - ind_item_a;
+// 	up_need_b = ind_item_b;
+// 	down_need_b = lstsize_b - ind_item_b;
+// 	if (up_need_a <= down_need_a && up_need_b <= down_need_b)
+// 	{	
+// 		if (up_need_a >= up_need_b)
+// 		{		
+// 			n_ra = up_need_a - up_need_b;			
+// 			n_rr = up_need_b;
+// 			cost = up_need_a; 
+// 		}
+// 		else
+// 		{
+// 			n_rb = up_need_b - up_need_a;			
+// 			n_rr = up_need_a;
+// 			cost = up_need_b; 
+// 		}		
+// 	}
+// 	else if (down_need_a <= up_need_a && down_need_b <= up_need_b)
+// 	{		
+// 		if (down_need_a >= down_need_b)
+// 		{
+// 			n_rra = down_need_a - down_need_b;			
+// 			n_rrr = down_need_b;
+// 			cost = down_need_a; 
+// 		}
+// 		else
+// 		{
+// 			n_rrb = down_need_b - down_need_a;			
+// 			n_rrr = down_need_a;
+// 			cost = down_need_b; 
+// 		}
+// 	}
+// 	else if (up_need_a <= down_need_a && up_need_b >= down_need_b)
+// 	{	
+// 		n_ra = up_need_a;
+// 		n_rrb = down_need_b;
+// 		cost = up_need_a + down_need_b;
+// 	}
+// 	else if (up_need_a >= down_need_a && up_need_b <= down_need_b)
+// 	{	
+// 		n_rb = up_need_b;
+// 		n_rra = down_need_a;
+// 		cost = up_need_b + down_need_a; 
+// 	}	
+// 	if (cost < best_cost || best_cost == -1)
+// 	{		
+// 		best_sol[RR] = n_rr;
+// 		best_sol[RRR] = n_rrr;
+// 		best_sol[RB] = n_rb;
+// 		best_sol[RRB] = n_rrb;
+// 		best_sol[RA] = n_ra;
+// 		best_sol[RRA] = n_rra;
+// 		best_cost = cost;
+// 	}		
+// }
 void	rewind_lst(t_list **la, t_list **lb, int lstsize)
 {
 	int		target_ind;
@@ -581,17 +688,35 @@ void	rewind_lst(t_list **la, t_list **lb, int lstsize)
 			rb(la, lb, 1);
 	else if (target_ind)
 		while (lstsize-- - target_ind)
-			rrb(la, lb, 0);
+			rrb(la, lb, 1);
 }
-
+void	apply_sol(t_list **la, t_list **lb, int *sol)
+{
+	t_eop	op;
+	int 	(*op_arr[OP]) (t_list **, t_list **, int); //static ?
+	
+	op = 0;
+	init_op_arr(op_arr);
+	while (++op <= RRR)	
+			while (sol[op]--)				
+				op_arr[op](la, lb, 1);	
+}
 void	alg_turk(t_list	*la, t_list *lb)
 {
 	t_list	*la_sav;
-	t_eop	best_op[7];
+	int		best_sol[OP];
 	int		lstsize_a;
 	int		lstsize_b;
 	int		ind_la;
 		
+	int i;
+	i = 0;
+	while (i < OP)
+	{
+		best_sol[i] = 0;	
+		i++;	
+	}
+				
 	pb(&la, &lb, 1);	
 	while (la)
 	{				
@@ -602,34 +727,36 @@ void	alg_turk(t_list	*la, t_list *lb)
 		while (la)
 		{			
 			calcul_best(ind_la++, lstsize_a, get_item_index(lb, 
-				get_target(*(int *) la->content, lb)), lstsize_b);					
+				get_target(*(int *) la->content, lb)), lstsize_b, best_sol);				
 			la = la->next;
 		}			
 		la = la_sav;		
-		while (best_n_rr--)		
-			rr(&la, &lb, 1);		
-		while (best_n_rrr--)
-			rrr(&la, &lb, 1);		
-		while (best_n_ra--)		
-			ra(&la, &lb, 1);		
-		while (best_n_rb--)
-			rb(&la, &lb, 1);
-		while (best_n_rrb--)
-			rrb(&la, &lb, 1);		
-		while (best_n_rra--)
-			rra(&la, &lb, 1);	
+		apply_sol(&la, &lb, best_sol);		
 		pb(&la, &lb, 1);	
-		best_cost = -1;
-		best_n_rr = 0;
-		best_n_rrr = 0;
-		best_n_rb = 0;
-		best_n_rrb = 0;
-		best_n_ra = 0;
-		best_n_rra = 0;
+		best_cost = -1;		
+		 i = 0;
+ 		// while (i < OP)		
+		// {
+		// 	best_sol[i] = 0;	
+		// 	i++;	
+		// }	
+		best_sol[RR] = 0;
+		best_sol[RRR] = 0;
+		best_sol[RB] = 0;
+		best_sol[RRB] = 0;
+		best_sol[RA] = 0;
+		best_sol[RRA] = 0;
+//best_sol[NONE] = 0;
+best_sol[PA] = 0;
+best_sol[PB] = 0;
+best_sol[SA] = 0;	
+best_sol[SB] = 0;	
+best_sol[SS] = 0;			
 	}
 	rewind_lst(&la, &lb, lstsize_b + 1);
 	while (pa(&la, &lb, 1))
 		;
+	//print_lst(la, lb);
 }
 
 void	alg(t_list **la, t_list **lb, int n_piece, int ok)
@@ -766,6 +893,16 @@ int	main(int argc, char *argv[])
 		
 	//alg(&a_head, &b_head, n_piece, 1);
 	alg_turk(a_head, b_head);
+	
+	// int sol[OP];
+	// int	i = 0;
+ 	// while (i++ < OP)
+	// 	sol[i] = 0;
+ 	// sol[PA] = 2;
+	// sol[RRR] = 3;
+	// sol[SS] = 1;	
+	// apply_sol(&a_head, &b_head, sol);
+	
 	//print_lst(a_head, b_head);	
 	free(args_arr);
 	ft_lstclear(&a_head, NULL);
