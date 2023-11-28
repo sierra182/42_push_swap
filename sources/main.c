@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/11 13:45:00 by svidot            #+#    #+#             */
-/*   Updated: 2023/11/28 19:25:02 by marvin           ###   ########.fr       */
+/*   Updated: 2023/11/28 21:50:38 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -277,15 +277,17 @@ void	alg_forwarding(t_list **la, t_list **lb, int argc, int flag)
 {
 	if (argc - 1 <= 6)
 	{
-		ft_printf("backtr\n");
+		if (flag)
+			ft_printf("\nwelcome to backtracking\n");
 		launch_backtr(la, lb, flag);
 	}
 	else
 	{
-		ft_printf("turk\n");
 		alg_turk(la, *la, *lb, 0);
+		ft_printf("\n    .- ¨\n    }    \n   °\n °*       .!*¨****°\n**       **°    *)\n+: +:+         +°\n \
+		+#  -+.+       +|'\n+=1=+=1=1=-   +-\n     #+#    °°<...-.\n     °#+   °%%%%%%%%%%°%%%%$  <~°~~-~~°-°-\n");
 	}
-	if (flag)
+		if (flag)
 		print_lst(*la, *lb);
 }
 
