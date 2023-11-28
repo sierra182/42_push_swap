@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/11 13:45:00 by svidot            #+#    #+#             */
-/*   Updated: 2023/11/28 17:17:48 by marvin           ###   ########.fr       */
+/*   Updated: 2023/11/28 19:25:02 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -245,64 +245,70 @@ void	init_best_sol(int *sol)
 	sol[0] = -1;	
 }
 
-void	alg_turk(t_list	*la, t_list	*la_sav, t_list *lb, int ind_la)
+void	alg_turk(t_list	**la, t_list *la_sav, t_list *lb, int ind_la)
 {	
 	int		best_sol[OP];
 	int		lstsize[2];
 	
 	init_best_sol(best_sol);	
-	pb(&la, &lb, 1);
-	while (la)
+	pb(la, &lb, 1);
+	while (*la)
 	{
 		ind_la = 0;
-		lstsize[0] = ft_lstsize(la);
+		lstsize[0] = ft_lstsize(*la);
 		lstsize[1] = ft_lstsize(lb);
-		la_sav = la;
-		while (la)
+		la_sav = *la;
+		while (*la)
 		{
 			calcul_best(ind_la++, lstsize, get_item_index(lb,
-					get_target(*(int *) la->content, lb)), best_sol);
-			la = la->next;
+					get_target(*(int *) (*la)->content, lb)), best_sol);
+			*la = (*la)->next;
 		}
-		la = la_sav;
-		apply_sol(&la, &lb, best_sol);
-		pb(&la, &lb, 1);
+		*la = la_sav;
+		apply_sol(la, &lb, best_sol);
+		pb(la, &lb, 1);
 	}
-	rewind_lst(&la, &lb, lstsize[1] + 1);
-	while (pa(&la, &lb, 1))
+	rewind_lst(la, &lb, lstsize[1] + 1);
+	while (pa(la, &lb, 1))
 		;
 }
 
-void	alg_forwarding(t_list **la, t_list **lb, int argc)
+void	alg_forwarding(t_list **la, t_list **lb, int argc, int flag)
 {
 	if (argc - 1 <= 6)
 	{
 		ft_printf("backtr\n");
-		launch_backtr(la, lb);
+		launch_backtr(la, lb, flag);
 	}
 	else
 	{
 		ft_printf("turk\n");
-		alg_turk(*la, *la, *lb, 0);
+		alg_turk(la, *la, *lb, 0);
 	}
+	if (flag)
+		print_lst(*la, *lb);
 }
 
 int	main(int argc, char *argv[])
 { 
 	int		*args_arr;
 	int 	range;
+	int		flag;
 	t_list	*la;
 	t_list	*lb;
 	
 	la = NULL;
 	lb = NULL;
+	flag = 1;
 	if (argc <= 1)
 		return (1);
+	// if (argv[1][0] == '-' && argv[1][1] == 'v' && ++flag)
+	// 	del_arg();
 	if (!setup(&argc, argv, argv, &args_arr))
 		return (write(2, "Error\n", 6));
 	init_list(&la, argc, args_arr);
 	if (!is_sort(la, lb))
-		alg_forwarding(&la, &lb, argc);	
+		alg_forwarding(&la, &lb, argc, flag);	
 	free(args_arr);
 	ft_lstclear(&la, NULL);
 	ft_lstclear(&lb, NULL);

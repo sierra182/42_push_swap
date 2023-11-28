@@ -17,7 +17,7 @@
 
 #include "operations.h"
 
-void	launch_backtr(t_list **la, t_list **lb);
+void	launch_backtr(t_list **la, t_list **lb, int flag);
 void	launch_backtr_simpl(t_list **la);
 
 #endif

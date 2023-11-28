@@ -85,14 +85,18 @@ typedef struct s_backtr_utils
 	int 	(*rev_op_arr[OP]) (t_list **, t_list **, int);
 } t_sbacktr_utils;
 
-int	rec(t_slistpack *listpack, int depth, int depth_max, t_sbacktr_utils *backtr_utils)
+int	rec(t_slistpack *listpack, int depth, int depth_max, t_sbacktr_utils *backtr_utils, int flag)
 {	
 	t_eop op;
 	
 	if (is_sort(*listpack->la, *listpack->lb))	
 		return (1);			
-	else if (depth >= depth_max)						
+	else if (depth >= depth_max)
+	{
+		if (flag) 						
+			print_tab_style(backtr_utils->sol_arr);
 		return (0);			
+	}
 	depth++;
 	op = NONE;
 	while (++op <= RRR)
@@ -100,7 +104,7 @@ int	rec(t_slistpack *listpack, int depth, int depth_max, t_sbacktr_utils *backtr
 		if (backtr_utils->op_arr[op](listpack->la, listpack->lb, 0))
 		{
 			backtr_utils->sol_arr[depth - 1] = op;
-			if (rec(listpack, depth, depth_max, backtr_utils))
+			if (rec(listpack, depth, depth_max, backtr_utils, flag))
 				return (1);
 			backtr_utils->rev_op_arr[op](listpack->la, listpack->lb, 0);	
 		}
@@ -109,7 +113,7 @@ int	rec(t_slistpack *listpack, int depth, int depth_max, t_sbacktr_utils *backtr
 	return (0);
 }
 
-void	launch_backtr(t_list **la, t_list **lb)
+void	launch_backtr(t_list **la, t_list **lb, int flag)
 {
 	int				i;
 	int				depth_max;
@@ -125,10 +129,17 @@ void	launch_backtr(t_list **la, t_list **lb)
 	listpack.lb = lb;
 	init_op_arr(backtr_utils.op_arr);
 	init_rev_op_arr(backtr_utils.rev_op_arr);
-	while (!rec(&listpack, 0, depth_max, &backtr_utils))
+	while (!rec(&listpack, 0, depth_max, &backtr_utils, flag))
 		depth_max++;			
 	init_op_char_arr(op_char_arr);
+	if (flag)
+	{
+		print_tab_style(backtr_utils.sol_arr);
+		ft_printf("\n");
+	}
 	print_tab(backtr_utils.sol_arr, op_char_arr);
+	//else
+
 	//print_lst(*listpack.la, *listpack.lb);
 }
 
