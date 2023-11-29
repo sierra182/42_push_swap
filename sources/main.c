@@ -6,7 +6,7 @@
 /*   By: svidot <svidot@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/11 13:45:00 by svidot            #+#    #+#             */
-/*   Updated: 2023/11/29 13:33:23 by svidot           ###   ########.fr       */
+/*   Updated: 2023/11/29 15:07:20 by svidot           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,22 +69,54 @@ t_list	*get_target(int value, t_list *lst)
 {	
 	t_list *target;
 	
-	target = get_min_item(lst);	
-	if (value < *(int *) target->content)
-		target = get_max_item(lst);
+	target = get_max_item(lst);	
+	if (value > *(int *) target->content)
+	 	target = get_min_item(lst);
 	else
 	{		
 		while (lst)
 		{
-			if (*(int *) lst->content > *(int *) target->content 
-					&& *(int *) lst->content < value)
+			if (*(int *) lst->content < *(int *) target->content 
+					&& *(int *) lst->content > value)
 				target = lst;
 			lst = lst->next;
 		}	
 	}
 	return (target);
 }
+// int	get_item_index(t_list *lst, t_list *item)
+// {
+// 	int	i;
 
+// 	i = 0;
+// 	while (lst && ++i)
+// 	{
+// 		if (lst == item)
+// 			return (--i);
+// 		lst = lst->next;
+// 	}
+// 	return (--i);
+// }
+
+// t_list	*get_target(int value, t_list *lst)
+// {	
+// 	t_list *target;
+	
+// 	target = get_min_item(lst);	
+// 	if (value < *(int *) target->content)
+// 		target = get_max_item(lst);
+// 	else
+// 	{		
+// 		while (lst)
+// 		{
+// 			if (*(int *) lst->content > *(int *) target->content 
+// 					&& *(int *) lst->content < value)
+// 				target = lst;
+// 			lst = lst->next;
+// 		}	
+// 	}
+// 	return (target);
+// }
 typedef struct s_cost_utils
 {
 	int	up_need_a;
@@ -177,7 +209,7 @@ void	assign_updown_downup(t_scost *scost, t_snop *snop)
 }
 
 void	calcul_best(int ind_item_a, int *lstsize, int ind_item_b, int *best_sol)
-{	
+{
 	t_scost scost;
 	t_snop 	snop;
 		
@@ -208,13 +240,13 @@ void	rewind_lst(t_list **la, t_list **lb, int lstsize)
 {
 	int		target_ind;
 
-	target_ind = get_item_index(*lb, get_max_item(*lb));
+	target_ind = get_item_index(*la, get_min_item(*la));
 	if (target_ind > 0 && lstsize - target_ind >= target_ind)
 		while (target_ind--)
-			rb(la, lb, 1);
+			ra(la, lb, 1);
 	else if (target_ind)
 		while (lstsize-- - target_ind)
-			rrb(la, lb, 1);
+			rra(la, lb, 1);
 }
 
 void	apply_sol(t_list **la, t_list **lb, int *sol)
@@ -235,7 +267,37 @@ void	apply_sol(t_list **la, t_list **lb, int *sol)
 	}	
 	sol[0] = -1;					
 }
+// void	rewind_lst(t_list **la, t_list **lb, int lstsize)
+// {
+// 	int		target_ind;
 
+// 	target_ind = get_item_index(*lb, get_max_item(*lb));
+// 	if (target_ind > 0 && lstsize - target_ind >= target_ind)
+// 		while (target_ind--)
+// 			rb(la, lb, 1);
+// 	else if (target_ind)
+// 		while (lstsize-- - target_ind)
+// 			rrb(la, lb, 1);
+// }
+
+// void	apply_sol(t_list **la, t_list **lb, int *sol)
+// {
+// 	t_eop	op;
+// 	static int 	(*op_arr[OP]) (t_list **, t_list **, int); 
+	
+// 	if (!op_arr[PA])	
+// 		init_op_arr(op_arr);	
+// 	op = 0;
+// 	while (++op <= RRR)
+// 	{
+// 		while (sol[op])
+// 		{
+// 			op_arr[op](la, lb, 1);	
+// 			sol[op]--;
+// 		}		
+// 	}	
+// 	sol[0] = -1;					
+// }
 void	init_best_sol(int *sol)
 {
 	int i;
@@ -302,36 +364,35 @@ void	pre_sort(t_list **la, t_list **lb, int argc, int *args_arr)
 	sort_list(*la);
 	median = *(int *) get_middle(*la)->content;
 	ft_lstclear(la, NULL);
+	//ft_lstclear(lb, NULL);
 	init_list(la, argc, args_arr);
 	sort_by_pivot(la, lb, median);	
 }
 
-void	alg_turk(t_list	**la, t_list *la_sav, t_list *lb, int ind_la)
+void	alg_turk(t_list	**la, t_list *lb_sav, t_list **lb, int ind_lb) 
 {	
 	int		best_sol[OP];
 	int		lstsize[2];
 	
 	init_best_sol(best_sol);	
-	pa(la, &lb, 1);
-	while (*la)
+	pa(la, lb, 1);
+	while (*lb)
 	{
-		ind_la = 0;
+		ind_lb = 0;
 		lstsize[0] = ft_lstsize(*la);
-		lstsize[1] = ft_lstsize(lb);
-		la_sav = *la;
-		while (*la)
+		lstsize[1] = ft_lstsize(*lb);
+		lb_sav = *lb;
+		while (*lb)
 		{
-			calcul_best(ind_la++, lstsize, get_item_index(lb,
-					get_target(*(int *) (*la)->content, lb)), best_sol);
-			*la = (*la)->next;
+			calcul_best(get_item_index(*la, get_target(*(int *) (*lb)->content, *la)), lstsize, ind_lb++, best_sol); 
+			*lb = (*lb)->next;
 		}
-		*la = la_sav;
-		apply_sol(la, &lb, best_sol);
-		pb(la, &lb, 1);
+		*lb = lb_sav;
+		apply_sol(la, lb, best_sol); 
+		pa(la, lb, 1);
 	}
-	rewind_lst(la, &lb, lstsize[1] + 1);
-	while (pa(la, &lb, 1))
-		;
+	rewind_lst(la, lb, lstsize[0] + 1);   
+	//print_lst(*la, *lb);
 }
 
 // void	alg_turk(t_list	**la, t_list *la_sav, t_list *lb, int ind_la)
@@ -373,7 +434,7 @@ void	alg_forwarding(t_list **la, t_list **lb, int argc, int *args_arr, int flag)
 	else
 	{
 		pre_sort(la, lb, argc, args_arr);
-		//alg_turk(la, *la, *lb, 0);
+		alg_turk(la, *lb, lb, 0);
 		if (flag)
 			ft_printf("\n    .- ¨\n    }    \n   °\n °*       .!*¨****°\n**       **°    *)\n+: +:+         +°\n \
 		+#  -+.+       +|'\n+=1=+=1=1=-   +-\n     #+#    °°<...-.\n     °#+   °%%%%%%%%%%°%%%%$  <~°~~-~~°-°-\n");
@@ -409,7 +470,7 @@ int	main(int argc, char *argv[])
 
 	if (!is_sort(la, lb))
 	 	alg_forwarding(&la, &lb, argc, args_arr, flag);	
-	print_lst(la, lb);
+	//print_lst(la, lb);
 	free(args_arr);
 	ft_lstclear(&la, NULL);
 	ft_lstclear(&lb, NULL);
