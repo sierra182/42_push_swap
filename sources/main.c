@@ -6,7 +6,7 @@
 /*   By: svidot <svidot@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/11 13:45:00 by svidot            #+#    #+#             */
-/*   Updated: 2023/11/29 12:08:53 by svidot           ###   ########.fr       */
+/*   Updated: 2023/11/29 13:33:23 by svidot           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -284,6 +284,27 @@ void	sort_list(t_list* lst)
 			lst = lst->next;		
 	}	
 }
+void	sort_by_pivot(t_list **la, t_list **lb, int pivot)
+{	
+	pb(la, lb, 1);
+	while (*la)
+	{		
+		pb(la, lb, 1);
+		if (*(int *) (*lb)->content <= pivot)
+			rb(la, lb, 1);		
+	}
+}
+
+void	pre_sort(t_list **la, t_list **lb, int argc, int *args_arr)
+{
+	int	median;
+	
+	sort_list(*la);
+	median = *(int *) get_middle(*la)->content;
+	ft_lstclear(la, NULL);
+	init_list(la, argc, args_arr);
+	sort_by_pivot(la, lb, median);	
+}
 
 void	alg_turk(t_list	**la, t_list *la_sav, t_list *lb, int ind_la)
 {	
@@ -291,7 +312,7 @@ void	alg_turk(t_list	**la, t_list *la_sav, t_list *lb, int ind_la)
 	int		lstsize[2];
 	
 	init_best_sol(best_sol);	
-	pb(la, &lb, 1);
+	pa(la, &lb, 1);
 	while (*la)
 	{
 		ind_la = 0;
@@ -313,7 +334,35 @@ void	alg_turk(t_list	**la, t_list *la_sav, t_list *lb, int ind_la)
 		;
 }
 
-void	alg_forwarding(t_list **la, t_list **lb, int argc, int flag)
+// void	alg_turk(t_list	**la, t_list *la_sav, t_list *lb, int ind_la)
+// {	
+// 	int		best_sol[OP];
+// 	int		lstsize[2];
+	
+// 	init_best_sol(best_sol);	
+// 	pb(la, &lb, 1);
+// 	while (*la)
+// 	{
+// 		ind_la = 0;
+// 		lstsize[0] = ft_lstsize(*la);
+// 		lstsize[1] = ft_lstsize(lb);
+// 		la_sav = *la;
+// 		while (*la)
+// 		{
+// 			calcul_best(ind_la++, lstsize, get_item_index(lb,
+// 					get_target(*(int *) (*la)->content, lb)), best_sol);
+// 			*la = (*la)->next;
+// 		}
+// 		*la = la_sav;
+// 		apply_sol(la, &lb, best_sol);
+// 		pb(la, &lb, 1);
+// 	}
+// 	rewind_lst(la, &lb, lstsize[1] + 1);
+// 	while (pa(la, &lb, 1))
+// 		;
+// }
+
+void	alg_forwarding(t_list **la, t_list **lb, int argc, int *args_arr, int flag)
 {
 	if (argc - 1 <= 6)
 	{
@@ -323,7 +372,8 @@ void	alg_forwarding(t_list **la, t_list **lb, int argc, int flag)
 	}
 	else
 	{
-		alg_turk(la, *la, *lb, 0);
+		pre_sort(la, lb, argc, args_arr);
+		//alg_turk(la, *la, *lb, 0);
 		if (flag)
 			ft_printf("\n    .- ¨\n    }    \n   °\n °*       .!*¨****°\n**       **°    *)\n+: +:+         +°\n \
 		+#  -+.+       +|'\n+=1=+=1=1=-   +-\n     #+#    °°<...-.\n     °#+   °%%%%%%%%%%°%%%%$  <~°~~-~~°-°-\n");
@@ -356,11 +406,10 @@ int	main(int argc, char *argv[])
 	if (!setup(&argc, argv, argv, &args_arr))
 		return (write(2, "Error\n", 6));
 	init_list(&la, argc, args_arr);
+
+	if (!is_sort(la, lb))
+	 	alg_forwarding(&la, &lb, argc, args_arr, flag);	
 	print_lst(la, lb);
-	sort_list(la);
-	print_lst(la, lb);
-	// if (!is_sort(la, lb))
-	// 	alg_forwarding(&la, &lb, argc, flag);	
 	free(args_arr);
 	ft_lstclear(&la, NULL);
 	ft_lstclear(&lb, NULL);
