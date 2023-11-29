@@ -6,7 +6,7 @@
 /*   By: svidot <svidot@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/11 13:45:00 by svidot            #+#    #+#             */
-/*   Updated: 2023/11/29 12:01:00 by svidot           ###   ########.fr       */
+/*   Updated: 2023/11/29 12:08:53 by svidot           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -245,6 +245,25 @@ void	init_best_sol(int *sol)
 		sol[i++] = 0;		
 	sol[0] = -1;	
 }
+t_list	*get_middle(t_list *lst)
+{
+	int	len;
+	int	middle;
+	t_list	*tmp;
+	
+	tmp = lst;
+	middle = 0;
+	while ( tmp && tmp != ft_lstlast(lst)) 
+	{
+		middle++;
+		tmp = tmp->next;
+	}
+	middle /= 2;
+	while (middle--)
+		lst = lst->next;			
+	return (lst);
+}
+
 void	swap_data(void **a, void **b);
 
 void	sort_list(t_list* lst)
