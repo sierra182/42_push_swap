@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: svidot <svidot@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/11 13:45:00 by svidot            #+#    #+#             */
-/*   Updated: 2023/11/29 10:06:27 by marvin           ###   ########.fr       */
+/*   Updated: 2023/11/29 12:01:00 by svidot           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -245,6 +245,26 @@ void	init_best_sol(int *sol)
 		sol[i++] = 0;		
 	sol[0] = -1;	
 }
+void	swap_data(void **a, void **b);
+
+void	sort_list(t_list* lst)
+{
+	t_list *ref;
+	
+	ref = lst;
+	while (lst)
+	{
+		if (*(int *) lst->content < *(int *) ref->content)		
+			swap_data(&lst->content, &ref->content);	
+		else if (!lst->next)
+		{
+			ref = ref->next;
+			lst = ref;
+		}
+		else		
+			lst = lst->next;		
+	}	
+}
 
 void	alg_turk(t_list	**la, t_list *la_sav, t_list *lb, int ind_la)
 {	
@@ -317,8 +337,11 @@ int	main(int argc, char *argv[])
 	if (!setup(&argc, argv, argv, &args_arr))
 		return (write(2, "Error\n", 6));
 	init_list(&la, argc, args_arr);
-	if (!is_sort(la, lb))
-		alg_forwarding(&la, &lb, argc, flag);	
+	print_lst(la, lb);
+	sort_list(la);
+	print_lst(la, lb);
+	// if (!is_sort(la, lb))
+	// 	alg_forwarding(&la, &lb, argc, flag);	
 	free(args_arr);
 	ft_lstclear(&la, NULL);
 	ft_lstclear(&lb, NULL);
