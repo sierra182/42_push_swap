@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/11 13:45:00 by svidot            #+#    #+#             */
-/*   Updated: 2023/11/29 09:30:40 by marvin           ###   ########.fr       */
+/*   Updated: 2023/11/29 10:06:27 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -220,10 +220,11 @@ void	rewind_lst(t_list **la, t_list **lb, int lstsize)
 void	apply_sol(t_list **la, t_list **lb, int *sol)
 {
 	t_eop	op;
-	int 	(*op_arr[OP]) (t_list **, t_list **, int); //static ?!!!!!!!!!!!!!!!!! optim proco
+	static int 	(*op_arr[OP]) (t_list **, t_list **, int); 
 	
+	if (!op_arr[PA])	
+		init_op_arr(op_arr);	
 	op = 0;
-	init_op_arr(op_arr);
 	while (++op <= RRR)
 	{
 		while (sol[op])

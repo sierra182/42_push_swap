@@ -41,34 +41,25 @@ void	init_rev_op_arr(int (*rev_op_arr[]) (t_list **, t_list **, int))
 
 void	print_tab_style(t_eop *sol_arr)
 {
+	static char	*op_char_arr[OP];
+	
+	if (!op_char_arr[PA])
+	{ 
+		op_char_arr[PA] = "pa ";
+		op_char_arr[PB] = "pb ";
+		op_char_arr[SA] = "sa ";
+		op_char_arr[SB] = "sb ";
+		op_char_arr[SS] = "ss ";
+		op_char_arr[RA] = "ra ";
+		op_char_arr[RB] = "rb ";
+		op_char_arr[RR] = "rr ";
+		op_char_arr[RRA] = "rra ";
+		op_char_arr[RRB] = "rrb ";
+		op_char_arr[RRR] = "rrr ";
+	}
 	ft_printf("\033[%dm", 95);
 	ft_printf("\033[2K\r ");
-	while(*sol_arr)
-	{	
-		if (*sol_arr == PA)
-			ft_printf("pa ");
-		else if (*sol_arr == PB)
-			ft_printf("pb ");
-		else if (*sol_arr == SA)
-			ft_printf("sa ");
-		else if (*sol_arr == SB)
-			ft_printf("sb ");
-		else if (*sol_arr == SS)
-			ft_printf("ss ");
-		else if (*sol_arr == RA)
-			ft_printf("ra ");
-		else if (*sol_arr == RB)
-			ft_printf("rb ");		
-		else if (*sol_arr == RR)
-			ft_printf("rr ");
-		else if (*sol_arr == RRA)
-			ft_printf("rra ");
-		else if (*sol_arr == RRB)
-			ft_printf("rrb ");
-		else if (*sol_arr == RRR)
-			ft_printf("rrr ");
-		sol_arr++;
-	}	
+	print_tab(sol_arr, op_char_arr);	
 	ft_printf("\033[0m");	
 }
 
