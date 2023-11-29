@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/11 13:45:00 by svidot            #+#    #+#             */
-/*   Updated: 2023/11/28 21:50:38 by marvin           ###   ########.fr       */
+/*   Updated: 2023/11/29 09:30:40 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -284,11 +284,18 @@ void	alg_forwarding(t_list **la, t_list **lb, int argc, int flag)
 	else
 	{
 		alg_turk(la, *la, *lb, 0);
-		ft_printf("\n    .- ¨\n    }    \n   °\n °*       .!*¨****°\n**       **°    *)\n+: +:+         +°\n \
+		if (flag)
+			ft_printf("\n    .- ¨\n    }    \n   °\n °*       .!*¨****°\n**       **°    *)\n+: +:+         +°\n \
 		+#  -+.+       +|'\n+=1=+=1=1=-   +-\n     #+#    °°<...-.\n     °#+   °%%%%%%%%%%°%%%%$  <~°~~-~~°-°-\n");
 	}
-		if (flag)
+	if (flag)
 		print_lst(*la, *lb);
+}
+
+void	del_arg(char *argv[])
+{	
+	while (*++argv)	
+		*argv = *(argv + 1);	
 }
 
 int	main(int argc, char *argv[])
@@ -301,11 +308,11 @@ int	main(int argc, char *argv[])
 	
 	la = NULL;
 	lb = NULL;
-	flag = 1;
+	flag = 0;
 	if (argc <= 1)
 		return (1);
-	// if (argv[1][0] == '-' && argv[1][1] == 'v' && ++flag)
-	// 	del_arg();
+	if (argv[1][0] == '-' && argv[1][1] == 'v' && ++flag)
+		del_arg(argv);
 	if (!setup(&argc, argv, argv, &args_arr))
 		return (write(2, "Error\n", 6));
 	init_list(&la, argc, args_arr);
