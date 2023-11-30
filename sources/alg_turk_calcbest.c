@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   alg_turk_utils.c                                   :+:      :+:    :+:   */
+/*   alg_turk_calcbest.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: svidot <svidot@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 12:01:52 by svidot            #+#    #+#             */
-/*   Updated: 2023/11/30 12:09:02 by svidot           ###   ########.fr       */
+/*   Updated: 2023/11/30 13:03:01 by svidot           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-void	assign_updown_downup(t_scost *scost, t_snop *snop)
+static void	assign_updown_downup(t_scost *scost, t_snop *snop)
 {		
 	if (scost->up_need_a <= scost->down_need_a
 		&& scost->up_need_b >= scost->down_need_b)
@@ -28,7 +28,7 @@ void	assign_updown_downup(t_scost *scost, t_snop *snop)
 	}	
 }
 
-int	assign_down_down(t_scost *scost, t_snop *snop)
+static int	assign_down_down(t_scost *scost, t_snop *snop)
 {		
 	if (scost->down_need_a <= scost->up_need_a && 
 		scost->down_need_b <= scost->up_need_b)
@@ -50,7 +50,7 @@ int	assign_down_down(t_scost *scost, t_snop *snop)
 	return (0);
 }	
 
-int	assign_up_up(t_scost *scost, t_snop *snop)
+static int	assign_up_up(t_scost *scost, t_snop *snop)
 {		
 	if (scost->up_need_a <= scost->down_need_a && 
 			scost->up_need_b <= scost->down_need_b)
@@ -72,7 +72,7 @@ int	assign_up_up(t_scost *scost, t_snop *snop)
 	return (0);
 }
 
-void	init_snop(t_snop *snop)
+static void	init_snop(t_snop *snop)
 {
 	snop->n_ra = 0;
 	snop->n_rb = 0;

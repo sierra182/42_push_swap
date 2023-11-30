@@ -6,7 +6,7 @@
 /*   By: svidot <svidot@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/11 13:45:00 by svidot            #+#    #+#             */
-/*   Updated: 2023/11/30 11:49:00 by svidot           ###   ########.fr       */
+/*   Updated: 2023/11/30 12:58:27 by svidot           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@
 
 #include <stdio.h>
 
-void	alg_forwarding(t_list **la, t_list **lb, int argc, int *args_arr, int flag)
+static void	alg_forwarding(t_list **la, t_list **lb, int argc, int *args_arr, int flag)
 {
 	if (argc - 1 <= 6)
 	{

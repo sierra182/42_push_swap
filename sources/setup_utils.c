@@ -6,7 +6,7 @@
 /*   By: svidot <svidot@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 11:51:21 by svidot            #+#    #+#             */
-/*   Updated: 2023/11/30 11:54:37 by svidot           ###   ########.fr       */
+/*   Updated: 2023/11/30 12:55:53 by svidot           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void del_arg(char *argv[])
 		*argv = *(argv + 1);
 }
 
-static int has_twins(int argc, int *args_arr, int tocheck)
+int has_twins(int argc, int *args_arr, int tocheck)
 {
 	int res;
 
@@ -31,7 +31,7 @@ static int has_twins(int argc, int *args_arr, int tocheck)
 	return (0);
 }
 
-static int is_overflow(char *s)
+int is_overflow(char *s)
 {
 	long nbr;
 	int isneg;
@@ -51,7 +51,7 @@ static int is_overflow(char *s)
 	return (0);
 }
 
-static void free_stdargv(char **stdargv)
+void free_stdargv(char **stdargv)
 {
 	int i;
 
@@ -61,7 +61,7 @@ static void free_stdargv(char **stdargv)
 	free(stdargv);
 }
 
-static char **make_stdargv(int *argc, char *argv[], char *argv_save[])
+char **make_stdargv(int *argc, char *argv[], char *argv_save[])
 {
 	char **stdargv_save;
 	char **split_save;
@@ -88,7 +88,7 @@ static char **make_stdargv(int *argc, char *argv[], char *argv_save[])
 	return (stdargv_save);
 }
 
-static void init_args_arr(int argc, char *argv[], int **args_arr)
+void init_args_arr(int argc, char *argv[], int **args_arr)
 {
 	*args_arr = (int *)malloc(sizeof(int) * (argc - 1));
 	if (!*args_arr)

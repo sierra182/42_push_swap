@@ -34,13 +34,13 @@ typedef struct s_backtr_utils
 	int 	(*rev_op_arr[OP]) (t_list **, t_list **, int);
 } t_sbacktr_utils;
 
-void	print_tab(t_eop *sol_arr, char **op_char_arr)
+static void	print_tab(t_eop *sol_arr, char **op_char_arr)
 {	
 	while (*sol_arr)	
 		ft_printf("%s", op_char_arr[*sol_arr++]);	
 }
 
-void	print_tab_style(t_eop *sol_arr)
+static void	print_tab_style(t_eop *sol_arr)
 {
 	static char	*op_char_arr[OP];
 	
@@ -64,7 +64,7 @@ void	print_tab_style(t_eop *sol_arr)
 	ft_printf("\033[0m");	
 }
 
-void	init_rev_op_arr(int (*rev_op_arr[]) (t_list **, t_list **, int))
+static void	init_rev_op_arr(int (*rev_op_arr[]) (t_list **, t_list **, int))
 {
 	rev_op_arr[PA] = pb;
 	rev_op_arr[PB] = pa;	
@@ -79,7 +79,7 @@ void	init_rev_op_arr(int (*rev_op_arr[]) (t_list **, t_list **, int))
 	rev_op_arr[RRR] = rr;
 }
 
-int	rec(t_slistpack *listpack, t_sdepth depth, t_sbacktr_utils *backtr_utils, int flag)
+static int	rec(t_slistpack *listpack, t_sdepth depth, t_sbacktr_utils *backtr_utils, int flag)
 {	
 	t_eop op;
 	

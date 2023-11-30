@@ -6,11 +6,11 @@
 /*   By: svidot <svidot@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 11:58:44 by svidot            #+#    #+#             */
-/*   Updated: 2023/11/30 12:10:42 by svidot           ###   ########.fr       */
+/*   Updated: 2023/11/30 13:04:08 by svidot           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-void	sort_by_pivot(t_list **la, t_list **lb, int pivot)
+static void	sort_by_pivot(t_list **la, t_list **lb, int pivot)
 {	
 	pb(la, lb, 1);
 	while (*la)
@@ -21,7 +21,7 @@ void	sort_by_pivot(t_list **la, t_list **lb, int pivot)
 	}
 }
 
-t_list	*get_middle(t_list *lst)
+static t_list	*get_middle(t_list *lst)
 {
 	int	len;
 	int	middle;
@@ -40,7 +40,7 @@ t_list	*get_middle(t_list *lst)
 	return (lst);
 }
 
-void	sort_list(t_list* lst)
+static void	sort_list(t_list* lst)
 {
 	t_list *ref;
 	

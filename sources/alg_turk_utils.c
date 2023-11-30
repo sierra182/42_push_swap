@@ -6,11 +6,11 @@
 /*   By: svidot <svidot@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 12:29:43 by svidot            #+#    #+#             */
-/*   Updated: 2023/11/30 12:34:59 by svidot           ###   ########.fr       */
+/*   Updated: 2023/11/30 13:01:08 by svidot           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-t_list	*get_min_item(t_list *lst)
+static t_list	*get_min_item(t_list *lst)
 {
 	t_list	*min_item;
 	
@@ -24,7 +24,7 @@ t_list	*get_min_item(t_list *lst)
 	return (min_item);
 }
 
-t_list	*get_max_item(t_list *lst)
+static t_list	*get_max_item(t_list *lst)
 {
 	t_list	*max_item;
 	

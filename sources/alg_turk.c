@@ -29,7 +29,7 @@ typedef struct s_n_op
 	int n_rrr;
 } t_snop;
 
-void	apply_sol(t_list **la, t_list **lb, int *sol)
+static void	apply_sol(t_list **la, t_list **lb, int *sol)
 {
 	t_eop	op;
 	static int 	(*op_arr[OP]) (t_list **, t_list **, int); 
@@ -48,7 +48,7 @@ void	apply_sol(t_list **la, t_list **lb, int *sol)
 	sol[0] = -1;					
 }
 
-void	init_best_sol(int *sol)
+static void	init_best_sol(int *sol)
 {
 	int i;
 	
