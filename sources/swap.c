@@ -33,7 +33,8 @@ static int	swap(t_list *lst)
 }
 
 int	sa(t_list **la, t_list **lb, int wflag)
-{
+{	
+	(void) lb;
 	if (wflag)
 		write(1, "sa\n", 3);
 	return (swap(*la));
@@ -41,6 +42,7 @@ int	sa(t_list **la, t_list **lb, int wflag)
 
 int	sb(t_list **la, t_list **lb, int wflag)
 {
+	(void) la;
 	if (wflag)
 		write(1, "sb\n", 3);
 	return (swap(*lb));

@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 11:58:44 by svidot            #+#    #+#             */
-/*   Updated: 2023/11/30 16:06:05 by marvin           ###   ########.fr       */
+/*   Updated: 2023/11/30 21:06:01 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,7 @@ static void	sort_by_pivot(t_list **la, t_list **lb, int pivot)
 }
 
 static t_list	*get_middle(t_list *lst)
-{
-	int	len;
+{	
 	int	middle;
 	t_list	*tmp;
 	

@@ -15,6 +15,7 @@
 
 int	ra(t_list **la, t_list **lb, int wflag)
 {
+	(void) lb;
 	if (wflag)
 		write(1, "ra\n", 3);
 	return (rotate(la));
@@ -22,6 +23,7 @@ int	ra(t_list **la, t_list **lb, int wflag)
 
 int	rb(t_list **la, t_list **lb, int wflag)
 {
+	(void) la;
 	if (wflag)
 		write(1, "rb\n", 3);
 	return (rotate(lb));
