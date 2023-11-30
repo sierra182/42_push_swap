@@ -3,17 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: svidot <svidot@student.42.fr>              +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/11 13:45:00 by svidot            #+#    #+#             */
-/*   Updated: 2023/11/30 12:58:27 by svidot           ###   ########.fr       */
+/*   Updated: 2023/11/30 15:31:41 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include "setup.h"
+#include "setup_utils.h"
 #include "ps_utils.h"
 #include "alg_backtr.h"
+#include "alg_turk.h"
 #include <unistd.h>
 #include <stdlib.h>
 

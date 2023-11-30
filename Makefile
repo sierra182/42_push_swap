@@ -5,7 +5,7 @@ LDFLAGS = ft_printf/libftprintf.a
 SRC_DIR = sources
 BONUS_DIR = bonus
 GNL_DIR = gnl
-SOURCES = $(SRC_DIR)/main.c $(SRC_DIR)/setup.c $(SRC_DIR)/ps_utils.c \
+SOURCES = $(SRC_DIR)/main.c $(SRC_DIR)/setup.c $(SRC_DIR)/setup_utils.c $(SRC_DIR)/ps_utils.c $(SRC_DIR)/alg_turk.c $(SRC_DIR)/alg_turk_calcbest.c $(SRC_DIR)/alg_turk_utils.c $(SRC_DIR)/alg_turk_presort.c\
 $(SRC_DIR)/push.c $(SRC_DIR)/swap.c $(SRC_DIR)/rotate.c $(SRC_DIR)/rev_rotate.c $(SRC_DIR)/rotate_utils.c \
 $(SRC_DIR)/alg_backtr.c
 SOURCES_BONUS = $(BONUS_DIR)/checker.c \

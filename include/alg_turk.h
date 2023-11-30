@@ -1,21 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ps_utils.h                                         :+:      :+:    :+:   */
+/*   alg_turk.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/19 21:25:37 by marvin            #+#    #+#             */
-/*   Updated: 2023/11/19 21:25:37 by marvin           ###   ########.fr       */
+/*   Created: 2023/11/30 15:05:35 by marvin            #+#    #+#             */
+/*   Updated: 2023/11/30 15:05:35 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PS_UTILS_H
- #define PS_UTILS_H
+#ifndef ALG_TURK_H
+# define ALG_TURK_H
 
 #include "libft.h"
 
-int		is_sort(t_list *la, t_list *lb);
-void	print_lst(t_list *la, t_list *lb);
+void	alg_turk(t_list	**la, t_list *lb_sav, t_list **lb, int ind_lb);
+void	pre_sort(t_list **la, t_list **lb, int argc, int *args_arr);
 
 #endif

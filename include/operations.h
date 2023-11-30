@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/11 13:46:50 by svidot            #+#    #+#             */
-/*   Updated: 2023/11/29 17:03:34 by marvin           ###   ########.fr       */
+/*   Updated: 2023/11/30 16:04:53 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,8 @@ typedef enum e_op
 	RRB,
 	RRR
 } t_eop;
+
+void	swap_data(void **a, void **b);
 
 int	pa(t_list **la, t_list **lb, int wflag);
 int	pb(t_list **la, t_list **lb, int wflag);

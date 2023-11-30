@@ -14,7 +14,7 @@ free_stdargv(char **)
 make_stdargv(int *, char * [], char * [])
 init_args_arr(int, char * [], int **)
 
-setup 
+setup
 
 init_list(t_list **, int, int *)
 init_op_arr(int(* [])(t_list **,t_list **, int))

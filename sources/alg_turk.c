@@ -10,24 +10,9 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-typedef struct s_cost_utils
-{
-	int	up_need_a;
-	int	down_need_a;
-	int	up_need_b; 
-	int	down_need_b;
-	int	cost;
-} t_scost;
-	
-typedef struct s_n_op
-{
-	int	n_ra;
-	int	n_rb;
-	int n_rr;
-	int n_rra;
-	int n_rrb;
-	int n_rrr;
-} t_snop;
+#include "alg_turk_utils.h"
+#include "operations.h"
+#include "setup.h"
 
 static void	apply_sol(t_list **la, t_list **lb, int *sol)
 {

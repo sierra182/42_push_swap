@@ -3,12 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   alg_turk_presort.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: svidot <svidot@student.42.fr>              +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 11:58:44 by svidot            #+#    #+#             */
-/*   Updated: 2023/11/30 13:04:08 by svidot           ###   ########.fr       */
+/*   Updated: 2023/11/30 16:06:05 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#include "setup.h"
+#include "operations.h"
 
 static void	sort_by_pivot(t_list **la, t_list **lb, int pivot)
 {	

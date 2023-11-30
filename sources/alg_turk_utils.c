@@ -3,12 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   alg_turk_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: svidot <svidot@student.42.fr>              +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 12:29:43 by svidot            #+#    #+#             */
-/*   Updated: 2023/11/30 13:01:08 by svidot           ###   ########.fr       */
+/*   Updated: 2023/11/30 16:25:30 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#include "operations.h"
 
 static t_list	*get_min_item(t_list *lst)
 {

@@ -3,12 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   alg_turk_calcbest.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: svidot <svidot@student.42.fr>              +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 12:01:52 by svidot            #+#    #+#             */
-/*   Updated: 2023/11/30 13:03:01 by svidot           ###   ########.fr       */
+/*   Updated: 2023/11/30 16:25:07 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#include "alg_turk_utils.h"
+#include "operations.h"
 
 static void	assign_updown_downup(t_scost *scost, t_snop *snop)
 {		

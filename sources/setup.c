@@ -13,9 +13,6 @@
 #include "libft.h"
 #include "operations.h"
 #include <stdlib.h>
-#include <limits.h>
-
-
 
 void init_list(t_list **lst, int argc, int *args_arr)
 {

@@ -3,12 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   setup_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: svidot <svidot@student.42.fr>              +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 11:51:21 by svidot            #+#    #+#             */
-/*   Updated: 2023/11/30 12:55:53 by svidot           ###   ########.fr       */
+/*   Updated: 2023/11/30 16:12:18 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#include <limits.h>
+#include <stdlib.h>
+#include "libft.h"
 
 void del_arg(char *argv[])
 {
