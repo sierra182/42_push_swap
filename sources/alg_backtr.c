@@ -15,28 +15,29 @@
 #include "setup.h"
 #include "ps_utils.h"
 
-int		is_sort(t_list *, t_list *); //
-
-void	init_rev_op_arr_simpl(int (*rev_op_arr[]) (t_list **, t_list **, int))
-{		
-	rev_op_arr[SB_SIMPL] = sb;
-	rev_op_arr[RB_SIMPL] = rrb;
-	rev_op_arr[RRB_SIMPL] = rb;	
-}
-
-void	init_rev_op_arr(int (*rev_op_arr[]) (t_list **, t_list **, int))
+typedef struct s_listpack
 {
-	rev_op_arr[PA] = pb;
-	rev_op_arr[PB] = pa;	
-	rev_op_arr[SA] = sa;
-	rev_op_arr[SB] = sb;
-	rev_op_arr[SS] = ss;
-	rev_op_arr[RA] = rra;
-	rev_op_arr[RB] = rrb;
-	rev_op_arr[RR] = rrr;
-	rev_op_arr[RRA] = ra;
-	rev_op_arr[RRB] = rb;
-	rev_op_arr[RRR] = rr;
+	t_list	**la;
+	t_list	**lb;
+} t_slistpack;
+
+typedef struct s_depth
+{
+	int	depth;
+	int	depth_max;
+} t_sdepth;
+
+typedef struct s_backtr_utils
+{
+	t_eop	sol_arr[MX_DEPTH];
+	int 	(*op_arr[OP]) (t_list **, t_list **, int);
+	int 	(*rev_op_arr[OP]) (t_list **, t_list **, int);
+} t_sbacktr_utils;
+
+void	print_tab(t_eop *sol_arr, char **op_char_arr)
+{	
+	while (*sol_arr)	
+		ft_printf("%s", op_char_arr[*sol_arr++]);	
 }
 
 void	print_tab_style(t_eop *sol_arr)
@@ -63,24 +64,20 @@ void	print_tab_style(t_eop *sol_arr)
 	ft_printf("\033[0m");	
 }
 
-typedef struct s_listpack
+void	init_rev_op_arr(int (*rev_op_arr[]) (t_list **, t_list **, int))
 {
-	t_list	**la;
-	t_list	**lb;
-} t_slistpack;
-
-typedef struct s_depth
-{
-	int	depth;
-	int	depth_max;
-} t_sdepth;
-
-typedef struct s_backtr_utils
-{
-	t_eop	sol_arr[MX_DEPTH];
-	int 	(*op_arr[OP]) (t_list **, t_list **, int);
-	int 	(*rev_op_arr[OP]) (t_list **, t_list **, int);
-} t_sbacktr_utils;
+	rev_op_arr[PA] = pb;
+	rev_op_arr[PB] = pa;	
+	rev_op_arr[SA] = sa;
+	rev_op_arr[SB] = sb;
+	rev_op_arr[SS] = ss;
+	rev_op_arr[RA] = rra;
+	rev_op_arr[RB] = rrb;
+	rev_op_arr[RR] = rrr;
+	rev_op_arr[RRA] = ra;
+	rev_op_arr[RRB] = rb;
+	rev_op_arr[RRR] = rr;
+}
 
 int	rec(t_slistpack *listpack, t_sdepth depth, t_sbacktr_utils *backtr_utils, int flag)
 {	
@@ -137,48 +134,4 @@ void	launch_backtr(t_list **la, t_list **lb, int flag)
 	}
 	else
 		print_tab(backtr_utils.sol_arr, op_char_arr);
-}
-
-int	rec_simpl(t_list **lst, int depth, int depth_max, t_eop_simpl *sol_arr, int (*op_arr[]) (t_list **, t_list **, int), int (*rev_op_arr[]) (t_list **, t_list **, int))
-{	
-	t_eop_simpl op;
-	
-	if (is_sort_simpl(*lst))
-		return (1);					
-	else if (depth >= depth_max)						
-		return (0);		
-	depth++;
-	op = NONE_SIMPL;
-	while (++op <= RRB_SIMPL)
-	{
-		if (op_arr[op](lst, lst, 0))
-		{			
-			sol_arr[depth - 1] = op;
-			if (rec_simpl(lst, depth, depth_max, sol_arr, op_arr, rev_op_arr))		
-				return (1);
-			rev_op_arr[op](lst, lst, 0);		
-		}	
-	}	
-	sol_arr[depth - 1] = 0;
-	return (0);
-}
-
-void	launch_backtr_simpl(t_list **lst)
-{
-	char		*op_char_arr[OP];
-	t_eop_simpl	sol_arr[MX_DEPTH];
-	int			depth_max;
-
-	depth_max = 0;	
-	int	i = -1;
-	while (++i < MX_DEPTH)
-		sol_arr[i] = 0;
-	int (*op_arr[OP]) (t_list **, t_list **, int);
-	int (*rev_op_arr[OP]) (t_list **, t_list **, int);
-	init_op_arr_simpl(op_arr);
-	init_rev_op_arr_simpl(rev_op_arr);	
-	while (!rec_simpl(lst, 0, depth_max, sol_arr, op_arr, rev_op_arr))
-		depth_max++;	
-	init_op_char_arr_simpl(op_char_arr);
-	print_tab_simpl(sol_arr, op_char_arr);			
 }

@@ -1,0 +1,88 @@
+
+
+push swap
+
+alg_forwarding(t_list **, t_list **, int, int *, int)
+main(int, char * [])
+
+setup_utils
+
+del_arg(char * []) !!
+has_twins(int, int *, int)
+is_overflow(char *)
+free_stdargv(char **)
+make_stdargv(int *, char * [], char * [])
+init_args_arr(int, char * [], int **)
+
+setup 
+
+init_list(t_list **, int, int *)
+init_op_arr(int(* [])(t_list **,t_list **, int))
+init_op_char_arr(char **)
+setup(int *, char * [], char * [], int **)
+
+ps utils
+
+is_sort(t_list *, t_list *)
+print_lst(t_list *, t_list *)
+
+alg backtr
+
+print_tab(t_eop *, char **)
+print_tab_style(t_eop *)
+init_rev_op_arr(int(* [])(t_list **,t_list **, int))
+rec(t_slistpack *, t_sdepth, t_sbacktr_utils *, int)
+launch_backtr(t_list **, t_list **, int)
+
+alg turk utils
+
+get_min_item(t_list *)
+get_max_item(t_list *)
+get_item_index(t_list *, t_list *)
+rewind_lst(t_list **, t_list **, int)
+get_target(int, t_list *)
+
+alg turk calcbest
+
+assign_up_up(t_scost *, t_snop *)
+assign_down_down(t_scost *, t_snop *)
+assign_updown_downup(t_scost *, t_snop *)
+init_snop(t_snop *)
+calcul_best(int, int *, int, int *)
+
+alg turk presort
+
+sort_by_pivot(t_list **, t_list **, int)
+get_middle(t_list *)
+sort_list(t_list *)
+pre_sort(t_list **, t_list **, int, int *)
+
+alg turk
+
+init_best_sol(int *)
+apply_sol(t_list **, t_list **, int *)
+alg_turk(t_list **, t_list *, t_list **, int)
+
+
+alg backtrsimpl
+
+print_tab_simpl(t_eop_simpl *, char **)
+init_op_char_arr_simpl(char **)
+init_op_arr_simpl(int(* [])(t_list **,t_list **, int))
+init_rev_op_arr_simpl(int(* [])(t_list **,t_list **, int))
+is_sort_simpl(t_list *)
+rec_simpl(t_list **, int, int, t_eop_simpl *, int(* [])(t_list **,t_list **, int), int(* [])(t_list **,t_list **, int))
+launch_backtr_simpl(t_list **)
+
+alg quick sort
+
+get_range_size(t_list *, t_list *)
+is_sort_range(t_list *, t_list *)
+get_middle(t_list *, t_list *)
+rec_qs(t_list **, t_list **, t_list **)
+alg_quick_sort(t_list **, t_list **)
+
+alg bubble sort
+
+sort_list(t_list *)
+alg_sort_list(t_list *)
