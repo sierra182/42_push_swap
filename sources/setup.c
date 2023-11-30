@@ -12,6 +12,7 @@
 
 #include "libft.h"
 #include "operations.h"
+#include "setup_utils.h"
 #include <stdlib.h>
 
 void init_list(t_list **lst, int argc, int *args_arr)
@@ -62,7 +63,6 @@ void init_op_char_arr(char **op_char_arr)
 	op_char_arr[RRB] = "rrb\n";
 	op_char_arr[RRR] = "rrr\n";
 }
-
 
 int setup(int *argc, char *argv[], char *argv_save[], int **args_arr)
 {
