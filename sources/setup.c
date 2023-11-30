@@ -17,13 +17,16 @@
 
 void init_list(t_list **lst, int argc, int *args_arr)
 {
+	static int *args_arr_stat;
 	int *args_arr_save;
 	t_list *new;
-
-	args_arr_save = args_arr;
+	
+	if (args_arr)
+		args_arr_stat = args_arr;
+	args_arr_save = args_arr_stat;
 	while (--argc)
 	{
-		new = ft_lstnew((void *)args_arr++);
+		new = ft_lstnew((void *)args_arr_stat++);
 		if (!new)
 		{
 			free(args_arr_save);
@@ -32,6 +35,7 @@ void init_list(t_list **lst, int argc, int *args_arr)
 		}
 		ft_lstadd_back(lst, new);
 	}
+	args_arr_stat = args_arr_save;
 }
 
 void init_op_arr(int (*op_arr[])(t_list **, t_list **, int))
