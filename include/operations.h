@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/11 13:46:50 by svidot            #+#    #+#             */
-/*   Updated: 2023/11/22 20:17:25 by marvin           ###   ########.fr       */
+/*   Updated: 2023/11/29 17:03:34 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,14 +31,6 @@ typedef enum e_op
 	RRB,
 	RRR
 } t_eop;
-
-typedef enum e_op_simpl
-{
-	NONE_SIMPL,	
-	SB_SIMPL,	
-	RB_SIMPL,	
-	RRB_SIMPL	
-} t_eop_simpl;
 
 int	pa(t_list **la, t_list **lb, int wflag);
 int	pb(t_list **la, t_list **lb, int wflag);
