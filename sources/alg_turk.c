@@ -58,7 +58,8 @@ void	alg_turk(t_list	**la, t_list *lb_sav, t_list **lb, int ind_lb)
 		lb_sav = *lb;
 		while (*lb)
 		{
-			calcul_best(get_item_index(*la, get_target(*(int *) (*lb)->content, *la)), lstsize, ind_lb++, best_sol); 
+			calcul_best(get_item_index(*la, get_target(*(int *) 
+				(*lb)->content, *la)), lstsize, ind_lb++, best_sol); 
 			*lb = (*lb)->next;
 		}
 		*lb = lb_sav;
