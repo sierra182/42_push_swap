@@ -45,7 +45,7 @@ void	read_stdin(t_list **la, t_list **lb, int *args_arr)
 {
 	char	*line;
 	t_eop 	sol_input;
-	int 	(*op_arr[OP]) (t_list **, t_list **);
+	int 	(*op_arr[OP]) (t_list **, t_list **, int);
 
 	init_op_arr(op_arr);
 	line = "l";
@@ -56,7 +56,7 @@ void	read_stdin(t_list **la, t_list **lb, int *args_arr)
 		{
 			sol_input = is_valid_op(line);
 			if (sol_input)			
-				op_arr[sol_input](la, lb);			
+				op_arr[sol_input](la, lb, 0);			
 			else							 	
 				error_input_handle(line, args_arr, la, lb);
 			free(line);

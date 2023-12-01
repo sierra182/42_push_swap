@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: svidot <svidot@student.42.fr>              +#+  +:+       +#+         #
+#    By: marvin <marvin@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/29 08:16:28 by seblin            #+#    #+#              #
-#    Updated: 2023/11/01 11:08:05 by svidot           ###   ########.fr        #
+#    Updated: 2023/12/01 19:03:02 by marvin           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,6 +25,7 @@ all : libft $(NAME)
 	
 libft : 
 	$(MAKE) -C $(LIBFTDIR)	
+	$(MAKE) -C $(LIBFTDIR) bonus 
 	
 %.o : %.c $(HEADER)
 	$(CC) $(CFLAGS) $< -c -o $@
