@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   setup_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: svidot <svidot@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 11:51:21 by svidot            #+#    #+#             */
-/*   Updated: 2023/11/30 20:36:16 by marvin           ###   ########.fr       */
+/*   Updated: 2023/12/02 12:00:34 by svidot           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,8 +68,8 @@ char **make_stdargv(int *argc, char *argv[], char *argv_save[])
 	size_t n_word;
 
 	n_word = 0;
-	while (*argv)
-		n_word += ft_wc(*argv++);
+	while (*argv) 
+		n_word += ft_wc(*argv++); 
 	*argc = n_word;
 	stdargv = (char **)ft_calloc(sizeof(char *), n_word + 1);
 	if (!stdargv)

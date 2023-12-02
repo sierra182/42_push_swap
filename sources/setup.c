@@ -78,8 +78,8 @@ int setup(int *argc, char *argv[], char *argv_save[], int **args_arr)
 {
 	char *s;
 	int i;
-
-	argv = make_stdargv(argc, argv, argv);
+	
+	argv = make_stdargv(argc, argv, argv);	
 	argv_save = argv;
 	while (*++argv)
 	{

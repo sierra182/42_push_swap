@@ -17,7 +17,7 @@ int	is_sort(t_list *la, t_list *lb)
 {	
 	if (ft_lstsize(lb))
 		return (0);	
-	while (la->next)
+	while (la && la->next)
 	{
 		if (*(int *) la->content > *(int *) la->next->content)
 			return (0);
@@ -28,6 +28,8 @@ int	is_sort(t_list *la, t_list *lb)
 
 void	print_lst(t_list *la, t_list *lb)
 {	
+	if (!la && !lb)
+		return ;
 	ft_printf("\n\033[%dm", 96);
 	ft_printf(" ~~~~~~~~~~~~~~~~~~~~ ~~(,,°>\n");
 	ft_printf("\033[0m");
