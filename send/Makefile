@@ -38,6 +38,9 @@ $(NAME) : $(OBJECTS)
 	@$(CC) $(OBJECTS) $(LDFLAGS) -o $@
 	@echo "\033[0;32mcompiling push_swap done...\033[0m" 👩‍🚀👽
 
+intro2:	
+	
+
 intro:
 	clear
 	@sleep 1
@@ -49,11 +52,18 @@ intro:
 	for (i = 1; i <= length($$0); i++) \
 	{printf "%s", chars[i]; system("sleep 0.2");}} \
 	system("sleep 2");' 
-	@words="\n\n\tFollow \n\t\tthe \t\b\b\b\033[0;96mColored! \n\t\t\b\b\b\b\b\b\033[1;95mUnicorne!\033[0m...🦄\n\n\n"; \
+	@words="\n\n\tFollow \n\t\tthe \t\b\b\b\033[0;96mColored! \n\t\t\b\b\b\b\b\b\033[1;95mUnicorne!\033[0m...🦄\n\n"; \
 	for j in $${words}; do \
 		echo -n "$$j"; \
 		sleep .4; \
-	done	
+	done
+	@sleep .4
+#@echo "\033[0;92m"
+	@cat lic.txt
+	@echo "\n"
+#@echo "\033[0m"
+	
+		
 
 ft_printf:	
 	@echo "\033[0;32mcompiling ft_printf...\033[0m" 🚀
