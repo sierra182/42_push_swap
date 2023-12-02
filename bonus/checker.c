@@ -67,26 +67,28 @@ void	read_stdin(t_list **la, t_list **lb, int *args_arr)
 
 int	main(int argc, char *argv[])
 {		
+	int		flag;
 	int		*args_arr;	
 	t_list	*a_head;
 	t_list	*b_head;
-
+	
 	a_head = NULL;
 	b_head = NULL;
-	if (argc <= 1)
+	if (argc <= 1 || (argc <= 2 && **(argv + 1) == '-'
+		&& *(*(argv + 1) + 1) == 'v'))
 		return (1);
+	flag = flag_detect(&argv);
 	if (!setup(&argc, argv, argv, &args_arr))
 		return (write(2, "Error\n", 6));
 	init_list(&a_head, argc, args_arr);	
 	if (!is_sort(a_head, b_head))
 		read_stdin(&a_head, &b_head, args_arr);
-	print_lst(a_head, b_head); // !!!!!!!!!!!!!!!!!!!!!!
+	if (flag)
+		print_lst(a_head, b_head); 
 	if (is_sort(a_head, b_head))
 		ft_printf("OK\n");
 	else 
 		ft_printf("KO\n");
-	free(args_arr);
-	ft_lstclear(&a_head, NULL);
-	ft_lstclear(&b_head, NULL);
-	return (0);	
+	return (free(args_arr), ft_lstclear(&a_head, NULL),
+		ft_lstclear(&b_head, NULL), 0);
 }

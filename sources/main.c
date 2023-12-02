@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: svidot <svidot@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/11 13:45:00 by svidot            #+#    #+#             */
-/*   Updated: 2023/12/01 18:59:02 by marvin           ###   ########.fr       */
+/*   Updated: 2023/12/02 11:05:08 by svidot           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,13 +52,12 @@ int	main(int argc, char *argv[])
 	t_list	*la;
 	t_list	*lb;
 	
-	flag = 0;
 	la = NULL;
 	lb = NULL;
-	if (argc <= 1)
+	if (argc <= 1 || (argc <= 2 && **(argv + 1) == '-'
+		&& *(*(argv + 1) + 1) == 'v'))
 		return (1);
-	if (**(argv + 1) == '-' && *(*(argv++ + 1) + 1) == 'v')
-		flag++;
+	flag = flag_detect(&argv);
 	if (!setup(&argc, argv, argv, &args_arr))
 		return (write(2, "Error\n", 6));
 	init_list(&la, argc, args_arr);

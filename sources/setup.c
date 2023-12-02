@@ -15,6 +15,12 @@
 #include "setup_utils.h"
 #include <stdlib.h>
 
+int	flag_detect(char **argv[])
+{
+	return ((**((*argv) + 1) == '-' && *(*((*argv) + 1) + 1) == 'v' 
+		&& (*argv)++));
+}
+
 void init_list(t_list **lst, int argc, int *args_arr)
 {
 	static int *args_arr_stat;
