@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   setup_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: svidot <svidot@student.42.fr>              +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 11:51:21 by svidot            #+#    #+#             */
-/*   Updated: 2023/12/02 12:00:34 by svidot           ###   ########.fr       */
+/*   Updated: 2023/12/02 16:26:27 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 #include <stdlib.h>
 #include "libft.h"
 
-int has_twins(int argc, int *args_arr, int tocheck)
+int	has_twins(int argc, int *args_arr, int tocheck)
 {
-	int res;
+	int	res;
 
 	res = 0;
 	while (argc--)
@@ -29,10 +29,10 @@ int has_twins(int argc, int *args_arr, int tocheck)
 	return (0);
 }
 
-int is_overflow(char *s)
+int	is_overflow(char *s)
 {
-	long nbr;
-	int isneg;
+	long	nbr;
+	int		isneg;
 
 	nbr = 0;
 	isneg = 0;
@@ -49,9 +49,9 @@ int is_overflow(char *s)
 	return (0);
 }
 
-void free_stdargv(char **stdargv)
+void	free_stdargv(char **stdargv)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (stdargv[i])
@@ -59,17 +59,17 @@ void free_stdargv(char **stdargv)
 	free(stdargv);
 }
 
-char **make_stdargv(int *argc, char *argv[], char *argv_save[])
+char	**make_stdargv(int *argc, char *argv[], char *argv_save[])
 {
-	char **stdargv_save;
-	char **split_save;
-	char **stdargv;
-	char **split;
-	size_t n_word;
+	char	**stdargv_save;
+	char	**split_save;
+	char	**stdargv;
+	char	**split;
+	size_t	n_word;
 
 	n_word = 0;
-	while (*argv) 
-		n_word += ft_wc(*argv++); 
+	while (*argv)
+		n_word += ft_wc(*argv++);
 	*argc = n_word;
 	stdargv = (char **)ft_calloc(sizeof(char *), n_word + 1);
 	if (!stdargv)
@@ -86,7 +86,7 @@ char **make_stdargv(int *argc, char *argv[], char *argv_save[])
 	return (stdargv_save);
 }
 
-void init_args_arr(int argc, char *argv[], int **args_arr)
+void	init_args_arr(int argc, char *argv[], int **args_arr)
 {
 	*args_arr = (int *)malloc(sizeof(int) * (argc - 1));
 	if (!*args_arr)

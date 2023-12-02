@@ -6,12 +6,11 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 15:18:38 by svidot            #+#    #+#             */
-/*   Updated: 2023/11/12 19:19:08 by marvin           ###   ########.fr       */
+/*   Updated: 2023/12/02 14:49:31 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-
 
 int	ft_atoi(const char *nptr)
 {

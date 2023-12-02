@@ -11,9 +11,9 @@
 /* ************************************************************************** */
 
 #ifndef PS_UTILS_H
- #define PS_UTILS_H
+# define PS_UTILS_H
 
-#include "libft.h"
+# include "libft.h"
 
 int		is_sort(t_list *la, t_list *lb);
 void	print_lst(t_list *la, t_list *lb);

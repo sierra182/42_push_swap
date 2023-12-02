@@ -13,9 +13,9 @@
 #include "libft.h"
 
 int	rotate(t_list **lst)
-{		
-	t_list	*tmp;	
-	
+{
+	t_list	*tmp;
+
 	if (*lst && (*lst)->next)
 	{
 		ft_lstadd_back(lst, *lst);
@@ -28,10 +28,10 @@ int	rotate(t_list **lst)
 }
 
 int	rev_rotate(t_list **lst)
-{		
+{
 	t_list	*lstlast;
 	int		lstsize;
-	
+
 	if (*lst && (*lst)->next)
 	{
 		lstsize = ft_lstsize(*lst);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   alg_turk_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: svidot <svidot@student.42.fr>              +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 12:29:43 by svidot            #+#    #+#             */
-/*   Updated: 2023/12/01 11:40:40 by svidot           ###   ########.fr       */
+/*   Updated: 2023/12/02 15:59:56 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 static t_list	*get_min_item(t_list *lst)
 {
 	t_list	*min_item;
-	
+
 	min_item = lst;
 	while (lst)
 	{
@@ -29,7 +29,7 @@ static t_list	*get_min_item(t_list *lst)
 static t_list	*get_max_item(t_list *lst)
 {
 	t_list	*max_item;
-	
+
 	max_item = lst;
 	while (lst)
 	{
@@ -53,9 +53,10 @@ int	get_item_index(t_list *lst, t_list *item)
 	}
 	return (--i);
 }
+
 void	rewind_lst(t_list **la, t_list **lb, int lstsize)
 {
-	int		target_ind;
+	int	target_ind;
 
 	target_ind = get_item_index(*la, get_min_item(*la));
 	if (target_ind > 0 && lstsize - target_ind >= target_ind)
@@ -67,18 +68,18 @@ void	rewind_lst(t_list **la, t_list **lb, int lstsize)
 }
 
 t_list	*get_target(int value, t_list *lst)
-{	
-	t_list *target;
+{
+	t_list	*target;
 
 	target = get_max_item(lst);
 	if (value > *(int *) target->content)
-	 	target = get_min_item(lst);
+		target = get_min_item(lst);
 	else
 	{
 		while (lst)
 		{
 			if (*(int *) lst->content < *(int *) target->content
-					&& *(int *) lst->content > value)
+				&& *(int *) lst->content > value)
 				target = lst;
 			lst = lst->next;
 		}

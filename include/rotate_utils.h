@@ -13,7 +13,7 @@
 #ifndef ROTATE_UTILS_H
 # define ROTATE_UTILS_H
 
-#include "libft.h"
+# include "libft.h"
 
 int	rotate(t_list **lst);
 int	rev_rotate(t_list **lst);

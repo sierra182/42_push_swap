@@ -13,7 +13,7 @@
 #ifndef ALG_TURK_H
 # define ALG_TURK_H
 
-#include "libft.h"
+# include "libft.h"
 
 void	alg_turk(t_list	**la, t_list *lb_sav, t_list **lb, int ind_lb);
 void	pre_sort(t_list **la, t_list **lb, int argc, int *args_arr);

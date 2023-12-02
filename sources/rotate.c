@@ -31,11 +31,11 @@ int	rb(t_list **la, t_list **lb, int wflag)
 
 int	rr(t_list **la, t_list **lb, int wflag)
 {
-	if (wflag)	
+	if (wflag)
 		write(1, "rr\n", 3);
 	if (rotate(la))
 	{
-		if(rotate(lb))
+		if (rotate(lb))
 			return (1);
 		else
 		{

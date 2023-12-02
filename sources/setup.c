@@ -17,16 +17,16 @@
 
 int	flag_detect(char **argv[])
 {
-	return ((**((*argv) + 1) == '-' && *(*((*argv) + 1) + 1) == 'v' 
-		&& (*argv)++));
+	return ((**((*argv) + 1) == '-' && *(*((*argv) + 1) + 1) == 'v'
+			&& (*argv)++));
 }
 
-void init_list(t_list **lst, int argc, int *args_arr)
+void	init_list(t_list **lst, int argc, int *args_arr)
 {
-	static int *args_arr_stat;
-	int *args_arr_save;
-	t_list *new;
-	
+	static int	*args_arr_stat;
+	int			*args_arr_save;
+	t_list		*new;
+
 	if (args_arr)
 		args_arr_stat = args_arr;
 	args_arr_save = args_arr_stat;
@@ -44,7 +44,7 @@ void init_list(t_list **lst, int argc, int *args_arr)
 	args_arr_stat = args_arr_save;
 }
 
-void init_op_arr(int (*op_arr[])(t_list **, t_list **, int))
+void	init_op_arr(int (*op_arr[])(t_list **, t_list **, int))
 {
 	op_arr[PA] = pa;
 	op_arr[PB] = pb;
@@ -59,7 +59,7 @@ void init_op_arr(int (*op_arr[])(t_list **, t_list **, int))
 	op_arr[RRR] = rrr;
 }
 
-void init_op_char_arr(char **op_char_arr)
+void	init_op_char_arr(char **op_char_arr)
 {
 	op_char_arr[PA] = "pa\n";
 	op_char_arr[PB] = "pb\n";
@@ -74,12 +74,12 @@ void init_op_char_arr(char **op_char_arr)
 	op_char_arr[RRR] = "rrr\n";
 }
 
-int setup(int *argc, char *argv[], char *argv_save[], int **args_arr)
+int	setup(int *argc, char *argv[], char *argv_save[], int **args_arr)
 {
-	char *s;
-	int i;
-	
-	argv = make_stdargv(argc, argv, argv);	
+	char	*s;
+	int		i;
+
+	argv = make_stdargv(argc, argv, argv);
 	argv_save = argv;
 	while (*++argv)
 	{

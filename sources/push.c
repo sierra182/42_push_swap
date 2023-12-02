@@ -14,11 +14,11 @@
 #include <unistd.h>
 
 static int	push(t_list **tolow, t_list **toup)
-{	
+{
 	t_list	*tmp;
-	
+
 	if (*tolow)
-	{		
+	{
 		tmp = (*tolow)->next;
 		ft_lstadd_front(toup, *tolow);
 		*tolow = tmp;
@@ -29,14 +29,14 @@ static int	push(t_list **tolow, t_list **toup)
 
 int	pa(t_list **la, t_list **lb, int wflag)
 {
-	if (wflag)	
+	if (wflag)
 		write(1, "pa\n", 3);
 	return (push(lb, la));
 }
 
 int	pb(t_list **la, t_list **lb, int wflag)
 {
-	if (wflag)	
+	if (wflag)
 		write(1, "pb\n", 3);
 	return (push(la, lb));
 }
