@@ -41,14 +41,16 @@ t_eop	is_valid_op(char *s)
 	return (0);
 }
 
-void	read_stdin(t_list **la, t_list **lb, int *args_arr)
+void	read_stdin(t_list **la, t_list **lb, int *args_arr, int flag)
 {
 	char	*line;
+	int		sol_len;
 	t_eop	sol_input;
 	int		(*op_arr[OP])(t_list **, t_list **, int);
 
 	init_op_arr(op_arr);
 	line = "l";
+	sol_len = 0;
 	while (line)
 	{
 		line = get_next_line(0);
@@ -61,14 +63,17 @@ void	read_stdin(t_list **la, t_list **lb, int *args_arr)
 				error_input_handle(line, args_arr, la, lb);
 			free(line);
 			line = "l";
+			sol_len++;
 		}
 	}
+	if (flag)
+		ft_printf("\ninstructions: %d\n", sol_len);
 }
 
 int	main(int argc, char *argv[])
 {
 	int		flag;
-	int		*args_arr;	
+	int		*args_arr;
 	t_list	*la;
 	t_list	*lb;
 
@@ -81,7 +86,7 @@ int	main(int argc, char *argv[])
 	if (!setup(&argc, argv, argv, &args_arr))
 		return (write(2, "Error\n", 6));
 	init_list(&la, argc, args_arr);
-	read_stdin(&la, &lb, args_arr);
+	read_stdin(&la, &lb, args_arr, flag);
 	if (flag)
 		print_lst(la, lb);
 	if (is_sort(la, lb) && argc >= 2)
