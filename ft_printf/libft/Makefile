@@ -23,7 +23,7 @@ $(NAME) : $(OBJECTS)
 	ar rcs $@ $?
 
 bonus: $(OBJECTS_BONUS)
-	ar rcs $(NAME) $^
+	ar rcs $(NAME) $?
 
 clean:
 	rm -f $(OBJECTS) $(OBJECTS_BONUS)
