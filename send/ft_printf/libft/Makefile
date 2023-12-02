@@ -23,13 +23,16 @@ $(NAME) : $(OBJECTS)
 	ar rcs $@ $?
 
 bonus: $(OBJECTS_BONUS)
+	@echo "\033[0;32mcompiling libft bonus...\033[0m" 🚀
 	ar rcs $(NAME) $?
-
+	@echo "\033[0;32mcompiling libft bonus... done\033[0m" 👩‍🚀👽
 clean:
-	rm -f $(OBJECTS) $(OBJECTS_BONUS)
+	@rm -f $(OBJECTS) $(OBJECTS_BONUS)
+	@echo cleanning libft 🧻
 
 fclean: clean
-	rm -f $(NAME)
+	@rm -f $(NAME)
+	@echo final cleanning libft 🚽 
 
 re: fclean all
 

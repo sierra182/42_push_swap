@@ -6,7 +6,7 @@
 #    By: marvin <marvin@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/29 08:16:28 by seblin            #+#    #+#              #
-#    Updated: 2023/12/02 08:09:58 by marvin           ###   ########.fr        #
+#    Updated: 2023/12/02 18:43:20 by marvin           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,8 +25,10 @@ PASS = 0
 all : libft $(NAME)
 	
 libft : 
-	$(MAKE) -C $(LIBFTDIR) && \
-	$(MAKE) -C $(LIBFTDIR) bonus
+	@echo "\033[0;32mcompiling libft...\033[0m" 🚀
+	@$(MAKE) -s -C $(LIBFTDIR) && \
+	$(MAKE) -s -C $(LIBFTDIR) bonus
+	@echo "\033[0;32mcompiling libft... done\033[0m" 👩‍🚀👽
 	
 %.o : %.c $(HEADER)
 	$(CC) $(CFLAGS) $< -c -o $@
@@ -43,11 +45,13 @@ $(NAME) :: $(OBJECTS)
 	fi
 
 clean :
-	rm -f $(OBJECTS)
-	$(MAKE) -C $(LIBFTDIR) clean
-
+	@rm -f $(OBJECTS)
+	@$(MAKE) -C $(LIBFTDIR) clean -s
+	@echo cleanning ft_printf 🧻
+	
 fclean : clean
-	rm -f $(NAME)
-	$(MAKE) -C $(LIBFTDIR) fclean
+	@rm -f $(NAME)
+	@$(MAKE) -C $(LIBFTDIR) fclean -s
+	@echo final cleanning ft_printf 🚽 
 	
 re : fclean all

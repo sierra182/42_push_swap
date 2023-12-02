@@ -49,7 +49,7 @@ void	read_stdin(t_list **la, t_list **lb, int *args_arr, int flag)
 	int		(*op_arr[OP])(t_list **, t_list **, int);
 
 	init_op_arr(op_arr);
-	line = "l";
+	line = "";
 	sol_len = 0;
 	while (line)
 	{
@@ -62,7 +62,7 @@ void	read_stdin(t_list **la, t_list **lb, int *args_arr, int flag)
 			else
 				error_input_handle(line, args_arr, la, lb);
 			free(line);
-			line = "l";
+			line = "";
 			sol_len++;
 		}
 	}
