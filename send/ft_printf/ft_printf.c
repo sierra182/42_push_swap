@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/29 08:04:59 by seblin            #+#    #+#             */
-/*   Updated: 2023/12/03 15:41:31 by marvin           ###   ########.fr       */
+/*   Updated: 2023/12/03 16:04:52 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "ft_printf.h"
 #include <stdarg.h> 
 #include <stdint.h> 
-
+//
 static int	putnbr_base(uintptr_t n, unsigned int base, char casse, char pref)
 {
 	int	size;

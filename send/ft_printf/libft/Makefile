@@ -11,29 +11,36 @@ OBJECTS = $(SOURCES:.c=.o)
 SOURCES_BONUS = ft_lstnew_bonus.c ft_lstadd_front_bonus.c ft_lstsize_bonus.c ft_lstlast_bonus.c ft_lstadd_back_bonus.c \
 				ft_lstdelone_bonus.c ft_lstclear_bonus.c ft_lstiter_bonus.c ft_lstmap_bonus.c
 OBJECTS_BONUS = $(SOURCES_BONUS:.c=.o)
-
-.PHONY: all clean fclean re bonus
+BONUS_FLAG = 0
+.PHONY: all clean fclean re bonus 
 
 all: $(NAME)
 
 %.o : %.c $(HEADER)
 	@echo "\033[0;32mcompiling libft object $<...\033[0m" 🚀
-	$(CC) $(CFLAGS) $< -c -o $@
+	@$(CC) $(CFLAGS) $< -c -o $@
 
-$(NAME) : $(OBJECTS)
-	@echo "\033[0;32madding libft object $? to libft.a ...\033[0m" 🚀
-	ar rcs $@ $?
+$(NAME) :: $(OBJECTS)
+	@echo "\033[0;32madding libft object $? to $@ ...\033[0m" 🚀
+	@ar rcs $@ $?
 
-bonus: $(OBJECTS_BONUS)
-	@echo "\033[0;32madding libft objects bonus $? to libft.a ...\033[0m" 🚀
-	ar rcs $(NAME) $?
+change_flag:
+	$(eval BONUS_FLAG = 1)
+
+bonus: change_flag $(NAME)
+	
+$(NAME) :: $(OBJECTS_BONUS)
+	@if [ $(BONUS_FLAG) -eq 1 ]; then \
+		echo "\033[0;32madding libft objects bonus $? to $@ ...\033[0m" 🚀; \
+		ar rcs $@ $?; \
+	fi
 
 clean:
-	@rm -f $(OBJECTS) $(OBJECTS_BONUS)
 	@echo cleanning libft objects 🧻
+	@rm -f $(OBJECTS) $(OBJECTS_BONUS)
 
 fclean: clean
+	@echo cleanning libft.a 🚽
 	@rm -f $(NAME)
-	@echo cleanning libft.a 🚽 
 
 re: fclean all

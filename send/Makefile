@@ -23,7 +23,7 @@ HEADERS = $(HEADERS_DIR)/alg_backtr.h $(HEADERS_DIR)/alg_turk.h $(HEADERS_DIR)/a
 $(HEADERS_DIR)/operations.h $(HEADERS_DIR)/ps_utils.h $(HEADERS_DIR)/setup.h \
 $(HEADERS_DIR)/setup_utils.h $(HEADERS_DIR)/rotate_utils.h
 
-.PHONY : all ft_printf bonus clean fclean re intro
+.PHONY : all ft_printf bonus clean fclean re intro l
 
 $(SRC_DIR)/%.o : $(SRC_DIR)/%.c $(LDFLAGS) $(HEADERS)
 	@echo "\033[0;32mcompiling push_swap object $<...\033[0m" 🚀
@@ -33,7 +33,10 @@ $(BONUS_DIR)/%.o : $(BONUS_DIR)/%.c $(LDFLAGS)
 	@echo "\033[0;32mcompiling push_swap object bonus $<...\033[0m" 🚀
 	@$(CC) $(CFLAGS) $(CFLAGS_BONUS) $< -c -o $@	
 
-all : ft_printf $(NAME)	
+all : intro ft_printf $(NAME)	
+	@echo 💗 😀 😃 😍
+
+l :ft_printf $(NAME)	
 	@echo 💗 😀 😃 😍
 
 $(NAME) : $(OBJECTS) 
@@ -44,15 +47,15 @@ intro:
 	clear
 	@sleep 1
 	@echo -n " Wake"
-	@sleep .5
+	@sleep .4
 	@echo " up...\n"
-	@sleep .5
+	@sleep .2
 	@echo -n " "
 	@letters="The Makefile has you..."; \
 	echo "\033[1;92m$$letters\033[0m" | awk '{split($$0, chars, ""); \
 	for (i = 1; i <= length($$0); i++) \
 	{printf "%s", chars[i]; system("sleep 0.2");}} \
-	system("sleep 2");' 
+	system("sleep 1");' 
 	@words="\n\n\tFollow \n\t\tthe \t\b\b\b\033[0;96mColored! \
 	\n\n\t\t\b\b\b\b\b\b\033[1;95mUnicorne!\033[0m...🦄\n\n"; \
 	for j in $${words}; do \
@@ -67,8 +70,9 @@ ft_printf:
 	@$(MAKE) -s -C $(FT_PRINTF_DIR) 
 
 bonus : ft_printf $(NAME_BONUS) 
-	
-$(NAME_BONUS) : $(OBJECTS_BONUS) $(LDFLAGS)
+	@echo 💎 🧯 🔥 😵
+
+$(NAME_BONUS) : $(OBJECTS_BONUS) 
 	@echo "\033[0;32mlinking push_swap all objects bonus with $(LDFLAGS)...\033[0m" 🚀
 	@$(CC) $(OBJECTS_BONUS) $(LDFLAGS) -o $@
 
@@ -77,9 +81,11 @@ clean :
 	@rm -f $(OBJECTS) $(OBJECTS_BONUS);
 	@$(MAKE) -C $(FT_PRINTF_DIR) clean -s
 
-fclean : clean
+fclean : 
+	@echo cleanning push_swap objects 🧻
+	@rm -f $(OBJECTS) $(OBJECTS_BONUS);
 	@echo cleanning push_swap 🚽 
 	@rm -f $(NAME) $(NAME_BONUS)
 	@$(MAKE) -C $(FT_PRINTF_DIR) fclean -s
 
-re: intro fclean all
+re: fclean ft_printf $(NAME)

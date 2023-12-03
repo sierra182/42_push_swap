@@ -69,7 +69,7 @@ void	read_stdin(t_list **la, t_list **lb, int *args_arr, int flag)
 	if (flag)
 		ft_printf("\ninstructions: %d\n", sol_len);
 }
-///
+
 int	main(int argc, char *argv[])
 {
 	int		flag;
