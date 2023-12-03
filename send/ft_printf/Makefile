@@ -6,7 +6,7 @@
 #    By: marvin <marvin@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/29 08:16:28 by seblin            #+#    #+#              #
-#    Updated: 2023/12/02 18:43:20 by marvin           ###   ########.fr        #
+#    Updated: 2023/12/03 15:33:02 by marvin           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,40 +18,35 @@ SOURCES = ft_printf.c
 OBJECTS = $(SOURCES:.c=.o)
 LIBFTDIR = ./libft
 LIBFTPATH = $(LIBFTDIR)/libft.a
-PASS = 0
 
 .PHONY : all libft clean fclean re 
 
 all : libft $(NAME)
 	
-libft : 
-	@echo "\033[0;32mcompiling libft...\033[0m" 🚀
-	@$(MAKE) -s -C $(LIBFTDIR) && \
-	$(MAKE) -s -C $(LIBFTDIR) bonus
-	@echo "\033[0;32mcompiling libft... done\033[0m" 👩‍🚀👽
+libft : 	
+	@$(MAKE) -s -C $(LIBFTDIR) 
+#	$(MAKE) -s -C $(LIBFTDIR) bonus
 	
-%.o : %.c $(HEADER)
+%.o : %.c $(LIBFTPATH) $(HEADER)
+	@echo "\033[0;32mcompiling $<...\033[0m" 🚀
 	$(CC) $(CFLAGS) $< -c -o $@
 
-$(NAME) :: $(LIBFTPATH) | $(OBJECTS)
-	cp $< $@	
-	ar rcs $@ $(OBJECTS)	
-	$(eval PASS = 1)
-	
-$(NAME) :: $(OBJECTS) 
-	@if [ $(PASS) -eq 0 ]; then \
-		echo "only modified objects: ar rcs $@ $?"; \
-		ar rcs $@ $?; \
-	fi
+$(NAME) :: $(LIBFTPATH)
+	@echo "\033[0;32mcopying $(LIBFTPATH) to $(NAME)...\033[0m" 🚀
+	cp $(LIBFTPATH) $(NAME)
 
+$(NAME) :: $(LIBFTPATH) $(OBJECTS)
+	@echo "\033[0;32madding $(OBJECTS) to $(NAME)...\033[0m" 🚀	
+	ar rcs $@ $(OBJECTS)	
+	
 clean :
 	@rm -f $(OBJECTS)
-	@$(MAKE) -C $(LIBFTDIR) clean -s
-	@echo cleanning ft_printf 🧻
+	@$(MAKE) -C $(LIBFTDIR) clean 
+	@echo cleanning ft_printf objects 🧻
 	
 fclean : clean
 	@rm -f $(NAME)
-	@$(MAKE) -C $(LIBFTDIR) fclean -s
-	@echo final cleanning ft_printf 🚽 
+	@$(MAKE) -C $(LIBFTDIR) fclean 
+	@echo cleanning libftprintf.a 🚽 
 	
 re : fclean all

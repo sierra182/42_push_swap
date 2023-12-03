@@ -17,22 +17,23 @@ OBJECTS_BONUS = $(SOURCES_BONUS:.c=.o)
 all: $(NAME)
 
 %.o : %.c $(HEADER)
+	@echo "\033[0;32mcompiling libft object $<...\033[0m" 🚀
 	$(CC) $(CFLAGS) $< -c -o $@
 
 $(NAME) : $(OBJECTS)
+	@echo "\033[0;32madding libft object $? to libft.a ...\033[0m" 🚀
 	ar rcs $@ $?
 
 bonus: $(OBJECTS_BONUS)
-	@echo "\033[0;32mcompiling libft bonus...\033[0m" 🚀
+	@echo "\033[0;32madding libft objects bonus $? to libft.a ...\033[0m" 🚀
 	ar rcs $(NAME) $?
-	@echo "\033[0;32mcompiling libft bonus... done\033[0m" 👩‍🚀👽
+
 clean:
 	@rm -f $(OBJECTS) $(OBJECTS_BONUS)
-	@echo cleanning libft 🧻
+	@echo cleanning libft objects 🧻
 
 fclean: clean
 	@rm -f $(NAME)
-	@echo final cleanning libft 🚽 
+	@echo cleanning libft.a 🚽 
 
 re: fclean all
-
