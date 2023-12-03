@@ -6,7 +6,7 @@
 #    By: marvin <marvin@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/29 08:16:28 by seblin            #+#    #+#              #
-#    Updated: 2023/12/03 18:23:59 by marvin           ###   ########.fr        #
+#    Updated: 2023/12/03 18:55:48 by marvin           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,26 +29,26 @@ libft :
 	
 %.o : %.c $(LIBFTPATH) $(HEADER)
 	@echo "\033[0;32mcompiling $<...\033[0m" 🚀
-	$(CC) $(CFLAGS) $< -c -o $@
+	@$(CC) $(CFLAGS) $< -c -o $@
 
 $(NAME) :: $(LIBFTPATH)
-	@echo "\033[0;32mcopying $(LIBFTPATH) to $(NAME)...\033[0m" 🚀
-	cp $(LIBFTPATH) $(NAME)
+	@echo "\n\033[0;32mcopying $(LIBFTPATH) to $(NAME)...\033[0m 🚀\n"
+	@cp $(LIBFTPATH) $(NAME)
 
 $(NAME) :: $(OBJECTS)
-	@echo "\033[0;32madding $(OBJECTS) to $(NAME)...\033[0m" 🚀	
-	ar rcs $@ $(OBJECTS)	
+	@echo "\n\033[0;32madding $(OBJECTS) to $(NAME)...\033[0m 🚀\n"	
+	@ar rcs $@ $(OBJECTS)	
 	
 clean :
 	@echo cleanning ft_printf objects 🧻
 	@rm -f $(OBJECTS)
-	@$(MAKE) -C $(LIBFTDIR) clean 
+	@$(MAKE) -s -C $(LIBFTDIR) clean 
 	
 fclean : 
 	@echo cleanning ft_printf objects 🧻
 	@rm -f $(OBJECTS)
 	@echo cleanning libftprintf.a 🚽 
 	@rm -f $(NAME)
-	@$(MAKE) -C $(LIBFTDIR) fclean 
+	@$(MAKE) -s -C $(LIBFTDIR) fclean 
 	
 re : fclean all

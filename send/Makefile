@@ -23,7 +23,7 @@ HEADERS = $(HEADERS_DIR)/alg_backtr.h $(HEADERS_DIR)/alg_turk.h $(HEADERS_DIR)/a
 $(HEADERS_DIR)/operations.h $(HEADERS_DIR)/ps_utils.h $(HEADERS_DIR)/setup.h \
 $(HEADERS_DIR)/setup_utils.h $(HEADERS_DIR)/rotate_utils.h
 
-.PHONY : all ft_printf bonus clean fclean re intro l
+.PHONY : all ft_printf bonus clean fclean re intro l newline
 
 $(SRC_DIR)/%.o : $(SRC_DIR)/%.c $(LDFLAGS) $(HEADERS)
 	@echo "\033[0;32mcompiling push_swap object $<...\033[0m" 🚀
@@ -34,14 +34,15 @@ $(BONUS_DIR)/%.o : $(BONUS_DIR)/%.c $(LDFLAGS)
 	@$(CC) $(CFLAGS) $(CFLAGS_BONUS) $< -c -o $@	
 
 all : intro ft_printf $(NAME)	
-	@echo 💗 😀 😃 😍
+	@echo " 💗 😀 😃 😍\n"
 
 l :ft_printf $(NAME)	
-	@echo 💗 😀 😃 😍
+	@echo " 💗 😀 😃 😍\n"
 
 $(NAME) : $(OBJECTS) 
-	@echo "\033[0;32mlinking push_swap all objects with $(LDFLAGS)...\033[0m" 🚀
+	@echo "\n\033[0;32mlinking push_swap objects with $(LDFLAGS)...\033[0m 🚀\n"
 	@$(CC) $(OBJECTS) $(LDFLAGS) -o $@
+	@echo " 💗 😀 😃 😍\n"
 
 intro:
 	clear
@@ -66,26 +67,31 @@ intro:
 	@cat lic.txt
 	@echo "\n"		
 
-ft_printf:		
+ft_printf: newline	
 	@$(MAKE) -s -C $(FT_PRINTF_DIR) 
 
+newline: 
+	@echo ""
+
 bonus : ft_printf $(NAME_BONUS) 
-	@echo 💎 🧯 🔥 😵
+	@echo " 💎 🧯 🔥 😵\n"
 
 $(NAME_BONUS) : $(OBJECTS_BONUS) 
-	@echo "\033[0;32mlinking push_swap all objects bonus with $(LDFLAGS)...\033[0m" 🚀
+	@echo "\n\033[0;32mlinking push_swap objects bonus with $(LDFLAGS)...\033[0m 🚀\n"
 	@$(CC) $(OBJECTS_BONUS) $(LDFLAGS) -o $@
 
 clean :
-	@echo cleanning push_swap objects 🧻
+	@echo "\ncleanning push_swap objects 🧻"
 	@rm -f $(OBJECTS) $(OBJECTS_BONUS);
 	@$(MAKE) -C $(FT_PRINTF_DIR) clean -s
+	@echo ""
 
 fclean : 
-	@echo cleanning push_swap objects 🧻
+	@echo "\ncleanning push_swap objects 🧻"
 	@rm -f $(OBJECTS) $(OBJECTS_BONUS);
 	@echo cleanning push_swap 🚽 
 	@rm -f $(NAME) $(NAME_BONUS)
 	@$(MAKE) -C $(FT_PRINTF_DIR) fclean -s
+	@echo ""
 
 re: fclean ft_printf $(NAME)

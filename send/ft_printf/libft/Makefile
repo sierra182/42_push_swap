@@ -21,7 +21,7 @@ all: $(NAME)
 	@$(CC) $(CFLAGS) $< -c -o $@
 
 $(NAME) :: $(OBJECTS)
-	@echo "\033[0;32madding libft object $? to $@ ...\033[0m" 🚀
+	@echo "\n\033[0;32madding libft object $? to $@ ...\033[0m 🚀\n"
 	@ar rcs $@ $?
 
 change_flag:
@@ -31,7 +31,7 @@ bonus: change_flag $(NAME)
 	
 $(NAME) :: $(OBJECTS_BONUS)
 	@if [ $(BONUS_FLAG) -eq 1 ]; then \
-		echo "\033[0;32madding libft objects bonus $? to $@ ...\033[0m" 🚀; \
+		echo "\n\033[0;32madding libft objects bonus $? to $@ ...\033[0m" 🚀; \
 		ar rcs $@ $?; \
 	fi
 

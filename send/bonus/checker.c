@@ -59,7 +59,7 @@ void	read_stdin(t_list **la, t_list **lb, int *args_arr, int flag)
 			sol_input = is_valid_op(line);
 			if (sol_input)
 				op_arr[sol_input](la, lb, 0);
-			else			
+			else
 				error_input_handle(line, args_arr, la, lb);
 			free(line);
 			line = "";
