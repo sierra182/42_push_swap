@@ -21,29 +21,28 @@ NAME = push_swap
 NAME_BONUS = checker
 HEADERS = $(HEADERS_DIR)/alg_backtr.h $(HEADERS_DIR)/alg_turk.h $(HEADERS_DIR)/alg_turk_utils.h \
 $(HEADERS_DIR)/operations.h $(HEADERS_DIR)/ps_utils.h $(HEADERS_DIR)/setup.h \
-$(HEADERS_DIR)/setup_utils.h $(HEADERS_DIR)/rotate_utils.h
-
-.PHONY : all ft_printf bonus clean fclean re intro l newline
+$(HEADERS_DIR)/setup_utils.h $(HEADERS_DIR)/rotate_utils.h $(FT_PRINTF_DIR)/ft_printf.h
+HEADERS_BONUS = $(GNL_DIR)/get_next_line.h $(HEADERS_DIR)/operations.h $(HEADERS_DIR)/setup.h \
+$(HEADERS_DIR)/ps_utils.h $(FT_PRINTF_DIR)/ft_printf.h
+.PHONY : all ft_printf bonus clean fclean re intro l newline emoticon
 
 $(SRC_DIR)/%.o : $(SRC_DIR)/%.c $(LDFLAGS) $(HEADERS)
 	@echo "\033[0;32mcompiling push_swap object $<...\033[0m" 🚀
 	@$(CC) $(CFLAGS) $< -c -o $@
 	
-$(BONUS_DIR)/%.o : $(BONUS_DIR)/%.c $(LDFLAGS)
+$(BONUS_DIR)/%.o : $(BONUS_DIR)/%.c $(LDFLAGS) $(HEADERS_BONUS)
 	@echo "\033[0;32mcompiling push_swap object bonus $<...\033[0m" 🚀
 	@$(CC) $(CFLAGS) $(CFLAGS_BONUS) $< -c -o $@	
 
-all : intro ft_printf $(NAME)	
-	@echo " 💗 😀 😃 😍\n"
 
-l :ft_printf $(NAME)	
-	@echo " 💗 😀 😃 😍\n"
+all : intro ft_printf $(NAME) emoticon		
+
+l :ft_printf $(NAME) emoticon		
 
 $(NAME) : $(OBJECTS) 
 	@echo "\n\033[0;32mlinking push_swap objects with $(LDFLAGS)...\033[0m 🚀\n"
 	@$(CC) $(OBJECTS) $(LDFLAGS) -o $@
-	@echo " 💗 😀 😃 😍\n"
-
+	
 intro:
 	clear
 	@sleep 1
@@ -64,11 +63,13 @@ intro:
 		sleep .4; \
 	done
 	@sleep .4
-	@cat lic.txt
-	@echo "\n"		
+	@cat lic.txt		
 
-ft_printf: newline	
+ft_printf: emoticon
 	@$(MAKE) -s -C $(FT_PRINTF_DIR) 
+
+emoticon:
+	@echo "\n 💗 😀 😃 😍\n"
 
 newline: 
 	@echo ""
