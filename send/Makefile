@@ -39,11 +39,11 @@ $(HEADERS_DIR)/ps_utils.h $(FT_PRINTF_DIR)/ft_printf.h
 .PHONY : all ft_printf bonus clean fclean re intro l newline emoticon
 
 $(SRC_DIR)/%.o : $(SRC_DIR)/%.c $(LDFLAGS) $(HEADERS)
-	@echo "\033[0;32mcompiling push_swap object $<...\033[0m" 🚀
+	@echo "\033[0;32m compiling push_swap object $<...\033[0m" 🚀
 	@$(CC) $(CFLAGS) $< -c -o $@
 	
 $(BONUS_DIR)/%.o : $(BONUS_DIR)/%.c $(LDFLAGS) $(HEADERS_BONUS)
-	@echo "\033[0;32mcompiling push_swap object bonus $<...\033[0m" 🚀
+	@echo "\033[0;32m compiling push_swap object bonus $<...\033[0m" 🚀
 	@$(CC) $(CFLAGS) $(CFLAGS_BONUS) $< -c -o $@	
 
 
@@ -52,7 +52,7 @@ all : intro ft_printf $(NAME) emoticon
 l :ft_printf $(NAME) emoticon		
 
 $(NAME) : $(OBJECTS) 
-	@echo "\n\033[0;32mlinking push_swap objects with $(LDFLAGS)...\033[0m 🚀\n"
+	@echo "\n\033[0;32m linking push_swap objects with $(LDFLAGS)...\033[0m 🚀\n"
 	@$(CC) $(OBJECTS) $(LDFLAGS) -o $@
 	
 intro:
@@ -61,14 +61,14 @@ intro:
 	@echo -n " Wake"
 	@sleep .4
 	@echo " up...\n"
-	@sleep .2
+	@sleep .1
 	@echo -n " "
 	@letters="The Makefile has you..."; \
 	echo "\033[1;92m$$letters\033[0m" | awk '{split($$0, chars, ""); \
 	for (i = 1; i <= length($$0); i++) \
 	{printf "%s", chars[i]; system("sleep 0.2");}} \
 	system("sleep 1");' 
-	@words="\n\n\tFollow \n\t\tthe \t\b\b\b\033[0;96mColored! \
+	@words="\n\n\tFollow \n\t\tthe \t\b\b\033[0;96mColored! \
 	\n\n\t\t\b\b\b\b\b\b\033[1;95mUnicorne!\033[0m...🦄\n\n"; \
 	for j in $${words}; do \
 		echo -n "$$j"; \
@@ -90,19 +90,19 @@ bonus : ft_printf $(NAME_BONUS)
 	@echo " 💎 🧯 🔥 😵\n"
 
 $(NAME_BONUS) : $(OBJECTS_BONUS) 
-	@echo "\n\033[0;32mlinking push_swap objects bonus with $(LDFLAGS)...\033[0m 🚀\n"
+	@echo "\n\033[0;32m linking push_swap objects bonus with $(LDFLAGS)...\033[0m 🚀\n"
 	@$(CC) $(OBJECTS_BONUS) $(LDFLAGS) -o $@
 
 clean :
-	@echo "\ncleanning push_swap objects 🧻"
+	@echo "\n cleanning push_swap objects 🧻"
 	@rm -f $(OBJECTS) $(OBJECTS_BONUS);
 	@$(MAKE) -C $(FT_PRINTF_DIR) clean -s
 	@echo ""
 
 fclean : 
-	@echo "\ncleanning push_swap objects 🧻"
+	@echo "\n cleanning push_swap objects 🧻"
 	@rm -f $(OBJECTS) $(OBJECTS_BONUS);
-	@echo cleanning push_swap 🚽 
+	@echo " cleanning push_swap 🚽" 
 	@rm -f $(NAME) $(NAME_BONUS)
 	@$(MAKE) -C $(FT_PRINTF_DIR) fclean -s
 	@echo ""

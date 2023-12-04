@@ -6,7 +6,7 @@
 #    By: svidot <svidot@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/12/04 06:56:29 by svidot            #+#    #+#              #
-#    Updated: 2023/12/04 06:56:29 by svidot           ###   ########.fr        #
+#    Updated: 2023/12/04 07:08:59 by svidot           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,11 +29,11 @@ BONUS_FLAG = 0
 all: $(NAME)
 
 %.o : %.c $(HEADER)
-	@echo "\033[0;32mcompiling libft object $<...\033[0m" 🚀
+	@echo "\033[0;32m compiling libft object $<...\033[0m" 🚀
 	@$(CC) $(CFLAGS) $< -c -o $@
 
 $(NAME) :: $(OBJECTS)
-	@echo "\n\033[0;32madding libft object $? to $@ ...\033[0m 🚀\n"
+	@echo "\n\033[0;32m adding libft object $? to $@ ...\033[0m 🚀\n"
 	@ar rcs $@ $?
 
 change_flag:
@@ -43,16 +43,16 @@ bonus: change_flag $(NAME)
 	
 $(NAME) :: $(OBJECTS_BONUS)
 	@if [ $(BONUS_FLAG) -eq 1 ]; then \
-		echo "\n\033[0;32madding libft objects bonus $? to $@ ...\033[0m" 🚀; \
+		echo "\n\033[0;32m adding libft objects bonus $? to $@ ...\033[0m" 🚀; \
 		ar rcs $@ $?; \
 	fi
 
 clean:
-	@echo cleanning libft objects 🧻
+	@echo " cleanning libft objects 🧻"
 	@rm -f $(OBJECTS) $(OBJECTS_BONUS)
 
 fclean: clean
-	@echo cleanning libft.a 🚽
+	@echo " cleanning libft.a 🚽"
 	@rm -f $(NAME)
 
 re: fclean all
