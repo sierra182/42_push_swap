@@ -1,3 +1,15 @@
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: svidot <svidot@student.42.fr>              +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2023/12/04 06:54:46 by svidot            #+#    #+#              #
+#    Updated: 2023/12/04 06:54:46 by svidot           ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
+
 CC = cc
 CFLAGS = -I$(HEADERS_DIR) -Ift_printf/libft/ -Ift_printf/ -Wall -Wextra -Werror
 CFLAGS_BONUS = -I$(GNL_DIR)
@@ -63,7 +75,7 @@ intro:
 		sleep .4; \
 	done
 	@sleep .4
-	@cat lic.txt		
+	@cat mfile_design	
 
 ft_printf: emoticon
 	@$(MAKE) -s -C $(FT_PRINTF_DIR) 

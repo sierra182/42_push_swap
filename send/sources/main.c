@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: svidot <svidot@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/11 13:45:00 by svidot            #+#    #+#             */
-/*   Updated: 2023/12/03 22:32:47 by marvin           ###   ########.fr       */
+/*   Updated: 2023/12/04 06:48:39 by svidot           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ static void	alg_forwarding(t_list **la, t_list **lb, int argc, int flag)
 {
 	if (!is_sort(*la, *lb))
 	{
-		if (argc - 1 <= 5)
+		if (argc - 1 <= 6)
 		{
 			if (flag)
 				ft_printf("\nwelcome to backtracking\n");
